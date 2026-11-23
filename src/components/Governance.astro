@@ -6,12 +6,11 @@ const GRAPH_URL = '/governance/control-graph.html';
 <section class="soft governance" id="ai-governance">
   <div class="container">
     <span class="eyebrow">AI Governance</span>
-    <h2 class="gov-title">AI you can't govern is AI you can't trust.</h2>
-    <p class="lead">Governance isn't red tape. It's what lets you move fast without breaking trust: every risk mapped, every control owned, every decision traceable.</p>
+    <h2 class="gov-title">It all starts with AI Governance</h2>
+    <p class="lead">Governance is key to AI enablement</p>
 
     <figure class="graph-frame">
       <div class="graph-head">
-        <span><strong>A working AI governance model</strong> · assets at the centre, the requirements that defend them, the controls that form the wall, and the risks aimed in.</span>
         <a href={GRAPH_URL} target="_blank" rel="noopener">Open full screen ↗</a>
       </div>
       <iframe
@@ -29,7 +28,7 @@ const GRAPH_URL = '/governance/control-graph.html';
 <style>
   .gov-title { font-size: clamp(1.9rem, 4.2vw, 2.8rem); max-width: 22ch; }
   .graph-frame { margin: 2.5rem 0 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); overflow: hidden; }
-  .graph-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; padding: 0.9rem 1.2rem; font-size: 0.92rem; border-bottom: 1px solid var(--border); }
+  .graph-head { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem 1.5rem; padding: 0.9rem 1.2rem; font-size: 0.92rem; border-bottom: 1px solid var(--border); }
   .graph-head a { white-space: nowrap; font-weight: 600; }
   iframe { display: block; width: 100%; height: min(78vh, 760px); border: 0; }
   figcaption { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-top: 1px solid var(--border); }
