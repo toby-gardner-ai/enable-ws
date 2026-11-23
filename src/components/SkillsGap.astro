@@ -1,42 +1,44 @@
 ---
-// Evidence block: a bold statement backed by Imperial College London research.
-// Figures: Imperial Lifelong Learning, "Everyone but me: What UK employees told us about AI and skills" (Nov 2026).
-// Censuswide survey of 2,000 UK employees (incl. business owners) in five high-growth sectors, 4–15 Sept 2026.
+// The problem, stated plainly: most companies don't have AI expertise in-house.
+// Source: Imperial Lifelong Learning (Imperial College London), "Everyone but me: What UK employees
+// told us about AI and skills" (Nov 2026). Censuswide survey of 2,000 UK employees, including business
+// owners, in five high-growth sectors, 4–15 Sept 2026.
 const SOURCE_URL = 'https://www.imperial.ac.uk/news/articles/lifelong-learning/2026/news-ai-report/';
 const REPORT_URL = 'https://www.imperial.ac.uk/lifelong-learning/closing-the-ai-capacity-gap/';
 
-// Only figures confirmed in Imperial's own report page or its launch coverage.
 const bars = [
-  { value: 85, label: 'want AI-related training in the next two years' },
-  { value: 70, label: 'say failing to close the skills gap will significantly affect jobs for the next generation' },
-  { value: 66, label: "say the UK's international competitiveness will suffer if the gap isn't closed" },
-  { value: 59, label: 'see a significant skills gap in their industry' },
+  { value: 75, label: 'Business owners & senior leaders', hero: true },
+  { value: 59, label: 'All employees' },
 ];
 ---
 <section class="skills-gap">
   <div class="container">
-    <span class="eyebrow">The real bottleneck</span>
-    <h2 class="statement">AI isn't held back by the technology.<br /><span class="hl">It's held back by skills.</span></h2>
-    <p class="lead">Six in ten UK workers say their industry has a significant skills gap, and 85% want more AI training. The tools are ready. Most teams aren't, and few companies have the people in-house to design, build and run AI well.</p>
+    <span class="eyebrow">The real problem</span>
+
+    <div class="hero-stat">
+      <p class="big" aria-hidden="true">75%</p>
+      <h2 class="statement">
+        <span class="sr-only">75% </span>of business leaders say their industry has a <span class="hl">significant skills gap.</span>
+      </h2>
+    </div>
+
+    <p class="punch">You know AI matters. You just don't have the in-house expertise to implement it. <strong>That's exactly why I'm here.</strong></p>
 
     <figure class="chart" aria-labelledby="sg-title">
       <figcaption id="sg-title">
-        <strong>UK employees in high-growth sectors who…</strong>
-        <span class="muted">% of respondents</span>
+        <strong>See a significant skills gap in their industry</strong>
+        <span class="muted">% who agree</span>
       </figcaption>
       <ul class="bars">
         {bars.map((b) => (
-          <li class="bar-row" title={`${b.value}% ${b.label}`}>
-            <div class="bar-text">
-              <span>{b.label}</span>
-            </div>
-            <div class="track" aria-hidden="true">
-              <div class="fill" style={`width:${b.value}%`}></div>
-            </div>
+          <li class={`bar-row ${b.hero ? 'is-hero' : ''}`} title={`${b.value}% of ${b.label.toLowerCase()}`}>
+            <span class="bar-label">{b.label}</span>
+            <div class="track" aria-hidden="true"><div class="fill" style={`width:${b.value}%`}></div></div>
             <span class="val">{b.value}%</span>
           </li>
         ))}
       </ul>
+      <p class="aside">And 85% of employees want AI-related training in the next two years.</p>
       <p class="source">
         Source: <a href={SOURCE_URL} rel="noopener">Imperial College London</a>,{' '}
         <a href={REPORT_URL} rel="noopener"><em>Everyone but me: What UK employees told us about AI and skills</em></a> (2026).
@@ -44,38 +46,51 @@ const bars = [
       </p>
     </figure>
 
-    <p class="bridge">That gap is exactly where I come in: I build the solution <em>and</em> the capability, so your team can own it.</p>
+    <div class="btn-row">
+      <a href="/contact" class="btn btn-primary">Close the gap: book a call</a>
+      <a href="/services" class="btn btn-ghost">How I help</a>
+    </div>
   </div>
 </section>
 
 <style>
-  .skills-gap { --bar: #0d9488; }
-  .statement { font-size: clamp(2rem, 4.6vw, 3.1rem); max-width: 22ch; }
+  .skills-gap { --bar: #0d9488; --bar-2: color-mix(in srgb, #0d9488 40%, var(--bg)); }
+  .hero-stat { display: grid; grid-template-columns: auto 1fr; gap: 0 2rem; align-items: center; margin-top: 0.5rem; }
+  .big {
+    margin: 0;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--accent-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  :global(:root[data-theme='dark']) .big, :global(:root[data-theme='dark']) .hl { color: var(--accent); }
+  .statement { font-size: clamp(1.7rem, 3.6vw, 2.6rem); margin: 0; max-width: 18ch; }
   .hl { color: var(--accent-strong); }
-  :global(:root[data-theme='dark']) .hl { color: var(--accent); }
+  .punch { font-size: clamp(1.2rem, 2.2vw, 1.45rem); max-width: 40rem; margin: 2rem 0 0; }
   .chart {
     margin: 2.5rem 0 0;
     padding: clamp(1.25rem, 3vw, 2rem);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--bg);
+    max-width: 760px;
   }
-  figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; margin-bottom: 1.5rem; }
+  figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; margin-bottom: 1.4rem; }
   figcaption .muted { font-size: 0.85rem; }
-  .bars { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
-  .bar-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 3.5rem;
-    grid-template-areas: 'text text' 'track val';
-    gap: 0.45rem 0.9rem;
-    align-items: center;
-    border-radius: 8px;
-  }
-  .bar-text { grid-area: text; font-size: 0.98rem; }
-  .track { grid-area: track; height: 12px; background: var(--bg-soft); border-radius: 0 4px 4px 0; overflow: hidden; }
-  .fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; transition: filter 0.15s; }
+  .bars { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.1rem; }
+  .bar-row { display: grid; grid-template-columns: minmax(0, 1fr) 3.5rem; grid-template-areas: 'label label' 'track val'; gap: 0.35rem 0.9rem; align-items: center; }
+  .bar-label { grid-area: label; font-size: 0.95rem; color: var(--muted); }
+  .is-hero .bar-label { color: var(--text); font-weight: 600; }
+  .track { grid-area: track; height: 14px; background: var(--bg-soft); border-radius: 0 4px 4px 0; overflow: hidden; }
+  .fill { height: 100%; background: var(--bar-2); border-radius: 0 4px 4px 0; transition: filter 0.15s; }
+  .is-hero .fill { background: var(--bar); }
   .bar-row:hover .fill { filter: brightness(1.15); }
-  .val { grid-area: val; font-weight: 700; font-size: 1.15rem; font-variant-numeric: tabular-nums; text-align: right; }
-  .source { margin: 1.75rem 0 0; font-size: 0.82rem; color: var(--muted); }
-  .bridge { margin-top: 2rem; font-size: 1.15rem; max-width: 46rem; }
+  .val { grid-area: val; font-weight: 700; font-size: 1.1rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .is-hero .val { color: var(--text); font-size: 1.3rem; }
+  .aside { margin: 1.4rem 0 0; font-size: 0.95rem; }
+  .source { margin: 1rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 640px) { .hero-stat { grid-template-columns: 1fr; gap: 0.5rem; } }
 </style>
