@@ -1,0 +1,20 @@
+---
+// StoryBrand: always pair a direct CTA (book a call) with a transitional one (free resource).
+import { SITE } from '../config';
+interface Props { heading?: string; text?: string }
+const {
+  heading = 'Ready to get AI working in your business?',
+  text = 'A 30 minute call. No pitch deck, no obligation. You leave with a clear view of where AI can help and what the first step looks like.',
+} = Astro.props;
+---
+<section class="soft">
+  <div class="narrow center">
+    <h2>{heading}</h2>
+    <p class="lead" style="margin-inline:auto">{text}</p>
+    <div class="btn-row" style="justify-content:center">
+      <a href={SITE.bookingUrl} class="btn btn-primary">Book a free discovery call</a>
+      <a href="/resources" class="btn btn-ghost">Get the AI readiness checklist</a>
+    </div>
+  </div>
+</section>
+<style>.center { text-align: center; }</style>

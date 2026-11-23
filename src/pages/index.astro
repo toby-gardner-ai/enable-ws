@@ -1,0 +1,188 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../config';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+<Base>
+  <!-- 1. Hero: what you get, why it matters, one obvious next step -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">AI Enablement</span>
+      <h1>Turn AI from a buzzword<br />into real results for your business.</h1>
+      <p class="lead">{SITE.oneLiner}</p>
+      <div class="btn-row">
+        <a href={SITE.bookingUrl} class="btn btn-primary">Book a free discovery call</a>
+        <a href="/work" class="btn btn-ghost">See what I've built</a>
+      </div>
+      <p class="muted small">30 minutes · no preparation needed · you keep the notes</p>
+    </div>
+  </section>
+
+  <!-- 2. The problem, in the customer's own words -->
+  <section class="soft">
+    <div class="container">
+      <span class="eyebrow">Sound familiar?</span>
+      <h2>You know AI matters. Making it work is the hard part.</h2>
+      <div class="grid grid-3" style="margin-top:2rem">
+        <div class="card">
+          <h3>Pilots that never ship</h3>
+          <p class="muted">You've run a proof of concept or two. They looked great in the demo, then stalled before reaching real users.</p>
+        </div>
+        <div class="card">
+          <h3>Too much noise</h3>
+          <p class="muted">Every vendor says they have the answer. It's hard to tell what's real, what's hype, and what actually fits your business.</p>
+        </div>
+        <div class="card">
+          <h3>Worried about falling behind</h3>
+          <p class="muted">Competitors are talking about AI, your team is experimenting on their own, and nobody owns a plan.</p>
+        </div>
+      </div>
+      <p class="lead" style="margin-top:2rem">AI should make your people more capable and your customers better served. It shouldn't be another project that eats budget and goodwill.</p>
+    </div>
+  </section>
+
+  <!-- 3. The guide: empathy + authority -->
+  <section>
+    <div class="container grid grid-2" style="align-items:center">
+      <div>
+        <span class="eyebrow">Your guide</span>
+        <h2>I've been on both sides of the AI hype.</h2>
+        <p>I design, build and integrate AI and machine learning systems for a living. I've seen what makes projects succeed (a real problem, a small first step, people brought along) and what makes them fail.</p>
+        <p>My job is to make you the hero of your AI story: your team, your data, your wins. I bring the map and the hands-on skills to get you there.</p>
+        <a href="/about">More about me →</a>
+      </div>
+      <div class="grid grid-2 stats">
+        <!-- TODO: replace with real numbers -->
+        <div class="card"><strong>[X]+ years</strong><span class="muted">building AI &amp; ML</span></div>
+        <div class="card"><strong>[X] projects</strong><span class="muted">shipped to production</span></div>
+        <div class="card"><strong>[X] teams</strong><span class="muted">trained and enabled</span></div>
+        <div class="card"><strong>[Result]</strong><span class="muted">your headline client win</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. The plan: three simple steps -->
+  <section class="soft">
+    <div class="container">
+      <span class="eyebrow">How it works</span>
+      <h2>A simple plan to get AI working for you</h2>
+      <div class="grid grid-3" style="margin-top:2rem">
+        <div class="card">
+          <span class="step-num">1</span>
+          <h3>Find the right problem</h3>
+          <p class="muted">We start with a short discovery: where are the bottlenecks, and which ones can AI actually fix? You get a ranked shortlist of opportunities with effort and value for each.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">2</span>
+          <h3>Build something real</h3>
+          <p class="muted">We pick one opportunity and build a working solution in weeks, integrated with your systems and tested with real users, not a slide deck.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">3</span>
+          <h3>Make it stick</h3>
+          <p class="muted">Your team learns how it works and how to extend it, so the capability stays in your business long after I've gone.</p>
+        </div>
+      </div>
+      <div class="btn-row"><a href={SITE.bookingUrl} class="btn btn-primary">Start with step 1</a></div>
+    </div>
+  </section>
+
+  <!-- 5. Success vs. failure: what's at stake -->
+  <section>
+    <div class="container grid grid-2">
+      <div>
+        <h3>Without a plan</h3>
+        <ul class="check-list x-list muted">
+          <li>Budget goes on tools nobody uses</li>
+          <li>Your team experiments in silos, with real data risk</li>
+          <li>Competitors pull ahead while you wait for certainty</li>
+        </ul>
+      </div>
+      <div>
+        <h3>With the right guide</h3>
+        <ul class="check-list">
+          <li>A clear AI roadmap tied to business outcomes</li>
+          <li>Working solutions in production, measured against real KPIs</li>
+          <li>A confident team that knows how to keep going</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Proof -->
+  {work.length > 0 && (
+    <section class="soft">
+      <div class="container">
+        <span class="eyebrow">Selected work</span>
+        <h2>Problems solved</h2>
+        <div class="grid grid-3" style="margin-top:2rem">
+          {work.map((w) => (
+            <a class="card" href={`/work/${w.id}`}>
+              <span class="tag">{w.data.client}</span>
+              <h3>{w.data.title}</h3>
+              <p class="muted">{w.data.outcome}</p>
+            </a>
+          ))}
+        </div>
+        <p style="margin-top:1.5rem"><a href="/work">All case studies →</a></p>
+      </div>
+    </section>
+  )}
+
+  <!-- 7. Who this is for (be specific, it builds trust) -->
+  <section>
+    <div class="container grid grid-2">
+      <div>
+        <span class="eyebrow">Is this for you?</span>
+        <h2>A good fit if…</h2>
+        <ul class="check-list">
+          <li>You have a real business problem and suspect AI can help</li>
+          <li>You want something in production, not another strategy deck</li>
+          <li>You care about your team owning the result</li>
+        </ul>
+      </div>
+      <div>
+        <span class="eyebrow">&nbsp;</span>
+        <h2>Probably not if…</h2>
+        <ul class="check-list x-list">
+          <li>You want AI for the press release, not the outcome</li>
+          <li>You're looking for the cheapest possible chatbot</li>
+          <li>Nobody internally has time to be involved</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Generosity: give value first -->
+  {posts.length > 0 && (
+    <section class="soft">
+      <div class="container">
+        <span class="eyebrow">Free thinking</span>
+        <h2>From the blog</h2>
+        <div class="grid grid-3" style="margin-top:2rem">
+          {posts.map((p) => (
+            <a class="card" href={`/blog/${p.id}`}>
+              <h3>{p.data.title}</h3>
+              <p class="muted">{p.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(4rem, 10vw, 7rem); }
+  .small { font-size: 0.9rem; margin-top: 0.9rem; }
+  .stats .card { display: flex; flex-direction: column; gap: 0.2rem; }
+  .stats strong { font-size: 1.5rem; }
+</style>

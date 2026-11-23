@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title="Blog" description="Practical writing on AI enablement: what works, what doesn't, and how to get started.">
+  <section>
+    <div class="narrow">
+      <span class="eyebrow">Blog</span>
+      <h1>Practical thinking on AI</h1>
+      <p class="lead">Short, useful posts for leaders and teams putting AI to work. No hype. <a href="/rss.xml">Subscribe via RSS</a>.</p>
+      <ul class="posts">
+        {posts.map((p) => (
+          <li>
+            <a href={`/blog/${p.id}`}><h2>{p.data.title}</h2></a>
+            <p class="muted">{p.data.description}</p>
+            <p class="muted small"><time datetime={p.data.pubDate.toISOString()}>{fmt(p.data.pubDate)}</time></p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+<style>
+  .posts { list-style: none; padding: 0; margin: 2.5rem 0 0; }
+  .posts li { padding: 1.5rem 0; border-top: 1px solid var(--border); }
+  .posts h2 { font-size: 1.35rem; margin-bottom: 0.3rem; }
+  .posts a { text-decoration: none; }
+  .small { font-size: 0.85rem; margin: 0; }
+</style>

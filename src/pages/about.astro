@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { SITE } from '../config';
+---
+<Base title="About" description={`About ${SITE.name}: background in AI, machine learning and helping teams adopt AI.`}>
+  <section>
+    <div class="narrow">
+      <span class="eyebrow">About</span>
+      <h1>Hi, I'm Toby.</h1>
+      <p class="lead">I help companies turn AI from something they talk about into something that works for them.</p>
+      <p class="placeholder-note">Placeholder bio. Edit <code>src/pages/about.astro</code> with your own story.</p>
+      <div class="prose">
+        <h2>Why I do this</h2>
+        <p>[Your story: what got you into AI, the moment you realised most companies were struggling to use it well, and why you care about getting it right.]</p>
+        <h2>Experience</h2>
+        <ul>
+          <li><strong>[Role]</strong>, [Company] ([years]): [one line on what you built or led, with a result]</li>
+          <li><strong>[Role]</strong>, [Company] ([years]): [one line on what you built or led, with a result]</li>
+          <li><strong>[Role]</strong>, [Company] ([years]): [one line on what you built or led, with a result]</li>
+        </ul>
+        <h2>What I believe</h2>
+        <ul>
+          <li><strong>Start with the problem, not the model.</strong> The best AI projects begin with a real pain point.</li>
+          <li><strong>Ship small, learn fast.</strong> A working thing in weeks beats a perfect plan in months.</li>
+          <li><strong>Leave the team stronger.</strong> Success means you don't need me forever.</li>
+        </ul>
+        <h2>Skills &amp; tools</h2>
+        <p>[e.g. Python, LLMs, RAG, agents, PyTorch, scikit-learn, cloud platforms, MLOps, data engineering]</p>
+        <p><a href={SITE.linkedin}>Full CV on LinkedIn →</a></p>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

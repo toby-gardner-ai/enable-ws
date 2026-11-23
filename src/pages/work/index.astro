@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getCollection } from 'astro:content';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Work" description="Case studies in AI and machine learning: the problem, what was built, and the result.">
+  <section>
+    <div class="container">
+      <span class="eyebrow">Work</span>
+      <h1>Real problems, real results</h1>
+      <p class="lead">Each case study follows the same shape: the problem the team faced, what we built together, and what changed.</p>
+    </div>
+  </section>
+  <section class="soft">
+    <div class="container grid grid-2">
+      {work.map((w) => (
+        <a class="card" href={`/work/${w.id}`}>
+          <span class="tag">{w.data.client}</span>
+          <h3>{w.data.title}</h3>
+          <p class="muted">{w.data.summary}</p>
+          <p><strong>Result:</strong> {w.data.outcome}</p>
+          <div>{w.data.stack.map((s) => <span class="tag">{s}</span>)}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <CtaBand heading="Have a problem like these?" />
+</Base>

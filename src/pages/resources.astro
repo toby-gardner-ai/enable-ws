@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+// Give value first. Each resource is free and useful on its own.
+// TODO: link each item to a real file (put PDFs in /public/resources/) or a blog post.
+const resources = [
+  {
+    title: 'AI Readiness Checklist',
+    type: 'Checklist',
+    text: '20 questions to find out if your data, people and processes are ready for AI, and what to fix first.',
+    href: '#',
+  },
+  {
+    title: 'Use-Case Scoring Template',
+    type: 'Template',
+    text: 'Rank AI opportunities by value, feasibility and risk so you pick the right first project.',
+    href: '#',
+  },
+  {
+    title: 'Build vs. Buy Guide',
+    type: 'Guide',
+    text: 'When to use an off-the-shelf AI tool, when to build your own, and the questions to ask vendors.',
+    href: '#',
+  },
+  {
+    title: 'AI Policy Starter',
+    type: 'Template',
+    text: 'A plain-English acceptable use policy you can adapt so your team can experiment safely.',
+    href: '#',
+  },
+  {
+    title: 'Evaluating LLM Outputs',
+    type: 'Guide',
+    text: 'A practical approach to testing whether an AI system is good enough to put in front of customers.',
+    href: '#',
+  },
+  {
+    title: 'Leadership Briefing Deck',
+    type: 'Slides',
+    text: 'A short, hype-free deck to get your leadership team aligned on what AI can and can\'t do.',
+    href: '#',
+  },
+];
+---
+<Base title="Resources" description="Free AI enablement resources: checklists, templates and guides for companies getting started with AI.">
+  <section>
+    <div class="container">
+      <span class="eyebrow">Free resources</span>
+      <h1>Tools to get started with AI, on your own terms</h1>
+      <p class="lead">Free, practical and no email required. Use them yourself, share them with your team, and get in touch if you want a hand.</p>
+      <p class="placeholder-note" style="max-width:40rem;margin-top:1.5rem">These resources are placeholders. Swap each link for a real file or post in <code>src/pages/resources.astro</code>.</p>
+    </div>
+  </section>
+  <section class="soft">
+    <div class="container grid grid-3">
+      {resources.map((r) => (
+        <a class="card" href={r.href}>
+          <span class="tag">{r.type}</span>
+          <h3>{r.title}</h3>
+          <p class="muted">{r.text}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+  <CtaBand heading="Rather skip straight to results?" />
+</Base>

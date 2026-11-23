@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+---
+<Base title="Contact" description="Book a free discovery call to talk about AI in your business.">
+  <section>
+    <div class="narrow">
+      <span class="eyebrow">Contact</span>
+      <h1>Let's talk about your AI goals</h1>
+      <p class="lead">Book a free 30 minute discovery call. Tell me what you're trying to achieve, and I'll tell you honestly whether and how AI can help.</p>
+      <div class="card" style="margin-top:2rem">
+        <h3>What happens on the call</h3>
+        <ul class="check-list">
+          <li>You share the problem or goal you have in mind</li>
+          <li>I ask a few questions about your data, team and systems</li>
+          <li>You leave with one or two concrete next steps, whether or not we work together</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={`mailto:${SITE.email}?subject=Discovery%20call`}>Email me to book</a>
+          <a class="btn btn-ghost" href={SITE.linkedin}>Message on LinkedIn</a>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:1.5rem">I reply within one business day (Brisbane time).</p>
+    </div>
+  </section>
+</Base>

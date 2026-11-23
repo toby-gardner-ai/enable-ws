@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { SITE } from '../config';
+
+// Three clear options with a recommended default (most clients start with the Sprint).
+const offers = [
+  {
+    name: 'AI Opportunity Workshop',
+    time: '1 to 2 weeks',
+    for: 'Teams who know AI matters but aren\'t sure where to start.',
+    get: [
+      'Interviews with the people closest to the work',
+      'A ranked shortlist of AI opportunities with value and effort',
+      'Risks, data readiness and a recommended first project',
+    ],
+  },
+  {
+    name: 'Build Sprint',
+    time: '4 to 8 weeks',
+    recommended: true,
+    for: 'Teams with a clear problem who want a working solution, fast.',
+    get: [
+      'A production-ready AI solution integrated with your systems',
+      'Evaluation and guardrails so you can trust the output',
+      'Handover docs and a session with your team',
+    ],
+  },
+  {
+    name: 'Enablement Partner',
+    time: 'Ongoing',
+    for: 'Companies building an internal AI capability for the long term.',
+    get: [
+      'A fractional AI lead for your roadmap and architecture',
+      'Hands-on training and coaching for your engineers and leaders',
+      'Reviews of vendors, tools and in-house builds',
+    ],
+  },
+];
+---
+<Base title="Services" description="AI enablement services: opportunity workshops, build sprints and ongoing partnership.">
+  <section>
+    <div class="container">
+      <span class="eyebrow">Services</span>
+      <h1>Pick the starting point that fits</h1>
+      <p class="lead">Every engagement has the same goal: AI that solves a real problem and a team that can keep it running. Not sure which one fits? Start with a call and I'll tell you honestly.</p>
+    </div>
+  </section>
+
+  <section class="soft">
+    <div class="container grid grid-3">
+      {offers.map((o) => (
+        <div class={`card offer ${o.recommended ? 'rec' : ''}`}>
+          {o.recommended && <span class="badge">Most popular</span>}
+          <h3>{o.name}</h3>
+          <p class="muted">{o.time}</p>
+          <p><strong>For:</strong> {o.for}</p>
+          <ul class="check-list">{o.get.map((g) => <li>{g}</li>)}</ul>
+          <a href={SITE.bookingUrl} class={`btn ${o.recommended ? 'btn-primary' : 'btn-ghost'}`}>Talk about this</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="narrow">
+      <h2>What I can help with</h2>
+      <div class="grid grid-2">
+        <div><h3>AI strategy</h3><p class="muted">Roadmaps, use-case discovery, build vs. buy decisions, governance.</p></div>
+        <div><h3>LLM applications</h3><p class="muted">Assistants, agents, retrieval (RAG), document processing and workflow automation.</p></div>
+        <div><h3>Machine learning</h3><p class="muted">Forecasting, classification, recommendation and the data pipelines behind them.</p></div>
+        <div><h3>Integration</h3><p class="muted">Connecting AI into your existing tools, data and processes so people actually use it.</p></div>
+        <div><h3>Evaluation &amp; safety</h3><p class="muted">Testing, monitoring and guardrails so you can trust what the system does.</p></div>
+        <div><h3>Team enablement</h3><p class="muted">Workshops and coaching that build lasting AI skills in your team.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .offer { display: flex; flex-direction: column; gap: 0.4rem; position: relative; }
+  .offer .btn { margin-top: auto; align-self: flex-start; }
+  .offer ul { margin: 0.6rem 0 1.2rem; }
+  .rec { border-color: var(--accent); box-shadow: 0 10px 30px -15px var(--accent); }
+  .badge {
+    position: absolute; top: -0.75rem; left: 1.5rem;
+    background: var(--accent); color: var(--accent-contrast);
+    font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px;
+  }
+</style>

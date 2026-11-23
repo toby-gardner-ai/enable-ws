@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const date = entry.data.pubDate.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={entry.data.title} description={entry.data.description}>
+  <article>
+    <section>
+      <div class="narrow">
+        <a href="/blog">← All posts</a>
+        <h1 style="margin-top:1.5rem">{entry.data.title}</h1>
+        <p class="muted"><time datetime={entry.data.pubDate.toISOString()}>{date}</time></p>
+        <div class="prose"><Content /></div>
+      </div>
+    </section>
+  </article>
+  <CtaBand heading="Want help putting this into practice?" />
+</Base>
