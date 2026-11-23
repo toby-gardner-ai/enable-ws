@@ -22,6 +22,8 @@ const bars = [
       </h2>
     </div>
 
+    <p class="denial">The other 25% are in denial.</p>
+
     <p class="punch">You know AI matters. You just don't have the in-house expertise to implement it. <strong>That's exactly why I'm here.</strong></p>
 
     <figure class="chart" aria-labelledby="sg-title">
@@ -68,6 +70,7 @@ const bars = [
   :global(:root[data-theme='dark']) .big, :global(:root[data-theme='dark']) .hl { color: var(--accent); }
   .statement { font-size: clamp(1.7rem, 3.6vw, 2.6rem); margin: 0; max-width: 18ch; }
   .hl { color: var(--accent-strong); }
+  .denial { font-size: clamp(1.3rem, 2.6vw, 1.75rem); font-weight: 700; font-style: italic; color: var(--muted); margin: 1.5rem 0 0; }
   .punch { font-size: clamp(1.2rem, 2.2vw, 1.45rem); max-width: 40rem; margin: 2rem 0 0; }
   .chart {
     margin: 2.5rem 0 0;
