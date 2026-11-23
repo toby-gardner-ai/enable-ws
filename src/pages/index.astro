@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
 import SkillsGap from '../components/SkillsGap.astro';
+import Governance from '../components/Governance.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../config';
 
@@ -71,8 +72,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
   </section>
 
+  <!-- 3b. AI Governance: why it matters, with the interactive control graph -->
+  <Governance />
+
   <!-- 4. The plan: three simple steps -->
-  <section class="soft">
+  <section>
     <div class="container">
       <span class="eyebrow">How it works</span>
       <h2>A simple plan to get AI working for you</h2>

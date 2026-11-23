@@ -1,0 +1,43 @@
+---
+// AI Governance: why it matters, shown with Toby's interactive control graph.
+// The graph is a self-contained page in /public/governance/ (built from the ai-governance repo's graph/ toolchain).
+const GRAPH_URL = '/governance/control-graph.html';
+---
+<section class="soft governance" id="ai-governance">
+  <div class="container">
+    <span class="eyebrow">AI Governance</span>
+    <h2 class="gov-title">AI you can't govern is AI you can't trust.</h2>
+    <p class="lead">Governance isn't red tape. It's what lets you move fast without breaking trust: every risk mapped, every control owned, every decision traceable.</p>
+
+    <figure class="graph-frame">
+      <div class="graph-head">
+        <span><strong>A working AI governance model</strong> · assets at the centre, the requirements that defend them, the controls that form the wall, and the risks aimed in.</span>
+        <a href={GRAPH_URL} target="_blank" rel="noopener">Open full screen ↗</a>
+      </div>
+      <iframe
+        src={GRAPH_URL}
+        title="Interactive AI governance control graph"
+        loading="lazy"
+        sandbox="allow-scripts allow-popups"
+      ></iframe>
+      <a class="btn btn-primary mobile-open" href={GRAPH_URL} target="_blank" rel="noopener">Explore the interactive graph ↗</a>
+      <figcaption class="muted">Drag to rotate, scroll to zoom.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .gov-title { font-size: clamp(1.9rem, 4.2vw, 2.8rem); max-width: 22ch; }
+  .graph-frame { margin: 2.5rem 0 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); overflow: hidden; }
+  .graph-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; padding: 0.9rem 1.2rem; font-size: 0.92rem; border-bottom: 1px solid var(--border); }
+  .graph-head a { white-space: nowrap; font-weight: 600; }
+  iframe { display: block; width: 100%; height: min(78vh, 760px); border: 0; }
+  figcaption { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-top: 1px solid var(--border); }
+  .mobile-open { display: none; margin: 1.2rem; }
+  /* The graph's own layout needs a wide screen; on phones offer it full screen instead. */
+  @media (max-width: 900px) {
+    iframe { display: none; }
+    .mobile-open { display: inline-flex; }
+    figcaption { display: none; }
+  }
+</style>
