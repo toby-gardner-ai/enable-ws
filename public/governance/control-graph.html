@@ -167,6 +167,7 @@ body { padding: 0 !important; }
 .app { grid-template-columns: 1fr !important; grid-template-rows: 1fr !important; gap: 0 !important; height: 100% !important; }
 .app > header, .rail, .drawer { display: none !important; }
 .canvas { border: 0 !important; border-radius: 0 !important; grid-column: 1 / -1 !important; grid-row: 1 / -1 !important; }
+.canvas .toolbar, #modechip, #toast { display: none !important; }
 </style>
 </head>
 <body>
@@ -6372,6 +6373,25 @@ apply({ fit: true, force: true });
 syncControls(); updateUndo(); drawer(null);
 if (PREVIEW) toast("No graph data: this is the unbuilt template. Build it with build_page.py (README §5).", 12000);
 window.__cg3d = { get Graph() { return Graph; }, S, get current() { return current; }, setView, focusNode, enterExplore, undo, redo, toggleCollapse, setGate, get dagLoops() { return dagLoops; } };
+</script>
+<script id="site-embed-fit">
+// Website embed (enable-ws): fill the frame. Fit the visible graph with no padding, then move the camera in a little,
+// because zoomToFit fits a bounding sphere and leaves slack around a roughly round graph.
+(function () {
+  function fill(ms) {
+    try {
+      if (typeof Graph === "undefined" || !Graph) return;
+      Graph.zoomToFit(ms, 0, function (s) { return typeof nodeVisible === "function" ? nodeVisible(s) : true; });
+      setTimeout(function () {
+        var cam = Graph.camera(), t = Graph.controls().target;
+        var k = 0.78;
+        Graph.cameraPosition({ x: t.x + (cam.position.x - t.x) * k, y: t.y + (cam.position.y - t.y) * k, z: t.z + (cam.position.z - t.z) * k }, t, ms);
+      }, ms + 50);
+    } catch (e) {}
+  }
+  window.addEventListener("load", function () { setTimeout(function () { fill(0); }, 1800); setTimeout(function () { fill(600); }, 4500); });
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { fill(300); }, 250); });
+})();
 </script>
 </body>
 </html>
