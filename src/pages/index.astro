@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
+import SkillsGap from '../components/SkillsGap.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../config';
 
@@ -46,6 +47,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       <p class="lead" style="margin-top:2rem">AI should make your people more capable and your customers better served. It shouldn't be another project that eats budget and goodwill.</p>
     </div>
   </section>
+
+  <!-- 2b. Bold statement + evidence: the skills gap -->
+  <SkillsGap />
 
   <!-- 3. The guide: empathy + authority -->
   <section>
