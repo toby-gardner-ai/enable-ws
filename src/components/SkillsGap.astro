@@ -1,0 +1,81 @@
+---
+// Evidence block: a bold statement backed by Imperial College London research.
+// Figures: Imperial Lifelong Learning, "Everyone but me: What UK employees told us about AI and skills" (Nov 2026).
+// Censuswide survey of 2,000 UK employees (incl. business owners) in five high-growth sectors, 4–15 Sept 2026.
+const SOURCE_URL = 'https://www.imperial.ac.uk/news/articles/lifelong-learning/2026/news-ai-report/';
+const REPORT_URL = 'https://www.imperial.ac.uk/lifelong-learning/closing-the-ai-capacity-gap/';
+
+// Only figures confirmed in Imperial's own report page or its launch coverage.
+const bars = [
+  { value: 85, label: 'want AI-related training in the next two years' },
+  { value: 70, label: 'say failing to close the skills gap will significantly affect jobs for the next generation' },
+  { value: 66, label: "say the UK's international competitiveness will suffer if the gap isn't closed" },
+  { value: 59, label: 'see a significant skills gap in their industry' },
+];
+---
+<section class="skills-gap">
+  <div class="container">
+    <span class="eyebrow">The real bottleneck</span>
+    <h2 class="statement">AI isn't held back by the technology.<br /><span class="hl">It's held back by skills.</span></h2>
+    <p class="lead">Six in ten UK workers say their industry has a significant skills gap, and 85% want more AI training. The tools are ready. Most teams aren't, and few companies have the people in-house to design, build and run AI well.</p>
+
+    <figure class="chart" aria-labelledby="sg-title">
+      <figcaption id="sg-title">
+        <strong>UK employees in high-growth sectors who…</strong>
+        <span class="muted">% of respondents</span>
+      </figcaption>
+      <ul class="bars">
+        {bars.map((b) => (
+          <li class="bar-row" title={`${b.value}% ${b.label}`}>
+            <div class="bar-text">
+              <span>{b.label}</span>
+            </div>
+            <div class="track" aria-hidden="true">
+              <div class="fill" style={`width:${b.value}%`}></div>
+            </div>
+            <span class="val">{b.value}%</span>
+          </li>
+        ))}
+      </ul>
+      <p class="source">
+        Source: <a href={SOURCE_URL} rel="noopener">Imperial College London</a>,{' '}
+        <a href={REPORT_URL} rel="noopener"><em>Everyone but me: What UK employees told us about AI and skills</em></a> (2026).
+        Censuswide survey of 2,000 UK employees, including business owners, in five high-growth sectors, September 2026.
+      </p>
+    </figure>
+
+    <p class="bridge">That gap is exactly where I come in: I build the solution <em>and</em> the capability, so your team can own it.</p>
+  </div>
+</section>
+
+<style>
+  .skills-gap { --bar: #0d9488; }
+  .statement { font-size: clamp(2rem, 4.6vw, 3.1rem); max-width: 22ch; }
+  .hl { color: var(--accent-strong); }
+  :global(:root[data-theme='dark']) .hl { color: var(--accent); }
+  .chart {
+    margin: 2.5rem 0 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+  }
+  figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; margin-bottom: 1.5rem; }
+  figcaption .muted { font-size: 0.85rem; }
+  .bars { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 3.5rem;
+    grid-template-areas: 'text text' 'track val';
+    gap: 0.45rem 0.9rem;
+    align-items: center;
+    border-radius: 8px;
+  }
+  .bar-text { grid-area: text; font-size: 0.98rem; }
+  .track { grid-area: track; height: 12px; background: var(--bg-soft); border-radius: 0 4px 4px 0; overflow: hidden; }
+  .fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; transition: filter 0.15s; }
+  .bar-row:hover .fill { filter: brightness(1.15); }
+  .val { grid-area: val; font-weight: 700; font-size: 1.15rem; font-variant-numeric: tabular-nums; text-align: right; }
+  .source { margin: 1.75rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .bridge { margin-top: 2rem; font-size: 1.15rem; max-width: 46rem; }
+</style>
