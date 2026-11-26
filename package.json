@@ -10,7 +10,8 @@
     "astro": "astro",
     "extract:governance": "node scripts/extract-governance.mjs",
     "extract:readiness": "node scripts/extract-readiness.mjs",
-    "extract": "npm run extract:governance && npm run extract:readiness"
+    "extract": "npm run extract:governance && npm run extract:readiness && npm run extract:controls",
+    "extract:controls": "node scripts/extract-controls.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

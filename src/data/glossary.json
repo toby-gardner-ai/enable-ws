@@ -7,7 +7,7 @@
   {
     "term": "Artifact",
     "slug": "artifact",
-    "meaning": "Any text or file an agent is built from or loads at runtime, such as its manifest, system prompt, prompt fragments, skills, tool definitions and eval cases. The agent's own artifacts live in its folder in the repository; shared ones are Registry entries, resolved into the Bundle at build."
+    "meaning": "Any text or file an agent is built from or loads at runtime, such as its manifest, system prompt, prompt fragments, skills, tool definitions and evaluation cases. The agent's own artifacts live in its folder in the repository; shared ones are Registry entries, resolved into the Bundle at build."
   },
   {
     "term": "Asset Owner",
@@ -22,7 +22,7 @@
   {
     "term": "Bundle",
     "slug": "bundle",
-    "meaning": "An immutable, content-addressed package of every artifact one agent version needs, built by CI for one Installation: for example, the agent's manifest, its prompt with shared fragments inlined, its skills and tool definitions, its model parameters and its evals. It is identified by its hash (`bundle_sha`) and held in write-once bundle storage."
+    "meaning": "An immutable, content-addressed package of every artifact one agent version needs, built by CI for one Installation: for example, the agent's manifest, its prompt with shared fragments inlined, its skills and tool definitions, its model parameters and its evaluations. It is identified by its hash (`bundle_sha`) and held in write-once bundle storage."
   },
   {
     "term": "Ceiling",
@@ -75,9 +75,9 @@
     "meaning": "The person accountable for a registry entry: its accuracy, its status and its approvals."
   },
   {
-    "term": "Eval",
-    "slug": "eval",
-    "meaning": "A test case of an agent's behaviour: an input, the output or action the agent must produce, and how a pass is judged. An agent's evals are part of its bundle and run before it is released."
+    "term": "Evaluation",
+    "slug": "evaluation",
+    "meaning": "A test case of an agent's behaviour: an input, the output or action the agent must produce, and how a pass is judged. An agent's evaluations together are its evaluation set, also called a golden dataset; they are part of its bundle and run before it is released."
   },
   {
     "term": "Governing Document",

@@ -1,0 +1,3921 @@
+{
+  "kinds": {
+    "check": "An automated test the organisation's own tooling runs at a Gate against what is in hand there — a working copy, the repository, a built bundle, a deployment or live state — with a pass or fail outcome. The Conformance Checks are the set of them.",
+    "configuration": "A setting, or a single mandatory code path, that holds at a Gate or Standing without a separate test run — branch protection, a storage policy, an IAM binding, or a library path every runtime must call, such as the tool guard.",
+    "procedure": "A documented step for a person or a governance agent, defined by the record it must produce."
+  },
+  "enforcement": {
+    "blocking": "The thing at the Gate does not proceed, or the offending part is removed, as when a value is masked.",
+    "reporting": "A finding or event is recorded and the thing proceeds.",
+    "attested": "A person or agent confirms on a record that the condition held."
+  },
+  "standing": "a control that holds at all times and refuses every attempt that breaks it, whenever that attempt is made — an append-only grant, a write-once bucket, an identity-provider policy.",
+  "gates": [
+    {
+      "id": "establish",
+      "name": "Establish",
+      "moment": "A repository, project, environment, tenant, installation, supplier or person is created or onboarded.",
+      "stops": "The thing being created from coming into use, such as an installation's first release."
+    },
+    {
+      "id": "author",
+      "name": "Author",
+      "moment": "On the workstation, before a commit or a push leaves it.",
+      "stops": "The commit or the push."
+    },
+    {
+      "id": "pr",
+      "name": "Pull request",
+      "moment": "A pull request against the release branch.",
+      "stops": "The merge."
+    },
+    {
+      "id": "merge",
+      "name": "Merge",
+      "moment": "A merge to the release branch: build, sign, publish and `dev` release.",
+      "stops": "Publication of the bundle and its `dev` release."
+    },
+    {
+      "id": "promote",
+      "name": "Promote",
+      "moment": "The release pointer moves to `staging` or `prod`.",
+      "stops": "The promotion."
+    },
+    {
+      "id": "load",
+      "name": "Load",
+      "moment": "A run starts.",
+      "stops": "The run."
+    },
+    {
+      "id": "ingress",
+      "name": "Ingress",
+      "moment": "External content enters a run, or a request reaches a workload (the Standard, the Standard).",
+      "stops": "That content or request."
+    },
+    {
+      "id": "action",
+      "name": "Action",
+      "moment": "Before each model call, tool call or outbound network request (the Standard, the Standard).",
+      "stops": "That call."
+    },
+    {
+      "id": "response",
+      "name": "Response",
+      "moment": "Anything leaves: a tool result returning to the model, a model response to the caller, a workload's response, or a signal or Control Record leaving the run (the Standard, the Standard).",
+      "stops": "That output, which is withheld or masked."
+    },
+    {
+      "id": "operate",
+      "name": "Operate",
+      "moment": "On a schedule or continuously, over live state.",
+      "stops": "Nothing directly. A failure is a finding, and an Incident where the Standard lists it; a control may revoke."
+    },
+    {
+      "id": "exit",
+      "name": "Exit",
+      "moment": "A person, supplier, tenant, registry entry, agent or installation is retired.",
+      "stops": "Nothing. The Gate ensures that removal is complete and recorded; a failure is a finding against the exit."
+    }
+  ],
+  "controls": [
+    {
+      "id": "CHK-01",
+      "kind": "check",
+      "title": "Every agent, installation and registry file matches its schema",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation",
+        "Person",
+        "Principal",
+        "Prompt",
+        "Tenant",
+        "Vocab"
+      ],
+      "risks": 7,
+      "requirements": [
+        "1.1",
+        "1.2",
+        "1.4",
+        "1.5",
+        "1.11",
+        "1.12",
+        "3.1",
+        "3.2",
+        "5.1",
+        "5.4",
+        "5.5",
+        "5.6",
+        "5.16",
+        "6.1",
+        "6.2",
+        "8.19",
+        "9.11",
+        "10.1",
+        "10.3",
+        "10.4",
+        "13.4",
+        "13.5",
+        "13.6",
+        "13.7",
+        "19.1",
+        "19.7",
+        "21.8",
+        "22.1",
+        "23.6"
+      ]
+    },
+    {
+      "id": "CHK-02",
+      "kind": "check",
+      "title": "Every agent's files follow the standard bundle layout, with nothing missing or extra",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 1,
+      "requirements": [
+        "3.3"
+      ]
+    },
+    {
+      "id": "CHK-03",
+      "kind": "check",
+      "title": "Every agent, skill, tool and server name follows the naming rules and is unique",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Vocab"
+      ],
+      "risks": 1,
+      "requirements": [
+        "3.8",
+        "3.9",
+        "3.10",
+        "3.11",
+        "3.12",
+        "3.15",
+        "5.19"
+      ]
+    },
+    {
+      "id": "CHK-04",
+      "kind": "check",
+      "title": "Everything an agent references exists in a registry and is approved",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Model",
+        "Skill",
+        "Source",
+        "Supplier",
+        "Vocab"
+      ],
+      "risks": 7,
+      "requirements": [
+        "2.13",
+        "4.6",
+        "5.8",
+        "5.10",
+        "6.3",
+        "7.4",
+        "9.1",
+        "18.2"
+      ]
+    },
+    {
+      "id": "CHK-05",
+      "kind": "check",
+      "title": "Every skill follows the portable skill format and carries an approved licence",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Skill"
+      ],
+      "risks": 2,
+      "requirements": [
+        "3.4",
+        "7.1",
+        "7.2",
+        "7.3",
+        "7.13"
+      ]
+    },
+    {
+      "id": "CHK-06",
+      "kind": "check",
+      "title": "Every MCP server is pinned to an exact version, approved and fully declared",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Integration",
+        "Service"
+      ],
+      "risks": 2,
+      "requirements": [
+        "3.13",
+        "8.1",
+        "8.2",
+        "8.3",
+        "8.6",
+        "23.1",
+        "23.6"
+      ]
+    },
+    {
+      "id": "CHK-07",
+      "kind": "check",
+      "title": "An agent's data classification can't exceed that of any model, service or source it uses",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Source",
+        "Supplier",
+        "Tenant"
+      ],
+      "risks": 4,
+      "requirements": [
+        "7.12",
+        "10.4",
+        "15.7",
+        "15.8",
+        "19.2",
+        "19.3",
+        "19.4"
+      ]
+    },
+    {
+      "id": "CHK-08",
+      "kind": "check",
+      "title": "Every irreversible tool effect requires a person's review or approval, and its content is captured",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 1,
+      "requirements": [
+        "13.5",
+        "22.2",
+        "31.4",
+        "31.6"
+      ]
+    },
+    {
+      "id": "CHK-09",
+      "kind": "check",
+      "title": "Building the same agent bundle twice produces an identical result",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Prompt"
+      ],
+      "risks": 1,
+      "requirements": [
+        "4.2",
+        "4.3",
+        "4.4",
+        "4.7"
+      ]
+    },
+    {
+      "id": "CHK-10",
+      "kind": "check",
+      "title": "Every agent run emits the required telemetry and nothing unpublished",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Tenant"
+      ],
+      "risks": 4,
+      "requirements": [
+        "1.3",
+        "1.4",
+        "1.6",
+        "6.7",
+        "7.10",
+        "9.5",
+        "9.6",
+        "10.2",
+        "11.1",
+        "12.1",
+        "12.2",
+        "12.3",
+        "12.11"
+      ]
+    },
+    {
+      "id": "CHK-11",
+      "kind": "check",
+      "title": "A tool call outside the agent's allowlist is denied and recorded",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Policy rule"
+      ],
+      "risks": 4,
+      "requirements": [
+        "8.5",
+        "11.2",
+        "11.3",
+        "12.4",
+        "31.3"
+      ]
+    },
+    {
+      "id": "CHK-12",
+      "kind": "check",
+      "title": "An irreversible tool call is paused until a person reviews it",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Person"
+      ],
+      "risks": 3,
+      "requirements": [
+        "31.4",
+        "31.5"
+      ]
+    },
+    {
+      "id": "CHK-13",
+      "kind": "check",
+      "title": "Message content is dropped from telemetry when content capture is off",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "12.5",
+        "12.9"
+      ]
+    },
+    {
+      "id": "CHK-14",
+      "kind": "check",
+      "title": "Control records written by the control record writer match the control record schema",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "11.5"
+      ]
+    },
+    {
+      "id": "CHK-15",
+      "kind": "check",
+      "title": "Every agent bundle passes its evaluation set before merge and before promotion",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "A case for every shared skill whose tools carry a `write` or `irreversible` effect",
+        "recommended": "A case for every shared skill, which an installation may require",
+        "trigger": null
+      },
+      "protects": [
+        "Agent",
+        "End user",
+        "Model",
+        "Prompt",
+        "Skill"
+      ],
+      "risks": 16,
+      "requirements": [
+        "14.1",
+        "14.2",
+        "14.3",
+        "14.4",
+        "14.5",
+        "14.6",
+        "14.8",
+        "14.9",
+        "14.11",
+        "14.12",
+        "15.12"
+      ]
+    },
+    {
+      "id": "CHK-16",
+      "kind": "check",
+      "title": "A built agent bundle contains no secrets when it is published",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Prompt",
+        "Secret"
+      ],
+      "risks": 2,
+      "requirements": [
+        "16.1",
+        "16.8"
+      ]
+    },
+    {
+      "id": "CHK-17",
+      "kind": "check",
+      "title": "Every installation's secrets exist, are readable only by its principal and are unexpired",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Secret"
+      ],
+      "risks": 2,
+      "requirements": [
+        "16.3",
+        "16.4",
+        "16.6"
+      ]
+    },
+    {
+      "id": "CHK-18",
+      "kind": "check",
+      "title": "No service an agent uses is overdue for re-assessment",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Supplier"
+      ],
+      "risks": 1,
+      "requirements": [
+        "18.6"
+      ]
+    },
+    {
+      "id": "CHK-19",
+      "kind": "check",
+      "title": "Every agent file contains all six required sections",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Prompt"
+      ],
+      "risks": 3,
+      "requirements": [
+        "6.2",
+        "15.10"
+      ]
+    },
+    {
+      "id": "CHK-20",
+      "kind": "check",
+      "title": "An injection attempt is refused, stripped or quarantined as the installation declares",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Workload"
+      ],
+      "risks": 3,
+      "requirements": [
+        "15.5"
+      ]
+    },
+    {
+      "id": "CHK-21",
+      "kind": "check",
+      "title": "Every tool and source passes a test that one tenant can't reach another's data",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Tenant"
+      ],
+      "risks": 1,
+      "requirements": [
+        "19.11"
+      ]
+    },
+    {
+      "id": "CHK-22",
+      "kind": "check",
+      "title": "The integrations inventory matches the live grants, tokens and app installations on every host",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": {
+        "minimum": "Reporting at `operate`",
+        "recommended": "Blocking at `pr`",
+        "trigger": null
+      },
+      "protects": [
+        "Integration",
+        "Supplier"
+      ],
+      "risks": 4,
+      "requirements": [
+        "20.5",
+        "20.8",
+        "20.11"
+      ]
+    },
+    {
+      "id": "CHK-23",
+      "kind": "check",
+      "title": "Workload endpoints reject unauthenticated, malformed and oversized requests",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Workload"
+      ],
+      "risks": 1,
+      "requirements": [
+        "21.1",
+        "21.2",
+        "21.3",
+        "21.9",
+        "21.15"
+      ]
+    },
+    {
+      "id": "CHK-24",
+      "kind": "check",
+      "title": "Every dependency version is at least 7 days old before it is adopted",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Service"
+      ],
+      "risks": 1,
+      "requirements": [
+        "12.8",
+        "25.2"
+      ]
+    },
+    {
+      "id": "CHK-25",
+      "kind": "check",
+      "title": "MCP tool descriptions and skill text contain no hidden instructions",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Service",
+        "Skill"
+      ],
+      "risks": 2,
+      "requirements": [
+        "25.5"
+      ]
+    },
+    {
+      "id": "CHK-27",
+      "kind": "check",
+      "title": "Every repository's project configuration matches the project baseline",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": {
+        "minimum": "Attested — the files are generated from the baseline when the repository is created and their equality is attested at the quarterly access review (requirement 27.3)",
+        "recommended": "Blocking — the check compares them on every pull request",
+        "trigger": "A second governed repository"
+      },
+      "protects": [
+        "Agent",
+        "Resource"
+      ],
+      "risks": 2,
+      "requirements": [
+        "27.1",
+        "27.3"
+      ]
+    },
+    {
+      "id": "CHK-28",
+      "kind": "check",
+      "title": "Nothing passes a CI gate unless every blocking conformance check has passed",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Document"
+      ],
+      "risks": 2,
+      "requirements": [
+        "2.8",
+        "3.16"
+      ]
+    },
+    {
+      "id": "CHK-29",
+      "kind": "check",
+      "title": "Secrets are blocked at commit, at push and in the built agent bundle",
+      "gates": [
+        {
+          "gate": "author",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Prompt",
+        "Secret"
+      ],
+      "risks": 2,
+      "requirements": [
+        "6.8",
+        "16.1",
+        "16.8",
+        "20.10"
+      ]
+    },
+    {
+      "id": "CHK-30",
+      "kind": "check",
+      "title": "Every infrastructure plan passes the security rules before it is applied",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Environment",
+        "Principal",
+        "Resource",
+        "Tenant"
+      ],
+      "risks": 4,
+      "requirements": [
+        "17.3",
+        "19.10",
+        "21.12",
+        "21.13",
+        "23.6"
+      ]
+    },
+    {
+      "id": "CHK-31",
+      "kind": "check",
+      "title": "All code passes format, lint and type checks before it merges",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The type checker runs in standard mode on the governance library (requirement 27.5); until the first workload that handles `confidential` data, the security rules of the baseline linter are the static analysis (requirement 27.8)",
+        "recommended": "Strict mode on every package, trigger: a second package in the repository; a static analysis tool as a required status check, a finding rated High or above blocking, trigger: the first workload that handles `confidential` data",
+        "trigger": null
+      },
+      "protects": [
+        "Agent",
+        "Workload"
+      ],
+      "risks": 2,
+      "requirements": [
+        "27.4",
+        "27.5",
+        "27.6",
+        "27.8",
+        "27.9"
+      ]
+    },
+    {
+      "id": "CHK-32",
+      "kind": "check",
+      "title": "Every registry entry has a unique kind and id",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Vocab"
+      ],
+      "risks": 1,
+      "requirements": [
+        "5.2"
+      ]
+    },
+    {
+      "id": "CHK-33",
+      "kind": "check",
+      "title": "Every cloud resource carries the required identifying labels",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Resource",
+        "Tenant"
+      ],
+      "risks": 2,
+      "requirements": [
+        "17.1",
+        "17.5"
+      ]
+    },
+    {
+      "id": "CHK-34",
+      "kind": "check",
+      "title": "Every governed identifier is a UUID v7 created by the one approved generator",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Tenant"
+      ],
+      "risks": 2,
+      "requirements": [
+        "1.9",
+        "1.10"
+      ]
+    },
+    {
+      "id": "CHK-35",
+      "kind": "check",
+      "title": "Every CI workflow uses minimal permissions and actions pinned to an exact version",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The organisation's Actions policy is set by hand at bootstrap and recorded in the bootstrap record",
+        "recommended": "The policy is declared as code and drift-checked (requirement 17.6)",
+        "trigger": "A second repository or a second person"
+      },
+      "protects": [
+        "Resource"
+      ],
+      "risks": 1,
+      "requirements": [
+        "29.1",
+        "29.2",
+        "29.3",
+        "29.4"
+      ]
+    },
+    {
+      "id": "CHK-36",
+      "kind": "check",
+      "title": "Infrastructure that differs from its code is detected every night",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Environment",
+        "Resource"
+      ],
+      "risks": 2,
+      "requirements": [
+        "17.6",
+        "17.11"
+      ]
+    },
+    {
+      "id": "CHK-37",
+      "kind": "check",
+      "title": "Unlabelled cloud resources are reported every night, and deleted in dev",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation",
+        "Resource"
+      ],
+      "risks": 2,
+      "requirements": [
+        "17.7"
+      ]
+    },
+    {
+      "id": "CHK-38",
+      "kind": "check",
+      "title": "Released components and images are checked every night for known vulnerabilities",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": {
+        "minimum": "Until the first live release pointer, the Git host's dependency alerts are on for every repository and reviewed weekly (requirement 25.4)",
+        "recommended": "The nightly match of the Contract",
+        "trigger": "The first live release pointer"
+      },
+      "protects": [
+        "Service",
+        "Workload"
+      ],
+      "risks": 2,
+      "requirements": [
+        "25.4"
+      ]
+    },
+    {
+      "id": "CHK-39",
+      "kind": "check",
+      "title": "A registry entry is never deleted, and its status never moves backwards",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Tenant",
+        "Vocab"
+      ],
+      "risks": 2,
+      "requirements": [
+        "5.5",
+        "5.9"
+      ]
+    },
+    {
+      "id": "CHK-40",
+      "kind": "check",
+      "title": "Installations share a principal only when approved and at the same data classification",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "Below `confidential`, installations of different tenants may share a principal at the same classification",
+        "recommended": null,
+        "trigger": null
+      },
+      "protects": [
+        "Principal",
+        "Tenant"
+      ],
+      "risks": 2,
+      "requirements": [
+        "10.3"
+      ]
+    },
+    {
+      "id": "CHK-41",
+      "kind": "check",
+      "title": "Every allowlisted host's domain is still held by its approved owner",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Egress"
+      ],
+      "risks": 1,
+      "requirements": [
+        "8.19"
+      ]
+    },
+    {
+      "id": "CHK-42",
+      "kind": "check",
+      "title": "Everything an installation uses processes data only in its tenant's permitted regions",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Tenant"
+      ],
+      "risks": 1,
+      "requirements": [
+        "19.10"
+      ]
+    },
+    {
+      "id": "CHK-43",
+      "kind": "check",
+      "title": "No store holds a departed tenant's data once its exit period ends",
+      "gates": [
+        {
+          "gate": "exit",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Tenant"
+      ],
+      "risks": 1,
+      "requirements": [
+        "19.13"
+      ]
+    },
+    {
+      "id": "CHK-44",
+      "kind": "check",
+      "title": "Model provider usage matches what installations recorded, within 5%, checked every night",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Model"
+      ],
+      "risks": 1,
+      "requirements": [
+        "9.6"
+      ]
+    },
+    {
+      "id": "CHK-45",
+      "kind": "check",
+      "title": "A tool call is denied if any one policy rule denies it",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Policy rule"
+      ],
+      "risks": 1,
+      "requirements": [
+        "31.2"
+      ]
+    },
+    {
+      "id": "CHK-46",
+      "kind": "check",
+      "title": "One end user can't reach another's data, tested before every promotion",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "31.7",
+        "31.11"
+      ]
+    },
+    {
+      "id": "CHK-47",
+      "kind": "check",
+      "title": "Agents that decide about individuals pass fairness evaluations before merge and promotion",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.4"
+      ]
+    },
+    {
+      "id": "CHK-48",
+      "kind": "check",
+      "title": "Models behind decisions about individuals have a fairness result recorded before approval",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.5"
+      ]
+    },
+    {
+      "id": "CHK-49",
+      "kind": "check",
+      "title": "An agent starts each run within its tool cap and context budget",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "Counts tokens as characters ÷ 4",
+        "recommended": "The model's own token counter",
+        "trigger": null
+      },
+      "protects": [
+        "Agent",
+        "Model"
+      ],
+      "risks": 3,
+      "requirements": [
+        "8.23"
+      ]
+    },
+    {
+      "id": "CHK-50",
+      "kind": "check",
+      "title": "Tools that run agent code against other systems declare their highest effect",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Policy rule",
+        "Service"
+      ],
+      "risks": 4,
+      "requirements": [
+        "8.25"
+      ]
+    },
+    {
+      "id": "CHK-51",
+      "kind": "check",
+      "title": "Allowlisted tools with near-identical names or descriptions are flagged at review",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 1,
+      "requirements": [
+        "14.12"
+      ]
+    },
+    {
+      "id": "CHK-52",
+      "kind": "check",
+      "title": "Sandbox profiles allow no package index or code host",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Service"
+      ],
+      "risks": 2,
+      "requirements": [
+        "23.11"
+      ]
+    },
+    {
+      "id": "CFG-01",
+      "kind": "configuration",
+      "title": "Each installation's resources are created and removed by one infrastructure module only",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation",
+        "Tenant"
+      ],
+      "risks": 2,
+      "requirements": [
+        "17.4"
+      ]
+    },
+    {
+      "id": "CFG-02",
+      "kind": "configuration",
+      "title": "Every installation runs as its own single principal",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Principal",
+        "Tenant"
+      ],
+      "risks": 3,
+      "requirements": [
+        "10.1",
+        "10.6",
+        "19.11"
+      ]
+    },
+    {
+      "id": "CFG-03",
+      "kind": "configuration",
+      "title": "Every new repository is generated from the project baseline",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Resource"
+      ],
+      "risks": 1,
+      "requirements": [
+        "27.1",
+        "27.3"
+      ]
+    },
+    {
+      "id": "CFG-04",
+      "kind": "configuration",
+      "title": "Every secret is readable by one installation's principal only",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Secret"
+      ],
+      "risks": 1,
+      "requirements": [
+        "16.3",
+        "16.4"
+      ]
+    },
+    {
+      "id": "CFG-05",
+      "kind": "configuration",
+      "title": "Files likely to hold secrets are kept out of every repository and image",
+      "gates": [
+        {
+          "gate": "author",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Secret"
+      ],
+      "risks": 1,
+      "requirements": [
+        "16.11"
+      ]
+    },
+    {
+      "id": "CFG-06",
+      "kind": "configuration",
+      "title": "Every install uses only the exact dependency versions in the committed lockfile",
+      "gates": [
+        {
+          "gate": "author",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The join reports a direct dependency with no `approved` entry in the `packages` registry (requirement 25.10; the Standard)",
+        "recommended": "It blocks the merge, and the rule extends to transitive dependencies",
+        "trigger": "The first approved release; the first `confidential` tenant"
+      },
+      "protects": [
+        "Agent",
+        "Service"
+      ],
+      "risks": 2,
+      "requirements": [
+        "25.2",
+        "25.3",
+        "25.7",
+        "25.8",
+        "25.9",
+        "25.11",
+        "27.2"
+      ]
+    },
+    {
+      "id": "CFG-07",
+      "kind": "configuration",
+      "title": "Every person's workstation meets the security baseline",
+      "gates": [
+        {
+          "gate": "author",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": {
+        "minimum": "Attested — the person attests each item of the baseline for each workstation (requirement 20.13)",
+        "recommended": "Device management reports each item of the baseline for every workstation, in place of the person's attestation",
+        "trigger": null
+      },
+      "protects": [
+        "Device",
+        "Integration"
+      ],
+      "risks": 4,
+      "requirements": [
+        "20.9",
+        "20.11",
+        "20.14",
+        "20.15",
+        "23.7",
+        "30.8"
+      ]
+    },
+    {
+      "id": "CFG-08",
+      "kind": "configuration",
+      "title": "The release branch accepts changes only through a reviewed pull request",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Document",
+        "Egress",
+        "Policy rule",
+        "Prompt",
+        "Signing identity",
+        "Skill",
+        "Tenant"
+      ],
+      "risks": 9,
+      "requirements": [
+        "2.3",
+        "2.4",
+        "2.5",
+        "13.1",
+        "13.3"
+      ]
+    },
+    {
+      "id": "CFG-09",
+      "kind": "configuration",
+      "title": "Every change requires review by the owner of the code it touches",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Egress",
+        "Person",
+        "Policy rule",
+        "Prompt",
+        "Tenant"
+      ],
+      "risks": 6,
+      "requirements": [
+        "2.7",
+        "13.1",
+        "13.3",
+        "13.10",
+        "20.1",
+        "29.3"
+      ]
+    },
+    {
+      "id": "CFG-10",
+      "kind": "configuration",
+      "title": "An agent's hooks call the tool guard and nothing else",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Policy rule"
+      ],
+      "risks": 1,
+      "requirements": [
+        "31.1"
+      ]
+    },
+    {
+      "id": "CFG-11",
+      "kind": "configuration",
+      "title": "Identity bindings are created only by the installation module; any other is refused",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Principal"
+      ],
+      "risks": 2,
+      "requirements": [
+        "10.9",
+        "10.13"
+      ]
+    },
+    {
+      "id": "CFG-12",
+      "kind": "configuration",
+      "title": "Package install scripts are disabled unless the package is on the allowlist",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "reporting"
+        },
+        {
+          "gate": "merge",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": {
+        "minimum": "A source build or lifecycle script not on the allowlist is reported (requirement 25.3)",
+        "recommended": "It fails the build",
+        "trigger": "The first `prod` release"
+      },
+      "protects": [
+        "Service"
+      ],
+      "risks": 1,
+      "requirements": [
+        "25.3"
+      ]
+    },
+    {
+      "id": "CFG-13",
+      "kind": "configuration",
+      "title": "Every pull request requires a person's approval before merging",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document",
+        "Person",
+        "Prompt"
+      ],
+      "risks": 3,
+      "requirements": [
+        "2.12"
+      ]
+    },
+    {
+      "id": "CFG-14",
+      "kind": "configuration",
+      "title": "Every commit on the release branch is signed, and traces to commits signed by a known person",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Signing identity"
+      ],
+      "risks": 1,
+      "requirements": [
+        "2.6",
+        "20.12"
+      ]
+    },
+    {
+      "id": "CFG-15",
+      "kind": "configuration",
+      "title": "Every build resolves and records each registry reference, refusing any not approved",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Model",
+        "Policy rule",
+        "Prompt"
+      ],
+      "risks": 3,
+      "requirements": [
+        "5.11",
+        "5.12",
+        "5.13",
+        "6.4",
+        "6.5",
+        "6.6",
+        "7.5",
+        "7.8",
+        "11.11"
+      ]
+    },
+    {
+      "id": "CFG-16",
+      "kind": "configuration",
+      "title": "Built agent bundles are stored under their content hash for tampering detection",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Prompt"
+      ],
+      "risks": 2,
+      "requirements": [
+        "4.9"
+      ]
+    },
+    {
+      "id": "CFG-17",
+      "kind": "configuration",
+      "title": "Every agent bundle is signed by the trusted signer and verified before it loads",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Signing identity",
+        "Skill"
+      ],
+      "risks": 4,
+      "requirements": [
+        "4.5",
+        "16.10"
+      ]
+    },
+    {
+      "id": "CFG-18",
+      "kind": "configuration",
+      "title": "Every build records the attributes derived from the agent's name in its manifest",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 1,
+      "requirements": [
+        "3.14"
+      ]
+    },
+    {
+      "id": "CFG-19",
+      "kind": "configuration",
+      "title": "An agent's model is resolved from the models registry, never hard-coded",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Model"
+      ],
+      "risks": 2,
+      "requirements": [
+        "3.6",
+        "9.2"
+      ]
+    },
+    {
+      "id": "CFG-20",
+      "kind": "configuration",
+      "title": "Every applied infrastructure plan and drift report is archived as a control record",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "reporting"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Environment",
+        "Installation",
+        "Resource"
+      ],
+      "risks": 3,
+      "requirements": [
+        "17.9"
+      ]
+    },
+    {
+      "id": "CFG-21",
+      "kind": "configuration",
+      "title": "The registry table is a copy of Git that only CI can write",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Policy rule",
+        "Vocab"
+      ],
+      "risks": 3,
+      "requirements": [
+        "5.3"
+      ]
+    },
+    {
+      "id": "CFG-22",
+      "kind": "configuration",
+      "title": "A bill of materials is recorded for every agent bundle",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Service"
+      ],
+      "risks": 1,
+      "requirements": [
+        "25.1"
+      ]
+    },
+    {
+      "id": "CFG-23",
+      "kind": "configuration",
+      "title": "Scripts are removed from skills at build unless approved",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Skill"
+      ],
+      "risks": 1,
+      "requirements": [
+        "7.6",
+        "7.7"
+      ]
+    },
+    {
+      "id": "CFG-24",
+      "kind": "configuration",
+      "title": "A tool whose definition changes after build is denied",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The harness recomputes the hash from the server's advertisement at boot and on each `list_changed` notice (requirement 8.20; the Standard)",
+        "recommended": "Live re-fetch-and-compare",
+        "trigger": null
+      },
+      "protects": [
+        "Agent",
+        "Service"
+      ],
+      "risks": 2,
+      "requirements": [
+        "8.20"
+      ]
+    },
+    {
+      "id": "CFG-25",
+      "kind": "configuration",
+      "title": "Every promotion to staging or production is approved by someone other than its initiator",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "13.2",
+        "13.12",
+        "17.3"
+      ]
+    },
+    {
+      "id": "CFG-26",
+      "kind": "configuration",
+      "title": "Every release pointer change is kept in a history that can't be edited",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation"
+      ],
+      "risks": 2,
+      "requirements": [
+        "2.11",
+        "4.13",
+        "11.4"
+      ]
+    },
+    {
+      "id": "CFG-27",
+      "kind": "configuration",
+      "title": "Only signed, tested and staged agent bundles are released to an installation",
+      "gates": [
+        {
+          "gate": "merge",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Installation"
+      ],
+      "risks": 2,
+      "requirements": [
+        "4.14",
+        "4.15",
+        "4.16",
+        "14.9"
+      ]
+    },
+    {
+      "id": "CFG-28",
+      "kind": "configuration",
+      "title": "Only the release role can change a release pointer",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation"
+      ],
+      "risks": 1,
+      "requirements": [
+        "4.11",
+        "4.12",
+        "13.2",
+        "21.11"
+      ]
+    },
+    {
+      "id": "CFG-29",
+      "kind": "configuration",
+      "title": "A dependency outage is handled as the installation declares, or the run stops",
+      "gates": [
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Model",
+        "Service",
+        "Source",
+        "Workload"
+      ],
+      "risks": 4,
+      "requirements": [
+        "22.1",
+        "22.2",
+        "22.3"
+      ]
+    },
+    {
+      "id": "CFG-30",
+      "kind": "configuration",
+      "title": "Agent bundles load only through the loader that verifies them",
+      "gates": [
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Signing identity"
+      ],
+      "risks": 4,
+      "requirements": [
+        "4.1",
+        "4.17",
+        "4.18",
+        "4.19",
+        "4.20",
+        "10.11"
+      ]
+    },
+    {
+      "id": "CFG-31",
+      "kind": "configuration",
+      "title": "Telemetry is set up through one initialisation path in every runtime",
+      "gates": [
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Workload"
+      ],
+      "risks": 1,
+      "requirements": [
+        "12.1",
+        "12.2",
+        "27.6"
+      ]
+    },
+    {
+      "id": "CFG-32",
+      "kind": "configuration",
+      "title": "All external content is screened at a single point before the model sees it",
+      "gates": [
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Ingress"
+      ],
+      "risks": 6,
+      "requirements": [
+        "8.21",
+        "15.4",
+        "15.5",
+        "15.6",
+        "15.8",
+        "15.9",
+        "15.11",
+        "15.13"
+      ]
+    },
+    {
+      "id": "CFG-33",
+      "kind": "configuration",
+      "title": "External content outside an installation's declared channels and limits is rejected",
+      "gates": [
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Ingress"
+      ],
+      "risks": 4,
+      "requirements": [
+        "15.1",
+        "15.2",
+        "15.3"
+      ]
+    },
+    {
+      "id": "CFG-34",
+      "kind": "configuration",
+      "title": "Every endpoint and tool input and output is validated against a strict schema",
+      "gates": [
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Ingress",
+        "Workload"
+      ],
+      "risks": 4,
+      "requirements": [
+        "21.9"
+      ]
+    },
+    {
+      "id": "CFG-35",
+      "kind": "configuration",
+      "title": "Every workload request is authenticated, and the caller's token is never forwarded",
+      "gates": [
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Ingress",
+        "Workload"
+      ],
+      "risks": 3,
+      "requirements": [
+        "21.2",
+        "21.3",
+        "21.4",
+        "21.5",
+        "21.6"
+      ]
+    },
+    {
+      "id": "CFG-36",
+      "kind": "configuration",
+      "title": "An installation's network traffic can reach only the hosts on its allowlist",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "Egress",
+        "Environment",
+        "Workload"
+      ],
+      "risks": 5,
+      "requirements": [
+        "10.7"
+      ]
+    },
+    {
+      "id": "CFG-37",
+      "kind": "configuration",
+      "title": "Tools that fetch URLs can't reach private or internal network addresses",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "Each fetching service validates in-process, through `agentstd.service.fetch` (requirement 21.12; the Standard)",
+        "recommended": "A single egress proxy that denies private ranges",
+        "trigger": "The first `confidential` installation"
+      },
+      "protects": [
+        "Dataset",
+        "Workload"
+      ],
+      "risks": 2,
+      "requirements": [
+        "21.12",
+        "27.6"
+      ]
+    },
+    {
+      "id": "CFG-38",
+      "kind": "configuration",
+      "title": "Every installation's usage is capped by quotas, and a run that reaches one stops",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Installation",
+        "Model",
+        "Tenant"
+      ],
+      "risks": 5,
+      "requirements": [
+        "10.8"
+      ]
+    },
+    {
+      "id": "CFG-39",
+      "kind": "configuration",
+      "title": "Tools that run code are confined to a single-use sandbox",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Egress",
+        "End user",
+        "Environment",
+        "Ingress",
+        "Tenant",
+        "Workload"
+      ],
+      "risks": 7,
+      "requirements": [
+        "23.1",
+        "23.2",
+        "23.3",
+        "23.4",
+        "23.5",
+        "23.8",
+        "23.9",
+        "23.11"
+      ]
+    },
+    {
+      "id": "CFG-40",
+      "kind": "configuration",
+      "title": "Every tool call is allowed or denied by the tool guard alone",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "A skill's `allowed-tools` is stripped and the agent's allowlist is the only grant; the stripped value is recorded in `agent.load` (requirement 8.15)",
+        "recommended": "Per-skill intersection of `allowed-tools` with the allowlist",
+        "trigger": null
+      },
+      "protects": [
+        "Agent",
+        "Policy rule"
+      ],
+      "risks": 5,
+      "requirements": [
+        "7.9",
+        "8.5",
+        "8.7",
+        "8.15",
+        "8.24",
+        "31.1",
+        "31.2",
+        "31.8",
+        "31.12"
+      ]
+    },
+    {
+      "id": "CFG-41",
+      "kind": "configuration",
+      "title": "A tool call can reach only the hosts on its installation's allowlist",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset"
+      ],
+      "risks": 2,
+      "requirements": [
+        "8.17",
+        "8.18"
+      ]
+    },
+    {
+      "id": "CFG-42",
+      "kind": "configuration",
+      "title": "A write tool call follows the installation's confirmation setting",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "31.6",
+        "31.9"
+      ]
+    },
+    {
+      "id": "CFG-43",
+      "kind": "configuration",
+      "title": "All telemetry leaves through the governed collector and no other route",
+      "gates": [
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Tenant",
+        "Workload"
+      ],
+      "risks": 4,
+      "requirements": [
+        "12.5",
+        "12.6",
+        "12.7",
+        "12.13",
+        "19.5"
+      ]
+    },
+    {
+      "id": "CFG-44",
+      "kind": "configuration",
+      "title": "An error response reveals no internal detail to the caller",
+      "gates": [
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Workload"
+      ],
+      "risks": 1,
+      "requirements": [
+        "21.10"
+      ]
+    },
+    {
+      "id": "CFG-45",
+      "kind": "configuration",
+      "title": "An control record that doesn't match its schema is refused when written",
+      "gates": [
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "11.10",
+        "11.13"
+      ]
+    },
+    {
+      "id": "CFG-46",
+      "kind": "configuration",
+      "title": "Every incident event has an alert rule, held as code",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": {
+        "minimum": "Rules are held as code in the monitoring platform's native format (requirement 12.12)",
+        "recommended": "Vendor-neutral rule definitions",
+        "trigger": "A second cloud"
+      },
+      "protects": [
+        "Installation"
+      ],
+      "risks": 1,
+      "requirements": [
+        "12.12",
+        "22.4",
+        "22.5"
+      ]
+    },
+    {
+      "id": "CFG-47",
+      "kind": "configuration",
+      "title": "The asset register is built every night from live infrastructure state",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Resource"
+      ],
+      "risks": 2,
+      "requirements": [
+        "5.20"
+      ]
+    },
+    {
+      "id": "CFG-48",
+      "kind": "configuration",
+      "title": "Every dataset is backed up on the schedule its backup class sets",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "22.11",
+        "22.12"
+      ]
+    },
+    {
+      "id": "CFG-49",
+      "kind": "configuration",
+      "title": "A new grant, token or MFA enrolment raises an alert within 1 hour",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Integration",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "20.7"
+      ]
+    },
+    {
+      "id": "CFG-50",
+      "kind": "configuration",
+      "title": "Every read of a secret is logged as a control record",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Secret"
+      ],
+      "risks": 1,
+      "requirements": [
+        "16.7"
+      ]
+    },
+    {
+      "id": "CFG-51",
+      "kind": "configuration",
+      "title": "Every secret is rotated at least every 90 days, with 14 days' notice",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Secret"
+      ],
+      "risks": 2,
+      "requirements": [
+        "16.6"
+      ]
+    },
+    {
+      "id": "CFG-52",
+      "kind": "configuration",
+      "title": "Audit records can't be changed or deleted once written",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset"
+      ],
+      "risks": 2,
+      "requirements": [
+        "11.6",
+        "18.3"
+      ]
+    },
+    {
+      "id": "CFG-53",
+      "kind": "configuration",
+      "title": "Break-glass access expires after 4 hours, is logged and can't be self-granted",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Environment",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "13.8",
+        "13.9",
+        "16.5",
+        "17.2"
+      ]
+    },
+    {
+      "id": "CFG-54",
+      "kind": "configuration",
+      "title": "A stored agent bundle can't be overwritten or deleted",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Signing identity"
+      ],
+      "risks": 2,
+      "requirements": [
+        "4.8"
+      ]
+    },
+    {
+      "id": "CFG-55",
+      "kind": "configuration",
+      "title": "Runtime database roles can't change the schema, releases or registry",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [],
+      "risks": 0,
+      "requirements": [
+        "10.13",
+        "21.11"
+      ]
+    },
+    {
+      "id": "CFG-56",
+      "kind": "configuration",
+      "title": "Git access uses SSH and tokens that expire within 30 days",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Device",
+        "Resource"
+      ],
+      "risks": 2,
+      "requirements": [
+        "20.17"
+      ]
+    },
+    {
+      "id": "CFG-57",
+      "kind": "configuration",
+      "title": "Confidential control records are readable only by approved roles",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "11.8",
+        "11.9",
+        "19.6"
+      ]
+    },
+    {
+      "id": "CFG-58",
+      "kind": "configuration",
+      "title": "Control records are kept for their retention period and deleted when the period ends",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Ingress"
+      ],
+      "risks": 2,
+      "requirements": [
+        "4.10",
+        "11.7"
+      ]
+    },
+    {
+      "id": "CFG-59",
+      "kind": "configuration",
+      "title": "Every person's account access requires phishing-resistant MFA",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The Git host requires two-factor authentication with secure methods only (no SMS or voice), and each person enrols a passkey, attested at the access review (requirement 20.2)",
+        "recommended": "A FIDO2 security key or platform passkey enforced by the identity provider, authenticator applications refused",
+        "trigger": "Single sign-on at the second person"
+      },
+      "protects": [
+        "Device",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "20.2"
+      ]
+    },
+    {
+      "id": "CFG-60",
+      "kind": "configuration",
+      "title": "No person has write access to staging or production",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Environment",
+        "Integration",
+        "Resource"
+      ],
+      "risks": 4,
+      "requirements": [
+        "17.2"
+      ]
+    },
+    {
+      "id": "CFG-61",
+      "kind": "configuration",
+      "title": "Confidential telemetry is readable only by approved roles",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "12.10"
+      ]
+    },
+    {
+      "id": "CFG-62",
+      "kind": "configuration",
+      "title": "No person can edit the database copies of the source repository",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation",
+        "Policy rule",
+        "Prompt"
+      ],
+      "risks": 3,
+      "requirements": [
+        "2.1",
+        "2.2"
+      ]
+    },
+    {
+      "id": "CFG-63",
+      "kind": "configuration",
+      "title": "Every host requires single sign-on and has no local or shared accounts",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The Git host enforces passkeys natively in place of single sign-on, and its leaver switch is manual and recorded by PRC-27 (requirement 20.3; the Standard)",
+        "recommended": "The Git host federates to the identity provider",
+        "trigger": "The second person"
+      },
+      "protects": [
+        "Person"
+      ],
+      "risks": 1,
+      "requirements": [
+        "20.3"
+      ]
+    },
+    {
+      "id": "CFG-64",
+      "kind": "configuration",
+      "title": "Infrastructure state is encrypted, versioned and readable only by the deployment pipeline",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "The storage provider manages the key, with the encryption it applies to everything it stores (requirement 17.8; the Standard)",
+        "recommended": "The organisation manages the key, which it holds and can withdraw",
+        "trigger": "The first `confidential` tenant"
+      },
+      "protects": [
+        "Resource"
+      ],
+      "risks": 1,
+      "requirements": [
+        "17.8"
+      ]
+    },
+    {
+      "id": "CFG-65",
+      "kind": "configuration",
+      "title": "Model providers are reached by workload identity, not API keys, wherever possible",
+      "gates": [
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Model",
+        "Secret",
+        "Supplier"
+      ],
+      "risks": 3,
+      "requirements": [
+        "16.2",
+        "21.3"
+      ]
+    },
+    {
+      "id": "CFG-66",
+      "kind": "configuration",
+      "title": "Every agent response passes the guardrails before it reaches the caller",
+      "gates": [
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset",
+        "End user",
+        "Installation",
+        "Model"
+      ],
+      "risks": 7,
+      "requirements": [
+        "12.15",
+        "28.7"
+      ]
+    },
+    {
+      "id": "CFG-67",
+      "kind": "configuration",
+      "title": "Every tool call and retrieval is limited to its end user's access",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "31.7",
+        "31.10",
+        "31.11"
+      ]
+    },
+    {
+      "id": "CFG-68",
+      "kind": "configuration",
+      "title": "No end user reaches an agent before accepting terms disclosing AI use",
+      "gates": [
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.1"
+      ]
+    },
+    {
+      "id": "CFG-69",
+      "kind": "configuration",
+      "title": "Every response sent to an end user is traceable to its run",
+      "gates": [
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.2"
+      ]
+    },
+    {
+      "id": "CFG-70",
+      "kind": "configuration",
+      "title": "Responses using retrieved content record their sources and show them where permitted",
+      "gates": [
+        {
+          "gate": "response",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.3"
+      ]
+    },
+    {
+      "id": "CFG-71",
+      "kind": "configuration",
+      "title": "An agent's decisions about individuals are monitored for unequal outcomes between groups",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.6"
+      ]
+    },
+    {
+      "id": "CFG-72",
+      "kind": "configuration",
+      "title": "Deferred tools load only from the bundle's allowlist, after screening",
+      "gates": [
+        {
+          "gate": "load",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": {
+        "minimum": "Search reaches only the allowlist, loads only hash-checked and screened definitions, and loads at most `search_results_max` tools at a time",
+        "recommended": "At most `max_visible_tools` definitions at any turn, a tool loaded by search displacing the one used least recently",
+        "trigger": null
+      },
+      "protects": [
+        "Agent"
+      ],
+      "risks": 2,
+      "requirements": [
+        "8.23"
+      ]
+    },
+    {
+      "id": "CFG-73",
+      "kind": "configuration",
+      "title": "Every model call records how full its context window is",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "reporting"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Model"
+      ],
+      "risks": 2,
+      "requirements": [
+        "12.16"
+      ]
+    },
+    {
+      "id": "CFG-74",
+      "kind": "configuration",
+      "title": "Compacted context keeps external content marked as external",
+      "gates": [
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 2,
+      "requirements": [
+        "15.14"
+      ]
+    },
+    {
+      "id": "CFG-75",
+      "kind": "configuration",
+      "title": "A run's context never grows past its installation's context ceiling",
+      "gates": [
+        {
+          "gate": "ingress",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 1,
+      "requirements": [
+        "12.16",
+        "15.15"
+      ]
+    },
+    {
+      "id": "CFG-76",
+      "kind": "configuration",
+      "title": "Code an agent writes is gone when its run ends",
+      "gates": [
+        {
+          "gate": "action",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Dataset"
+      ],
+      "risks": 2,
+      "requirements": [
+        "23.10"
+      ]
+    },
+    {
+      "id": "CFG-77",
+      "kind": "configuration",
+      "title": "The audit database admits nothing that a rule does not grant",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "standing",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": []
+    },
+    {
+      "id": "PRC-01",
+      "kind": "procedure",
+      "title": "Each environment is set up once, by the bootstrap script, under one approval",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Environment"
+      ],
+      "risks": 2,
+      "requirements": [
+        "17.10"
+      ]
+    },
+    {
+      "id": "PRC-02",
+      "kind": "procedure",
+      "title": "Every supplier and service is assessed before approval and re-assessed on its tier's schedule",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": {
+        "minimum": "A supplier that offers only a static credential may have a `confidential` Ceiling where the decision records all five conditions of requirement 18.7",
+        "recommended": "A Ceiling no higher than `internal` unless an InfoSec-approved `classification-exception` is recorded on the entry",
+        "trigger": null
+      },
+      "protects": [
+        "Dataset",
+        "Model",
+        "Service",
+        "Supplier",
+        "Tenant"
+      ],
+      "risks": 9,
+      "requirements": [
+        "18.1",
+        "18.2",
+        "18.4",
+        "18.6",
+        "18.7",
+        "18.9",
+        "18.11",
+        "18.12",
+        "18.13",
+        "25.6"
+      ]
+    },
+    {
+      "id": "PRC-03",
+      "kind": "procedure",
+      "title": "A tenant is approved before its first installation is created",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Tenant"
+      ],
+      "risks": 3,
+      "requirements": [
+        "19.8",
+        "19.9",
+        "19.10"
+      ]
+    },
+    {
+      "id": "PRC-04",
+      "kind": "procedure",
+      "title": "Every security-relevant change is reviewed against the security checklist",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Egress",
+        "Policy rule",
+        "Workload"
+      ],
+      "risks": 3,
+      "requirements": [
+        "13.13"
+      ]
+    },
+    {
+      "id": "PRC-05",
+      "kind": "procedure",
+      "title": "Every change to a governing document or library is approved by InfoSec",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Document"
+      ],
+      "risks": 2,
+      "requirements": [
+        "2.9",
+        "13.10",
+        "20.6"
+      ]
+    },
+    {
+      "id": "PRC-06",
+      "kind": "procedure",
+      "title": "A new direct dependency is approved before it is used",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Service"
+      ],
+      "risks": 1,
+      "requirements": [
+        "25.10",
+        "25.12"
+      ]
+    },
+    {
+      "id": "PRC-07",
+      "kind": "procedure",
+      "title": "An agent rename is recorded with the agent's previous name",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation"
+      ],
+      "risks": 1,
+      "requirements": [
+        "1.7"
+      ]
+    },
+    {
+      "id": "PRC-08",
+      "kind": "procedure",
+      "title": "Every major Standard version has a migration note and re-checks every current bundle",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document"
+      ],
+      "risks": 1,
+      "requirements": [
+        "3.7"
+      ]
+    },
+    {
+      "id": "PRC-09",
+      "kind": "procedure",
+      "title": "Lowering an evaluation threshold or waiving a required case requires approval",
+      "gates": [
+        {
+          "gate": "pr",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent"
+      ],
+      "risks": 1,
+      "requirements": [
+        "14.7"
+      ]
+    },
+    {
+      "id": "PRC-10",
+      "kind": "procedure",
+      "title": "The governance framework is reviewed every year by an independent reviewer",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document"
+      ],
+      "risks": 1,
+      "requirements": [
+        "26.2"
+      ]
+    },
+    {
+      "id": "PRC-11",
+      "kind": "procedure",
+      "title": "Workloads used by confidential installations pass adversarial testing before production and every year",
+      "gates": [
+        {
+          "gate": "promote",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Workload"
+      ],
+      "risks": 2,
+      "requirements": [
+        "21.14"
+      ]
+    },
+    {
+      "id": "PRC-12",
+      "kind": "procedure",
+      "title": "Every person's security awareness is recorded every year",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Person",
+        "Secret"
+      ],
+      "risks": 3,
+      "requirements": [
+        "26.3"
+      ]
+    },
+    {
+      "id": "PRC-13",
+      "kind": "procedure",
+      "title": "Every governing document is reviewed at least once a year, and the review recorded",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document"
+      ],
+      "risks": 1,
+      "requirements": [
+        "26.1",
+        "26.5",
+        "26.7"
+      ]
+    },
+    {
+      "id": "PRC-14",
+      "kind": "procedure",
+      "title": "Every incident is declared within 1 hour and tracked in a single incident record",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset",
+        "Environment",
+        "Installation",
+        "Person",
+        "Tenant"
+      ],
+      "risks": 5,
+      "requirements": [
+        "17.6",
+        "17.7",
+        "22.5",
+        "22.6",
+        "22.7",
+        "22.9",
+        "22.10",
+        "22.15"
+      ]
+    },
+    {
+      "id": "PRC-15",
+      "kind": "procedure",
+      "title": "Every closed incident is reviewed within 5 business days for lessons and changes",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document"
+      ],
+      "risks": 1,
+      "requirements": [
+        "22.14"
+      ]
+    },
+    {
+      "id": "PRC-16",
+      "kind": "procedure",
+      "title": "Management reviews open risks, incidents and lapses at least every quarter",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document"
+      ],
+      "risks": 1,
+      "requirements": [
+        "26.6"
+      ]
+    },
+    {
+      "id": "PRC-17",
+      "kind": "procedure",
+      "title": "An installation's state at any past time can be reconstructed, tested every quarter",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Installation"
+      ],
+      "risks": 2,
+      "requirements": [
+        "11.12"
+      ]
+    },
+    {
+      "id": "PRC-18",
+      "kind": "procedure",
+      "title": "Compromise scenarios and declared failure behaviours are exercised every year",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Model",
+        "Service",
+        "Workload"
+      ],
+      "risks": 4,
+      "requirements": [
+        "22.4",
+        "22.16"
+      ]
+    },
+    {
+      "id": "PRC-19",
+      "kind": "procedure",
+      "title": "Backups are test-restored every quarter to prove recovery time and data-loss limits are met",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "22.13"
+      ]
+    },
+    {
+      "id": "PRC-20",
+      "kind": "procedure",
+      "title": "A revoked installation is switched to its quarantine bundle",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation"
+      ],
+      "risks": 1,
+      "requirements": [
+        "4.12",
+        "4.16"
+      ]
+    },
+    {
+      "id": "PRC-21",
+      "kind": "procedure",
+      "title": "Every installation's risk profile is reviewed every quarter and adjusted where needed",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Agent",
+        "Installation",
+        "Principal",
+        "Tenant"
+      ],
+      "risks": 5,
+      "requirements": [
+        "10.5",
+        "10.10"
+      ]
+    },
+    {
+      "id": "PRC-22",
+      "kind": "procedure",
+      "title": "Exposed secrets are revoked within 1 hour and replaced within 24 hours",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Secret",
+        "Signing identity",
+        "Supplier"
+      ],
+      "risks": 3,
+      "requirements": [
+        "16.9",
+        "22.8"
+      ]
+    },
+    {
+      "id": "PRC-23",
+      "kind": "procedure",
+      "title": "Roles, access and segregation of duties are reviewed every quarter",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": {
+        "minimum": "Each person's key fingerprints on the person record are compared with the Git host's key list (requirement 20.16); repository teams and roles are set by hand to match `groups/` and attested (requirement 17.16); recovery is by codes stored offline and a second enrolled passkey (requirement 20.18)",
+        "recommended": "Keys reconciled automatically with the integrations inventory by CHK-22, trigger: the second person; teams and roles generated from `groups/` by code and drift-checked, trigger: a second repository or a second person; two hardware-bound keys, one held as backup",
+        "trigger": null
+      },
+      "protects": [
+        "Integration",
+        "Person",
+        "Source"
+      ],
+      "risks": 5,
+      "requirements": [
+        "10.12",
+        "13.11",
+        "17.16",
+        "20.13",
+        "20.16",
+        "20.18"
+      ]
+    },
+    {
+      "id": "PRC-24",
+      "kind": "procedure",
+      "title": "External threat intelligence is reviewed every quarter and each item acted on or dismissed",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document",
+        "Service",
+        "Supplier"
+      ],
+      "risks": 4,
+      "requirements": [
+        "26.4"
+      ]
+    },
+    {
+      "id": "PRC-25",
+      "kind": "procedure",
+      "title": "Every vulnerability finding is triaged within 1 business day, then fixed or accepted",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Service",
+        "Workload"
+      ],
+      "risks": 2,
+      "requirements": [
+        "25.4"
+      ]
+    },
+    {
+      "id": "PRC-26",
+      "kind": "procedure",
+      "title": "A registry entry is retired only when no approved agent bundle references it",
+      "gates": [
+        {
+          "gate": "exit",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [],
+      "risks": 0,
+      "requirements": [
+        "5.7",
+        "18.8",
+        "18.9"
+      ]
+    },
+    {
+      "id": "PRC-27",
+      "kind": "procedure",
+      "title": "A departing person's access is removed within 1 business day",
+      "gates": [
+        {
+          "gate": "exit",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Integration",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "20.4"
+      ]
+    },
+    {
+      "id": "PRC-28",
+      "kind": "procedure",
+      "title": "A departing supplier's access is revoked and deletion of our data is confirmed",
+      "gates": [
+        {
+          "gate": "exit",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Supplier"
+      ],
+      "risks": 1,
+      "requirements": [
+        "18.10"
+      ]
+    },
+    {
+      "id": "PRC-29",
+      "kind": "procedure",
+      "title": "A departing tenant's data is deleted or returned within the agreed exit period",
+      "gates": [
+        {
+          "gate": "exit",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Tenant"
+      ],
+      "risks": 1,
+      "requirements": [
+        "19.13"
+      ]
+    },
+    {
+      "id": "PRC-30",
+      "kind": "procedure",
+      "title": "Every risk is re-rated every year and after each review trigger",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Document"
+      ],
+      "risks": 1,
+      "requirements": [
+        "26.8",
+        "26.9"
+      ]
+    },
+    {
+      "id": "PRC-31",
+      "kind": "procedure",
+      "title": "Every installation is classified under applicable AI regulation before production, then yearly",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "attested"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation"
+      ],
+      "risks": 1,
+      "requirements": []
+    },
+    {
+      "id": "PRC-32",
+      "kind": "procedure",
+      "title": "Every retrieval source's sharing settings are reviewed before it is approved",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Source"
+      ],
+      "risks": 1,
+      "requirements": [
+        "15.8"
+      ]
+    },
+    {
+      "id": "PRC-33",
+      "kind": "procedure",
+      "title": "Requests to see, export or erase personal data are met within 30 days",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Dataset"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.8"
+      ]
+    },
+    {
+      "id": "PRC-34",
+      "kind": "procedure",
+      "title": "Every end user's challenge to an agent's decision is answered by a person",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        },
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "End user"
+      ],
+      "risks": 1,
+      "requirements": [
+        "28.9"
+      ]
+    },
+    {
+      "id": "PRC-35",
+      "kind": "procedure",
+      "title": "Every person's Git key is made on its device, registered and recorded before that device's first commit",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": {
+        "minimum": "A key file protected by a passphrase held in the operating-system keychain (requirement 20.12, 20.15)",
+        "recommended": "A key whose private half cannot leave hardware and that needs the person's presence for each use (`ed25519-sk` with `verify-required`, or the platform's secure-hardware agent)",
+        "trigger": "The first `confidential` tenant"
+      },
+      "protects": [
+        "Signing identity"
+      ],
+      "risks": 1,
+      "requirements": [
+        "20.12",
+        "20.15",
+        "20.16",
+        "20.17"
+      ]
+    },
+    {
+      "id": "PRC-36",
+      "kind": "procedure",
+      "title": "Every person has an approved record before they act, and joins a group only by someone else's change",
+      "gates": [
+        {
+          "gate": "establish",
+          "enforcement": "blocking"
+        }
+      ],
+      "tier": null,
+      "protects": [],
+      "risks": 0,
+      "requirements": [
+        "1.11"
+      ]
+    },
+    {
+      "id": "PRC-37",
+      "kind": "procedure",
+      "title": "A retired installation's secrets, principal and resources are disabled or removed",
+      "gates": [
+        {
+          "gate": "exit",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Installation"
+      ],
+      "risks": 1,
+      "requirements": [
+        "10.12"
+      ]
+    },
+    {
+      "id": "PRC-38",
+      "kind": "procedure",
+      "title": "A person's access is updated to match their new role within 1 business day",
+      "gates": [
+        {
+          "gate": "operate",
+          "enforcement": "attested"
+        }
+      ],
+      "tier": null,
+      "protects": [
+        "Integration",
+        "Person"
+      ],
+      "risks": 2,
+      "requirements": [
+        "20.4"
+      ]
+    }
+  ]
+}

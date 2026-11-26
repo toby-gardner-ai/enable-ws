@@ -14,6 +14,7 @@ import {
   type Subject,
 } from '../../lib/subjects';
 import { plain } from '../../lib/inline';
+import { ENFORCEMENT_LABEL, controlHref, controlsFor, gateName } from '../../lib/controls';
 
 export function getStaticPaths() {
   return inDepthSubjects.map((subject) => ({ params: { slug: subject.slug }, props: { subject } }));
@@ -35,6 +36,7 @@ const quote = split > 0 ? why.slice(0, split + 1) : why;
 const whyRest = split > 0 ? withTerms(why.slice(split + 2), seen) : '';
 const words = [...seen].map(glossaryTerm);
 const relatedSubjects = related(subject);
+const enforcedBy = controlsFor(subject);
 const preview = (s: Subject) => {
   const text = plain(s.sections[0].items[0]?.text ?? '');
   return text.length > 110 ? text.slice(0, text.lastIndexOf(' ', 110)) + '…' : text;
@@ -118,6 +120,27 @@ const preview = (s: Subject) => {
         </div>
       </div>
     </section>
+
+    {enforcedBy.length > 0 && (
+      <section class="block tight">
+        <div class="container two-col">
+          <h2 class="small-h">Enforced by.</h2>
+          <ul class="controls">
+            {enforcedBy.map((c) => (
+              <li>
+                <a href={controlHref(c)}>
+                  <span class="ctl-id">{c.id}</span>
+                  <span class="c-title">{c.title}</span>
+                  <span class="c-gates">
+                    {c.gates.map((g) => <span class={`enf enf-${g.enforcement}`} title={ENFORCEMENT_LABEL[g.enforcement]}>{gateName(g.gate)}</span>)}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
 
     {words.length > 0 && (
       <section class="block tight">
@@ -276,6 +299,17 @@ const preview = (s: Subject) => {
     font-size: clamp(1.35rem, 2.6vw, 1.75rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.015em;
   }
 
+  .controls { list-style: none; padding: 0; margin: 0; }
+  .controls li + li { border-top: 1px solid var(--border); }
+  .controls a { display: grid; grid-template-columns: 5rem 1fr auto; gap: 0.3rem 1rem; align-items: baseline; padding: 0.65rem 0.3rem; text-decoration: none; color: var(--text) !important; border-radius: 8px; }
+  .controls a:hover { background: var(--bg-soft); }
+  .controls .ctl-id { justify-self: start; }
+  .c-gates { display: flex; gap: 0.6rem; }
+  .c-gates .enf { font-weight: 500; color: var(--muted); }
+  @media (max-width: 760px) {
+    .controls a { grid-template-columns: auto 1fr; }
+    .c-title { grid-column: 1 / -1; grid-row: 2; }
+  }
   .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .chip {
     padding: 0.4rem 0.95rem; border-radius: 999px; border: 1px solid var(--border);

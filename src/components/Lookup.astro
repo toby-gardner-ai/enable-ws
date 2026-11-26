@@ -5,10 +5,10 @@
 interface Props {
   placeholder: string;
   noun: [string, string]; // singular, plural
-  letters: string[]; // letters that have entries
+  letters?: string[]; // letters that have entries; none hides the A–Z bar
   filters?: { label: string; tag: string }[];
 }
-const { placeholder, noun, letters, filters = [] } = Astro.props;
+const { placeholder, noun, letters = [], filters = [] } = Astro.props;
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 ---
 <div class="lookup" data-singular={noun[0]} data-plural={noun[1]}>
@@ -30,11 +30,13 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
       )}
       <p class="count" aria-live="polite" id="lookup-count"></p>
     </div>
-    <nav class="az" aria-label="Jump to letter">
-      {alphabet.map((l) =>
-        letters.includes(l) ? <a href={`#letter-${l.toLowerCase()}`}>{l}</a> : <span aria-hidden="true">{l}</span>
-      )}
-    </nav>
+    {letters.length > 0 && (
+      <nav class="az" aria-label="Jump to letter">
+        {alphabet.map((l) =>
+          letters.includes(l) ? <a href={`#letter-${l.toLowerCase()}`}>{l}</a> : <span aria-hidden="true">{l}</span>
+        )}
+      </nav>
+    )}
   </div>
 </div>
 
@@ -95,6 +97,8 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     apply();
     input.focus();
   });
+  // A link like /controls/library#kind-check opens with that filter on.
+  chips.find((c) => c.dataset.filter && location.hash === `#${c.dataset.filter}`)?.click();
   apply();
 </script>
 

@@ -28,6 +28,14 @@ export const NAV: NavItem[] = [
       { href: '/subjects', label: 'Subjects', text: 'What AI governance covers, subject by subject' },
     ],
   },
+  {
+    href: '/controls',
+    label: 'AI Controls',
+    children: [
+      { href: '/controls', label: 'Control Lifecycle', text: 'Where each control acts, from first commit to retirement' },
+      { href: '/controls/library', label: 'Control Library', text: 'Every control, searchable, with what it protects' },
+    ],
+  },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
 ];

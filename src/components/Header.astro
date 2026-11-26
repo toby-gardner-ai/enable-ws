@@ -2,6 +2,11 @@
 import { NAV, SITE } from '../config';
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path.startsWith(href);
+// Within a dropdown, only the child with the longest matching href is current,
+// so /controls/library isn't also marked as /controls.
+const matches = (href: string) => path === href || path.startsWith(`${href}/`);
+const currentChild = (children: { href: string }[]) =>
+  children.filter((c) => matches(c.href)).sort((a, b) => b.href.length - a.href.length)[0];
 ---
 <header class="site-header">
   <div class="container bar">
@@ -13,7 +18,7 @@ const isCurrent = (href: string) => path.startsWith(href);
             <li class="dropdown">
               <button
                 type="button"
-                class:list={['dropdown-toggle', { current: item.children.some((c) => isCurrent(c.href)) }]}
+                class:list={['dropdown-toggle', { current: !!currentChild(item.children) }]}
                 aria-expanded="false"
                 aria-haspopup="true"
               >
@@ -22,7 +27,7 @@ const isCurrent = (href: string) => path.startsWith(href);
               <ul class="menu">
                 {item.children.map((child) => (
                   <li>
-                    <a href={child.href} aria-current={isCurrent(child.href) ? 'page' : undefined}>
+                    <a href={child.href} aria-current={currentChild(item.children!) === child ? 'page' : undefined}>
                       <strong>{child.label}</strong>
                       <span>{child.text}</span>
                     </a>

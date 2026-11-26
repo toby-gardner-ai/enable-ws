@@ -1,0 +1,329 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import {
+  ENFORCEMENT_LABEL,
+  KIND_ICON,
+  KIND_LABEL,
+  PHASES,
+  STANDING,
+  controlHref,
+  controls,
+  enforcement,
+  gateName,
+  gates,
+  glossaryFor,
+  isInDepth,
+  kinds,
+  relatedControls,
+  standing,
+  subjectHref,
+  subjectsFor,
+  withControlLinks,
+  type Control,
+} from '../../../lib/controls';
+import { inline, plain } from '../../../lib/inline';
+
+export function getStaticPaths() {
+  return controls.map((control) => ({ params: { id: control.id.toLowerCase() }, props: { control } }));
+}
+
+const { control } = Astro.props as { control: Control };
+const index = controls.indexOf(control);
+const prev = controls[index - 1];
+const next = controls[index + 1];
+const at = new Map(control.gates.map((g) => [g.gate, g.enforcement]));
+
+// "An automated check that blocks at Pull request and Promote, and reports at Operate."
+const KIND_NOUN: Record<string, string> = { check: 'An automated check', configuration: 'A configuration', procedure: 'A procedure' };
+const VERB: Record<string, string> = { blocking: 'blocks', reporting: 'reports', attested: 'is attested' };
+const list = (items: string[]) => (items.length > 1 ? `${items.slice(0, -1).join(', ')} and ${items.at(-1)}` : items[0]);
+const clauses = (['blocking', 'reporting', 'attested'] as const)
+  .map((level) => {
+    const names = control.gates.filter((g) => g.enforcement === level).map((g) => g.gate);
+    if (!names.length) return '';
+    const standingToo = names.includes('standing');
+    const named = names.filter((n) => n !== 'standing').map(gateName);
+    const where = [named.length ? `at ${list(named)}` : '', standingToo ? 'at all times' : ''].filter(Boolean).join(' and ');
+    return `${VERB[level]} ${where}`;
+  })
+  .filter(Boolean);
+const summary = `${KIND_NOUN[control.kind]} that ${list(clauses)}.`;
+
+const subjects = subjectsFor(control);
+const related = relatedControls(control);
+const preview = (text: string, n = 120) => (text.length > n ? text.slice(0, text.lastIndexOf(' ', n)) + '…' : text);
+const stopFor = (gate: string) => (gate === 'standing' ? STANDING : gates.find((g) => g.id === gate)!);
+---
+<Base title={`${control.id}: ${control.title}`} description={summary}>
+  <article>
+    <section class="hero">
+      <div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/controls">AI Controls</a><span aria-hidden="true">/</span>
+          <a href="/controls/library">Control Library</a><span aria-hidden="true">/</span>
+          <span aria-current="page">{control.id}</span>
+        </nav>
+        <p class="meta">
+          <span class="ctl-id">{control.id}</span>
+          <a href={`/controls/library#kind-${control.kind}`} class="kind"><span aria-hidden="true">{KIND_ICON[control.kind]}</span> {KIND_LABEL[control.kind]}</a>
+        </p>
+        <h1>{control.title}</h1>
+        <div class="summary">
+          <p>{summary}</p>
+          <p class="kind-def" set:html={inline(kinds[control.kind as keyof typeof kinds])} />
+        </div>
+        <nav class="pager" aria-label="Other controls">
+          {prev ? <a href={controlHref(prev)} class="prev"><span>← {prev.id}</span>{preview(prev.title, 60)}</a> : <span />}
+          {next && <a href={controlHref(next)} class="next"><span>{next.id} →</span>{preview(next.title, 60)}</a>}
+        </nav>
+      </div>
+    </section>
+
+    <section class="block soft">
+      <div class="container">
+        <h2>Where it acts.</h2>
+        <ol class="strip" aria-label="The life of an agent">
+          {PHASES.map((phase) => (
+            <li class="strip-phase">
+              <span class="strip-name">{phase.name}</span>
+              <span class="strip-gates">
+                {phase.gates.map((id) => (
+                  <span class:list={['dot', at.get(id) && `on enf-${at.get(id)}`]} title={at.get(id) ? `${gateName(id)}: ${at.get(id)}` : gateName(id)}>
+                    <span class="dot-mark" aria-hidden="true"></span>
+                    <span class="dot-label">{gateName(id)}</span>
+                  </span>
+                ))}
+              </span>
+            </li>
+          ))}
+          <li class="strip-phase">
+            <span class="strip-name">Always on</span>
+            <span class="strip-gates">
+              <span class:list={['dot', at.get('standing') && `on enf-${at.get('standing')}`]}>
+                <span class="dot-mark" aria-hidden="true"></span>
+                <span class="dot-label">Standing</span>
+              </span>
+            </span>
+          </li>
+        </ol>
+        <div class="gate-cards">
+          {control.gates.map((g) => {
+            const stop = stopFor(g.gate);
+            return (
+              <div class="card gate-card" style={`--enf-color: var(--enf-${g.enforcement})`}>
+                <p class="gc-top">
+                  <a href={`/controls#gate-${g.gate}`} class="gc-name">{gateName(g.gate)}</a>
+                  <span class={`enf enf-${g.enforcement}`}>{ENFORCEMENT_LABEL[g.enforcement]}</span>
+                </p>
+                <dl>
+                  <dt>When</dt>
+                  <dd set:html={inline(g.gate === 'standing' ? standing.charAt(0).toUpperCase() + standing.slice(1) : stop.moment)} />
+                  <dt>If it fails</dt>
+                  <dd set:html={inline(g.enforcement === 'blocking' && g.gate !== 'standing' ? `It stops ${stop.stops.charAt(0).toLowerCase()}${stop.stops.slice(1)}` : enforcement[g.enforcement as keyof typeof enforcement])} />
+                </dl>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    {control.tier && (
+      <section class="block">
+        <div class="container two-col">
+          <h2>Start here, grow into it.</h2>
+          <div class="tiers">
+            <div class="tier now">
+              <span class="tier-label">Minimum · today</span>
+              <p set:html={withControlLinks(control.tier.minimum)} />
+            </div>
+            {control.tier.recommended && (
+              <>
+                <span class="tier-arrow" aria-hidden="true">→</span>
+                <div class="tier next">
+                  <span class="tier-label">Recommended · next</span>
+                  <p set:html={withControlLinks(control.tier.recommended)} />
+                  {control.tier.trigger && <p class="trigger"><strong>Move up when:</strong> <span set:html={withControlLinks(control.tier.trigger.charAt(0).toLowerCase() + control.tier.trigger.slice(1))} /></p>}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {control.protects.length > 0 && (
+      <section class="block">
+        <div class="container two-col">
+          <h2>What it protects.</h2>
+          <div>
+            <p class="big">
+              It reduces {control.risks} {control.risks === 1 ? 'risk' : 'risks'} to {control.protects.length === 1 ? 'one kind of asset' : `${control.protects.length} kinds of asset`}:
+            </p>
+            <div class="chips">
+              {control.protects.map((name) => {
+                const term = glossaryFor(name);
+                return term ? (
+                  <a class="chip" href={`/glossary#${term.slug}`} title={plain(term.meaning)}>{name}</a>
+                ) : (
+                  <span class="chip">{name}</span>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {subjects.length > 0 && (
+      <section class="block tight">
+        <div class="container two-col">
+          <h2>Subjects it serves.</h2>
+          <div class="cards-list">
+            {subjects.map((s) => (
+              <a href={subjectHref(s)} class="rel">
+                <strong>{s.subject}{isInDepth(s) && <span class="tag depth">In depth</span>}</strong>
+                <span>{preview(plain(s.sections[0].items[0]?.text ?? ''))}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="block tight">
+        <div class="container two-col">
+          <h2>Works alongside.</h2>
+          <ul class="related">
+            {related.map((c) => (
+              <li>
+                <a href={controlHref(c)}>
+                  <span class="ctl-id">{c.id}</span>
+                  <span>{c.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <section class="block tight">
+      <div class="container">
+        <div class="card stuck">
+          <div>
+            <h2>See how it fits.</h2>
+            <p class="muted">Explore every control by the moment it acts, or search the full library.</p>
+          </div>
+          <div class="btn-row">
+            <a href="/controls" class="btn btn-primary">Control lifecycle →</a>
+            <a href="/controls/library" class="btn btn-ghost">Control library</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <CtaBand heading="Want these controls working in your business?" text="A 30 minute call to find which controls matter most for your AI use, and how to put the first ones in place." />
+</Base>
+
+<style>
+  .hero { padding-bottom: 2.5rem; }
+  .crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.88rem; color: var(--muted); margin-bottom: 1.8rem; }
+  .crumbs a { color: var(--muted) !important; text-decoration: none; }
+  .crumbs a:hover { color: var(--text) !important; }
+  .crumbs [aria-current] { color: var(--text); }
+  .meta { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
+  .meta .ctl-id { font-size: 0.9rem; }
+  .kind { font-size: 0.9rem; color: var(--muted) !important; text-decoration: none; }
+  .kind:hover { color: var(--text) !important; }
+  h1 { max-width: 30ch; font-size: clamp(2rem, 4.2vw, 3rem); }
+
+  .summary {
+    margin-top: 1.4rem; padding: 1.5rem 1.7rem; max-width: 52rem;
+    border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius);
+    background: var(--bg-soft);
+  }
+  .summary p:first-child { font-size: 1.3rem; line-height: 1.5; margin-bottom: 0.6rem; }
+  .kind-def { color: var(--muted); font-size: 0.92rem; margin: 0; }
+  .summary :global(code) { font-size: 0.88em; }
+
+  .pager { display: flex; justify-content: space-between; gap: 1rem; max-width: 52rem; margin-top: 1.2rem; }
+  .pager a { display: grid; max-width: 48%; font-weight: 600; text-decoration: none; color: var(--text) !important; font-size: 0.92rem; }
+  .pager a span { font: 600 0.8rem ui-monospace, Menlo, monospace; color: var(--muted); }
+  .pager a:hover { color: var(--accent-strong) !important; }
+  .pager .next { text-align: right; }
+
+  .block { padding: clamp(2.5rem, 6vw, 4rem) 0; }
+  .block.tight { padding-top: 0; }
+  .two-col { display: grid; grid-template-columns: 15rem 1fr; gap: 1rem 3rem; align-items: start; }
+  .two-col h2 { font-size: 1.6rem; }
+  .big { font-size: 1.15rem; }
+
+  /* Lifecycle strip */
+  .strip { list-style: none; padding: 0; margin: 1.2rem 0 1.8rem; display: grid; grid-template-columns: 1fr 4fr 4fr 2fr 1fr; gap: 0.8rem; }
+  .strip-phase { display: grid; gap: 0.5rem; align-content: start; }
+  .strip-name { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .strip-gates { display: flex; gap: 0.3rem; position: relative; }
+  .strip-gates::before { content: ''; position: absolute; left: 0.5rem; right: 0.5rem; top: 0.45rem; height: 2px; background: var(--border); }
+  .dot { flex: 1; display: grid; justify-items: center; gap: 0.35rem; text-align: center; position: relative; }
+  .dot-mark { width: 0.95rem; height: 0.95rem; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); }
+  .dot.on .dot-mark { background: var(--enf-color); border-color: var(--enf-color); box-shadow: 0 0 0 3px var(--bg-soft), 0 0 0 5px color-mix(in srgb, var(--enf-color) 35%, transparent); }
+  .dot-label { font-size: 0.72rem; color: var(--muted); line-height: 1.2; }
+  .dot.on .dot-label { color: var(--text); font-weight: 700; }
+
+  .gate-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .gate-card { border-top: 4px solid var(--enf-color); }
+  .gc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.8rem; }
+  .gc-name { font-weight: 700; font-size: 1.1rem; color: var(--text) !important; text-decoration: none; }
+  .gc-name:hover { color: var(--accent-strong) !important; }
+  .gate-card dl { margin: 0; }
+  .gate-card dt { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .gate-card dd { margin: 0.15rem 0 0.8rem; font-size: 0.95rem; }
+  .gate-card dd:last-child { margin-bottom: 0; }
+  .gate-card :global(code), .tiers :global(code) { font-size: 0.86em; background: var(--bg-soft); padding: 0.05rem 0.35rem; border-radius: 5px; }
+
+  /* Tiers */
+  .tiers { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: stretch; }
+  .tier { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; }
+  .tier p { margin: 0; }
+  .tier.next { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--bg)); }
+  .tier-label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.5rem; }
+  .tier.next .tier-label { color: var(--accent-strong); }
+  :root[data-theme='dark'] .tier.next .tier-label { color: var(--accent); }
+  .tier-arrow { align-self: center; font-size: 1.4rem; color: var(--accent); }
+  .trigger { margin-top: 0.8rem !important; padding-top: 0.8rem; border-top: 1px dashed var(--border); font-size: 0.92rem; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip { padding: 0.4rem 0.95rem; border-radius: 999px; border: 1px solid var(--border); font-size: 0.9rem; text-decoration: none; color: var(--text) !important; }
+  a.chip:hover { border-color: var(--accent); }
+
+  .cards-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.8rem; }
+  .rel { display: grid; gap: 0.3rem; align-content: start; padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+  .rel:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .rel strong { color: var(--text); font-size: 0.98rem; }
+  .rel span:not(.tag) { color: var(--muted); font-size: 0.86rem; line-height: 1.45; }
+  .depth { margin: 0 0 0 0.4rem; font-size: 0.68rem; vertical-align: 0.1em; border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+  :root[data-theme='dark'] .depth { color: var(--accent); }
+
+  .related { list-style: none; padding: 0; margin: 0; }
+  .related li + li { border-top: 1px solid var(--border); }
+  .related a { display: grid; grid-template-columns: 5rem 1fr; gap: 1rem; align-items: baseline; padding: 0.7rem 0.3rem; text-decoration: none; color: var(--text) !important; border-radius: 8px; }
+  .related a:hover { background: var(--bg-soft); }
+  .related .ctl-id { justify-self: start; }
+
+  .stuck { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 2rem; padding: 2rem; background: var(--bg-soft); }
+  .stuck h2 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .stuck p { margin: 0; }
+  .stuck .btn-row { margin-top: 0; }
+
+  @media (max-width: 900px) {
+    .strip { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .tiers { grid-template-columns: 1fr; }
+    .tier-arrow { transform: rotate(90deg); justify-self: center; }
+    .pager a { max-width: 100%; }
+  }
+</style>

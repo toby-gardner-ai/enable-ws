@@ -1,16 +1,12 @@
 // Builds src/data/readiness.json from the AI readiness questions in the ai-governance repo.
 // Run: npm run extract:readiness [-- path/to/ai_readiness_qs.json]
 import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { slug, sourcePath } from './markdown.mjs';
 
-const source = process.argv[2]
-  ? resolve(process.argv[2])
-  : fileURLToPath(new URL('../../../ai-governance/research/ai_readiness_qs.json', import.meta.url));
+const source = sourcePath(process.argv[2], 'research/ai_readiness_qs.json');
 const out = new URL('../src/data/readiness.json', import.meta.url);
 const questions = JSON.parse(readFileSync(source, 'utf8'));
-
-const slug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 // "agentic-ai-lens" → "Agentic AI"
 const lensName = (id) =>

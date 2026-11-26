@@ -12,6 +12,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "23.1",
+      "23.5",
+      "23.8"
     ]
   },
   {
@@ -27,6 +32,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.13"
     ]
   },
   {
@@ -42,6 +50,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "23.9",
+      "23.10"
     ]
   },
   {
@@ -57,6 +69,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "28.4",
+      "28.6"
     ]
   },
   {
@@ -72,6 +88,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.1",
+      "1.8"
     ]
   },
   {
@@ -83,10 +103,16 @@
         "items": [
           {
             "type": "p",
-            "text": "Who may approve what: only the release role, never the change's author, moves a version to staging or production; changes to governing documents, schemas, automated checks, vocabulary, governance library or CI workflows also need a security reviewer; seven named approvals, recorded with approver and date, unlock riskier behaviour (content capture, automated irreversible actions, skill scripts, classification exception, shared identity, eval waiver, degraded operation); each deployment names a group, excluding the agent's owner if `confidential`, to approve its irreversible actions"
+            "text": "Who may approve what: only the release role, never the change's author, moves a version to staging or production; changes to governing documents, schemas, automated checks, vocabulary, governance library or CI workflows also need a security reviewer; seven named approvals, recorded with approver and date, unlock riskier behaviour (content capture, automated irreversible actions, skill scripts, classification exception, shared identity, evaluation waiver, degraded operation); each deployment names a group, excluding the agent's owner if `confidential`, to approve its irreversible actions"
           }
         ]
       }
+    ],
+    "requirements": [
+      "13.2",
+      "13.3",
+      "13.5",
+      "13.7"
     ]
   },
   {
@@ -102,6 +128,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "13.4",
+      "13.6"
     ]
   },
   {
@@ -117,6 +147,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.8",
+      "2.13"
     ]
   },
   {
@@ -132,6 +166,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.14",
+      "2.15",
+      "2.16"
     ]
   },
   {
@@ -147,6 +186,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.3",
+      "2.10",
+      "2.12"
     ]
   },
   {
@@ -162,6 +206,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.11"
     ]
   },
   {
@@ -177,6 +224,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.4",
+      "2.9"
     ]
   },
   {
@@ -192,6 +243,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.1",
+      "2.2"
     ]
   },
   {
@@ -241,6 +296,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.16"
     ]
   },
   {
@@ -286,6 +344,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.1",
+      "3.3",
+      "3.4"
     ]
   },
   {
@@ -301,6 +364,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.14"
     ]
   },
   {
@@ -316,6 +382,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.8",
+      "3.9",
+      "3.11",
+      "3.12"
     ]
   },
   {
@@ -331,6 +403,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.10",
+      "3.13",
+      "3.15"
     ]
   },
   {
@@ -380,6 +457,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.5",
+      "3.6"
     ]
   },
   {
@@ -429,6 +510,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "3.2",
+      "3.7"
     ]
   },
   {
@@ -444,6 +529,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "29.4"
     ]
   },
   {
@@ -459,6 +547,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "29.3"
     ]
   },
   {
@@ -474,6 +565,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "29.1",
+      "29.2"
     ]
   },
   {
@@ -489,6 +584,15 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "4.1",
+      "4.2",
+      "4.3",
+      "4.4",
+      "4.5",
+      "4.6",
+      "4.7"
     ]
   },
   {
@@ -504,6 +608,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "4.15"
     ]
   },
   {
@@ -519,6 +626,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "4.11",
+      "4.12",
+      "4.13",
+      "4.14"
     ]
   },
   {
@@ -534,6 +647,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "4.16",
+      "4.19",
+      "4.20"
     ]
   },
   {
@@ -549,6 +667,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "4.8",
+      "4.9",
+      "4.10"
     ]
   },
   {
@@ -564,6 +687,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "4.17",
+      "4.18"
     ]
   },
   {
@@ -579,6 +706,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.2",
+      "19.3"
     ]
   },
   {
@@ -594,6 +725,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.1",
+      "19.4"
     ]
   },
   {
@@ -609,6 +744,14 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "27.4",
+      "27.5",
+      "27.6",
+      "21.12",
+      "27.7",
+      "27.8"
     ]
   },
   {
@@ -624,6 +767,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "27.9"
     ]
   },
   {
@@ -639,6 +785,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.11"
     ]
   },
   {
@@ -654,6 +803,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "23.7"
     ]
   },
   {
@@ -669,6 +821,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "30.8"
     ]
   },
   {
@@ -684,6 +839,304 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "12.16"
+    ]
+  },
+  {
+    "subject": "Control record access",
+    "slug": "control-record-access",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Access** is how control records that may hold confidential content are protected, stored and read, so that the audit trail doesn't itself become a data-leak risk. Such content includes captured prompts, completions, tool parameters, admitted external content, confidential bundles and incident snapshots."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Encryption at rest: confidential records are always encrypted in storage."
+          },
+          {
+            "type": "li",
+            "text": "Regional residency: records stay in the installation's region, which meets data-residency obligations."
+          },
+          {
+            "type": "li",
+            "text": "Role-restricted reading: only roles approved for confidential data can read these records."
+          },
+          {
+            "type": "li",
+            "text": "Break-glass for people: a person reads confidential records only through emergency (break-glass) access. That access is time-limited, logged as an audit event, and reviewed afterwards."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Capturing everything means control records can hold some of the most sensitive data an agent handles. Strict access controls let an organisation keep the detail it needs for accountability without widening exposure. Logging and reviewing break-glass use makes access to the audit trail auditable as well, so the people doing the oversight are overseen too."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.8",
+      "11.9"
+    ]
+  },
+  {
+    "subject": "Control record capture",
+    "slug": "control-record-capture",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Control Record Capture is recording governed events as they happen, so that every agent start, action and change leaves a record at the moment it occurs. It answers three questions: what exactly was this agent running, what did it do, and who changed it?"
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Load-time snapshot: each time an agent starts, a record of exactly what it loaded. That means the bundle hash, the model, the prompt and skill hashes, the tools and tool-server versions, the principal it runs as, and the host."
+          },
+          {
+            "type": "li",
+            "text": "Per-event records: a table row and a matching log event for each tool call, denial, human review, release change, registry update, piece of admitted external content, evaluation run, refused load and incident."
+          },
+          {
+            "type": "li",
+            "text": "Shared identifiers: every record names the agent, installation, bundle and run, so each event links back to the exact configuration that produced it."
+          },
+          {
+            "type": "li",
+            "text": "Change provenance: a who, when, from, to and why row for every release change or merge into a release branch."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Capture is the first link in the chain. Integrity, retention and reconstruction can only protect what was recorded. Because the full loaded configuration is captured, not just the actions, any behaviour can be traced to the exact model, prompt, skill and tool versions involved. Every change also has a named owner and a stated reason."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.1",
+      "11.2",
+      "11.3",
+      "11.4"
+    ]
+  },
+  {
+    "subject": "Control record integrity",
+    "slug": "control-record-integrity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Integrity** is the guarantee that control records, once written, stay complete, unaltered and trustworthy. The audit trail is immutable and append-only, and no one can quietly change or remove it."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Write once: audit rows and log events are written a single time, in the published schema."
+          },
+          {
+            "type": "li",
+            "text": "A single long-term store: all records go to the one designated long-term store, partitioned by date and never rewritten."
+          },
+          {
+            "type": "li",
+            "text": "No updates or deletions: no person and no running workload can update or delete a record. That includes administrators and the agents themselves."
+          },
+          {
+            "type": "li",
+            "text": "Corrections by addition: a mistake is fixed by writing a new row that points to the one it corrects, so the original and the correction both stay visible."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "An audit trail that can be edited can't be trusted as evidence. Immutability means records hold up in audits, incident investigations and regulatory reviews, and a compromised agent or a malicious insider can't cover their tracks. Append-only corrections keep a full history of what was recorded and when it was amended."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.5",
+      "11.6"
+    ]
+  },
+  {
+    "subject": "Control record reconstruction",
+    "slug": "control-record-reconstruction",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Reconstruction** is the ability to rebuild, from the audit trail alone, exactly what an agent installation was running and doing at any past point in time. It also includes regular testing to prove that this still works."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Bundle resolution: every bundle named in the audit trail resolves to its source commit and to the registry entries in force when it was built."
+          },
+          {
+            "type": "li",
+            "text": "Trusted, consistent time: every timestamp comes from the platform's synchronised clock in UTC, never from application code, so records join accurately across tables and suppliers."
+          },
+          {
+            "type": "li",
+            "text": "A published query: a documented, tested query answers \"what did this installation run at time T?\""
+          },
+          {
+            "type": "li",
+            "text": "Regular proof: the query is run at least quarterly to confirm that the chain from records to bundles to source code still holds."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Reconstruction is the payoff of the whole control record system. Capture, schema, integrity, retention and access all exist so that past behaviour can be explained with evidence. Answering what was running, what it was built from, and under which approved configuration is essential for incident investigations, audits, disputes and regulatory inquiries. Routine testing means the capability works when it's needed, instead of being found broken in the middle of a crisis."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.11",
+      "11.12",
+      "11.13"
+    ]
+  },
+  {
+    "subject": "Control record retention",
+    "slug": "control-record-retention",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Retention** is the policy for how long control records are kept and how that is enforced. Retention periods are set by data classification and applied by the storage infrastructure, not by application code."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "A period per classification: each data classification has a defined retention period."
+          },
+          {
+            "type": "li",
+            "text": "Enforcement in storage: storage lifecycle rules apply retention and expiry. That means a software bug or a misbehaving workload can't delete records early or get around the policy."
+          },
+          {
+            "type": "li",
+            "text": "Tenant minimum: a tenant agreement can lengthen retention but never shorten it below the standard."
+          },
+          {
+            "type": "li",
+            "text": "Bundles kept in step: built bundles are kept at least as long as the records that refer to them, so every bundle named in the audit trail can still be retrieved."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Retention meets regulatory and contractual obligations in a way that is consistent and auditable. Enforcing it in storage makes it reliable. Keeping bundles alongside the records means the audit trail never points to a configuration that no longer exists, which reconstruction depends on."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.7"
+    ]
+  },
+  {
+    "subject": "Control record schema",
+    "slug": "control-record-schema",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Schema** is the published, versioned definition of the structure of every audit table and control record dataset: its fields, data types, required values and identifiers. The schema is enforced when records are written, so stored records always match a known, documented format."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Published definitions: each audit table and dataset has a documented shape that reviewers, auditors and query tools can rely on."
+          },
+          {
+            "type": "li",
+            "text": "Versioning: a change to the structure creates a new schema version, so older and newer records can both still be read correctly."
+          },
+          {
+            "type": "li",
+            "text": "Fail-closed writing: any program that writes control records fails rather than write a shape it doesn't recognise. That rules out silent drift, improvised fields and malformed rows."
+          },
+          {
+            "type": "li",
+            "text": "Consistent common fields: identifiers such as agent, installation, bundle, run and UTC timestamp are defined the same way in every table, so records join cleanly."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "An audit trail is only useful if people and tools that didn't write it can read it reliably, possibly years later. Strict, versioned schemas stop the gradual decay that sets in when each writer invents its own format. The fail-closed rule surfaces problems immediately at the source, not during an audit or incident investigation."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.10"
     ]
   },
   {
@@ -699,6 +1152,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.11",
+      "22.12",
+      "22.13"
     ]
   },
   {
@@ -714,6 +1172,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.5",
+      "19.6"
     ]
   },
   {
@@ -729,6 +1191,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.1",
+      "22.2",
+      "22.3",
+      "22.4"
     ]
   },
   {
@@ -744,6 +1212,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "25.10",
+      "25.11",
+      "25.12"
     ]
   },
   {
@@ -759,6 +1232,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "25.5",
+      "25.6"
     ]
   },
   {
@@ -774,6 +1251,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "25.1"
     ]
   },
   {
@@ -789,6 +1269,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "25.2",
+      "25.7",
+      "25.8"
     ]
   },
   {
@@ -804,6 +1289,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "25.3",
+      "25.9"
     ]
   },
   {
@@ -819,6 +1308,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "25.4"
     ]
   },
   {
@@ -834,6 +1326,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "30.1",
+      "30.2",
+      "30.3"
     ]
   },
   {
@@ -849,6 +1346,13 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "30.4",
+      "30.5",
+      "30.6",
+      "20.17",
+      "30.7"
     ]
   },
   {
@@ -864,6 +1368,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.5"
     ]
   },
   {
@@ -879,6 +1386,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.7"
     ]
   },
   {
@@ -894,6 +1404,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "8.17",
+      "8.18",
+      "8.19"
     ]
   },
   {
@@ -909,6 +1424,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "31.7",
+      "31.10",
+      "31.11"
     ]
   },
   {
@@ -924,6 +1444,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "28.1"
     ]
   },
   {
@@ -939,6 +1462,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.12"
     ]
   },
   {
@@ -954,81 +1480,106 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "28.8",
+      "28.9"
     ]
   },
   {
-    "subject": "Eval case content",
-    "slug": "eval-case-content",
+    "subject": "Evaluation case content",
+    "slug": "evaluation-case-content",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "What each eval test case states (an input, the expected behaviour and the criterion for judging the output) and what data it may hold: every case and test fixture carries a classification, holds no confidential or personal data unless synthetic or the installation's own within its ceiling, and contains no secret-shaped string"
+            "text": "What each evaluation test case states (an input, the expected behaviour and the criterion for judging the output) and what data it may hold: every case and test fixture carries a classification, holds no confidential or personal data unless synthetic or the installation's own within its ceiling, and contains no secret-shaped string"
           }
         ]
       }
+    ],
+    "requirements": [
+      "14.2",
+      "14.11"
     ]
   },
   {
-    "subject": "Eval coverage",
-    "slug": "eval-coverage",
+    "subject": "Evaluation coverage",
+    "slug": "evaluation-coverage",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "The pre-release behaviour tests (evals) every agent carries in its bundle, without which it cannot be promoted beyond development: at least one case for each thing it is told never to do, each tool it may call and each shared skill whose tools can write or act irreversibly, plus runs with its full tool list and its context filled to its limit, as in production, covering every prohibition and the choice between tools that overlap"
+            "text": "The pre-release behaviour tests (evaluations, together the agent's golden dataset) every agent carries in its bundle, without which it cannot be promoted beyond development: at least one case for each thing it is told never to do, each tool it may call and each shared skill whose tools can write or act irreversibly, plus runs with its full tool list and its context filled to its limit, as in production, covering every prohibition and the choice between tools that overlap"
           }
         ]
       }
+    ],
+    "requirements": [
+      "14.1",
+      "14.3",
+      "14.12"
     ]
   },
   {
-    "subject": "Eval gates",
-    "slug": "eval-gates",
+    "subject": "Evaluation gates",
+    "slug": "evaluation-gates",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "Evals as regression tests guarding change and release: the agent's evals run before merging any change to its prompt or included fragments, skills, tool allowlist, tool-server versions or effects, or model (including a provider's new version under the same model name), a result below threshold blocking the merge; and no bundle reaches staging or production without a passing run against that exact bundle"
+            "text": "Evaluations as regression tests guarding change and release: the agent's evaluations run before merging any change to its prompt or included fragments, skills, tool allowlist, tool-server versions or effects, or model (including a provider's new version under the same model name), a result below threshold blocking the merge; and no bundle reaches staging or production without a passing run against that exact bundle"
           }
         ]
       }
+    ],
+    "requirements": [
+      "14.4",
+      "14.9"
     ]
   },
   {
-    "subject": "Eval record",
-    "slug": "eval-record",
+    "subject": "Evaluation record",
+    "slug": "evaluation-record",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "The record of every eval run: the exact bundle it ran against, so a result is never credited to a version that was not tested, and its cases, pass or fail per case, threshold and outcome, written to the long-term control record store and linked to the source commit"
+            "text": "The record of every evaluation run: the exact bundle it ran against, so a result is never credited to a version that was not tested, and its cases, pass or fail per case, threshold and outcome, written to the long-term control record store and linked to the source commit"
           }
         ]
       }
+    ],
+    "requirements": [
+      "14.6",
+      "14.8"
     ]
   },
   {
-    "subject": "Eval thresholds",
-    "slug": "eval-thresholds",
+    "subject": "Evaluation thresholds",
+    "slug": "evaluation-thresholds",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "The pass rate on its pre-release behaviour tests (evals) that each agent declares in its definition: for a confidential agent every case marked required must pass, for others a minimum set by the Standard; lowering the threshold or removing or waiving a required case needs a recorded approval"
+            "text": "The pass rate on its pre-release behaviour tests (evaluations) that each agent declares in its definition: for a confidential agent every case marked required must pass, for others a minimum set by the Standard; lowering the threshold or removing or waiving a required case needs a recorded approval"
           }
         ]
       }
+    ],
+    "requirements": [
+      "14.5",
+      "14.7"
     ]
   },
   {
@@ -1044,6 +1595,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.2",
+      "26.6"
     ]
   },
   {
@@ -1059,6 +1614,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.1"
     ]
   },
   {
@@ -1074,6 +1632,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.5",
+      "1.7",
+      "1.9",
+      "1.10"
     ]
   },
   {
@@ -1089,6 +1653,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.6"
     ]
   },
   {
@@ -1104,6 +1671,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.9",
+      "22.10"
     ]
   },
   {
@@ -1119,6 +1690,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.5",
+      "22.6",
+      "22.7"
     ]
   },
   {
@@ -1134,6 +1710,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.15"
     ]
   },
   {
@@ -1145,10 +1724,14 @@
         "items": [
           {
             "type": "p",
-            "text": "Learning from incidents: a post-incident review within five business days of closing that records the timeline, root cause, whether an eval covered the behaviour (and the one added if not) and any change to controls or requirements; and a yearly resilience exercise that rehearses a supply-chain compromise and a compromised developer account, triggers every declared failure behaviour in staging, and restores one top-class data store end to end"
+            "text": "Learning from incidents: a post-incident review within five business days of closing that records the timeline, root cause, whether an evaluation covered the behaviour (and the one added if not) and any change to controls or requirements; and a yearly resilience exercise that rehearses a supply-chain compromise and a compromised developer account, triggers every declared failure behaviour in staging, and restores one top-class data store end to end"
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.14",
+      "22.16"
     ]
   },
   {
@@ -1164,6 +1747,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.1",
+      "15.2",
+      "15.3",
+      "15.15"
     ]
   },
   {
@@ -1179,6 +1768,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.11"
     ]
   },
   {
@@ -1190,10 +1782,16 @@
         "items": [
           {
             "type": "p",
-            "text": "Prompt-injection defence at input: one screening point every piece of external context passes before the model reads it, with no bypass, using fixed patterns rather than a model; injection attempts stripped, quarantined or the run refused, as each installation declares (refuse by default for confidential); secret-shaped values redacted; and evals that test injection through every accepted route and a malformed attachment of each accepted type"
+            "text": "Prompt-injection defence at input: one screening point every piece of external context passes before the model reads it, with no bypass, using fixed patterns rather than a model; injection attempts stripped, quarantined or the run refused, as each installation declares (refuse by default for confidential); secret-shaped values redacted; and evaluations that test injection through every accepted route and a malformed attachment of each accepted type"
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.4",
+      "15.5",
+      "15.6",
+      "15.12"
     ]
   },
   {
@@ -1209,6 +1807,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.9",
+      "15.14"
     ]
   },
   {
@@ -1224,6 +1826,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.2"
     ]
   },
   {
@@ -1239,6 +1844,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "10.8",
+      "10.9"
     ]
   },
   {
@@ -1254,6 +1863,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "10.10"
     ]
   },
   {
@@ -1269,6 +1881,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.5",
+      "20.6",
+      "20.7",
+      "20.8"
     ]
   },
   {
@@ -1318,7 +1936,8 @@
           }
         ]
       }
-    ]
+    ],
+    "requirements": []
   },
   {
     "subject": "Model fairness",
@@ -1333,6 +1952,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "28.5"
     ]
   },
   {
@@ -1348,6 +1970,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "23.6"
     ]
   },
   {
@@ -1363,6 +1988,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "9.5"
     ]
   },
   {
@@ -1416,6 +2044,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "9.11"
     ]
   },
   {
@@ -1431,6 +2062,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "9.2"
     ]
   },
   {
@@ -1480,6 +2114,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "9.1"
     ]
   },
   {
@@ -1533,6 +2170,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "9.6",
+      "9.12"
     ]
   },
   {
@@ -1548,6 +2189,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "28.7"
     ]
   },
   {
@@ -1563,6 +2207,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "28.2",
+      "28.3"
     ]
   },
   {
@@ -1578,6 +2226,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.13"
     ]
   },
   {
@@ -1593,6 +2244,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.2",
+      "20.3"
     ]
   },
   {
@@ -1608,6 +2263,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.1",
+      "20.4"
     ]
   },
   {
@@ -1623,6 +2282,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.3"
     ]
   },
   {
@@ -1638,6 +2300,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.11"
     ]
   },
   {
@@ -1653,6 +2318,13 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.12",
+      "20.15",
+      "20.16",
+      "20.17",
+      "20.18"
     ]
   },
   {
@@ -1668,6 +2340,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.7"
     ]
   },
   {
@@ -1683,6 +2358,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "10.1",
+      "10.2",
+      "10.11",
+      "10.12"
     ]
   },
   {
@@ -1698,6 +2379,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "10.6",
+      "10.7",
+      "10.13"
     ]
   },
   {
@@ -1713,6 +2399,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "10.3",
+      "10.4",
+      "10.5"
     ]
   },
   {
@@ -1728,6 +2419,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "6.3",
+      "6.4"
     ]
   },
   {
@@ -1743,6 +2438,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "6.1",
+      "6.2",
+      "6.8"
     ]
   },
   {
@@ -1758,6 +2458,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.10"
     ]
   },
   {
@@ -1773,6 +2476,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "6.5",
+      "6.6",
+      "6.7"
     ]
   },
   {
@@ -1788,6 +2496,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "5.2",
+      "5.9"
     ]
   },
   {
@@ -1803,6 +2515,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "5.5",
+      "5.6",
+      "5.7",
+      "5.8"
     ]
   },
   {
@@ -1818,7 +2536,8 @@
           }
         ]
       }
-    ]
+    ],
+    "requirements": []
   },
   {
     "subject": "Registry kinds",
@@ -1833,6 +2552,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "5.16",
+      "5.17",
+      "5.19"
     ]
   },
   {
@@ -1848,6 +2572,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "5.1",
+      "5.3",
+      "5.4"
     ]
   },
   {
@@ -1863,6 +2592,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "5.10",
+      "5.11",
+      "5.12",
+      "5.13"
     ]
   },
   {
@@ -1878,6 +2613,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "17.11",
+      "17.16"
     ]
   },
   {
@@ -1893,6 +2632,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "2.5",
+      "2.6",
+      "2.7"
     ]
   },
   {
@@ -1908,6 +2652,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "17.10"
     ]
   },
   {
@@ -1923,6 +2670,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "17.2",
+      "17.3",
+      "17.5"
     ]
   },
   {
@@ -1938,6 +2690,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "17.1",
+      "17.4"
     ]
   },
   {
@@ -1953,6 +2709,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "17.6",
+      "17.7"
     ]
   },
   {
@@ -1968,6 +2728,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "5.20"
     ]
   },
   {
@@ -1983,6 +2746,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "17.8",
+      "17.9"
     ]
   },
   {
@@ -1998,6 +2765,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "12.15"
     ]
   },
   {
@@ -2013,6 +2783,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "15.7",
+      "15.8"
     ]
   },
   {
@@ -2028,6 +2802,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.8",
+      "26.9"
     ]
   },
   {
@@ -2043,6 +2821,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "13.8",
+      "13.9"
     ]
   },
   {
@@ -2058,6 +2840,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "13.10",
+      "13.11"
     ]
   },
   {
@@ -2073,6 +2859,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "13.1",
+      "13.12",
+      "13.1"
     ]
   },
   {
@@ -2088,6 +2879,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "1.3",
+      "1.4"
     ]
   },
   {
@@ -2103,6 +2898,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "23.2",
+      "23.3",
+      "23.4",
+      "23.11"
     ]
   },
   {
@@ -2118,6 +2919,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.5",
+      "16.7"
     ]
   },
   {
@@ -2129,10 +2934,14 @@
         "items": [
           {
             "type": "p",
-            "text": "Keeping credentials out of reach: no secret (API key, token, password, private key, connection string, service-account key file) in any repository or its history, bundle, manifest, registry entry, prompt, skill, log, trace, metric label, eval file or CI output; and agents holding none, authenticating by the installation's workload identity instead, with tool servers holding their own downstream credentials"
+            "text": "Keeping credentials out of reach: no secret (API key, token, password, private key, connection string, service-account key file) in any repository or its history, bundle, manifest, registry entry, prompt, skill, log, trace, metric label, evaluation file or CI output; and agents holding none, authenticating by the installation's workload identity instead, with tool servers holding their own downstream credentials"
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.1",
+      "16.2"
     ]
   },
   {
@@ -2148,6 +2957,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.8",
+      "16.11"
     ]
   },
   {
@@ -2163,6 +2976,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.9"
     ]
   },
   {
@@ -2178,6 +2994,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "22.8"
     ]
   },
   {
@@ -2193,6 +3012,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.6"
     ]
   },
   {
@@ -2208,6 +3030,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.3",
+      "16.4"
     ]
   },
   {
@@ -2223,6 +3049,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "13.13"
     ]
   },
   {
@@ -2238,6 +3067,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "16.10"
     ]
   },
   {
@@ -2253,6 +3085,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "7.1",
+      "7.2",
+      "7.3"
     ]
   },
   {
@@ -2268,6 +3105,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "7.10"
     ]
   },
   {
@@ -2283,6 +3123,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "7.6",
+      "7.7",
+      "7.8"
     ]
   },
   {
@@ -2298,6 +3143,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "7.4",
+      "7.5"
     ]
   },
   {
@@ -2313,6 +3162,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "7.12",
+      "7.13"
     ]
   },
   {
@@ -2328,6 +3181,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "7.9"
     ]
   },
   {
@@ -2343,6 +3199,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.2",
+      "18.3",
+      "18.13"
     ]
   },
   {
@@ -2358,6 +3219,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.4"
     ]
   },
   {
@@ -2373,6 +3237,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.7"
     ]
   },
   {
@@ -2388,6 +3255,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.9",
+      "18.10"
     ]
   },
   {
@@ -2403,6 +3274,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.1",
+      "18.12"
     ]
   },
   {
@@ -2418,6 +3293,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.6",
+      "18.8"
     ]
   },
   {
@@ -2433,6 +3312,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "18.11"
     ]
   },
   {
@@ -2448,6 +3330,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "12.9",
+      "12.10",
+      "12.13"
     ]
   },
   {
@@ -2463,6 +3350,13 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "12.1",
+      "12.2",
+      "12.3",
+      "12.4",
+      "12.11"
     ]
   },
   {
@@ -2478,6 +3372,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "12.12",
+      "12.14"
     ]
   },
   {
@@ -2493,6 +3391,12 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "12.5",
+      "12.6",
+      "12.7",
+      "12.8"
     ]
   },
   {
@@ -2508,6 +3412,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.8",
+      "19.9",
+      "19.10"
     ]
   },
   {
@@ -2523,6 +3432,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.13"
     ]
   },
   {
@@ -2538,6 +3450,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "19.11"
     ]
   },
   {
@@ -2553,6 +3468,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "26.4"
     ]
   },
   {
@@ -2568,6 +3486,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "8.5",
+      "8.15"
     ]
   },
   {
@@ -2583,6 +3505,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "31.6",
+      "31.9"
     ]
   },
   {
@@ -2598,6 +3524,13 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "31.1",
+      "31.2",
+      "31.3",
+      "31.8",
+      "31.12"
     ]
   },
   {
@@ -2613,6 +3546,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "31.4",
+      "31.5"
     ]
   },
   {
@@ -2628,6 +3565,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "8.24",
+      "8.25"
     ]
   },
   {
@@ -2643,6 +3584,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "8.20",
+      "8.21",
+      "8.23"
     ]
   },
   {
@@ -2658,6 +3604,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "8.6",
+      "8.7"
     ]
   },
   {
@@ -2673,6 +3623,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "8.1",
+      "8.2",
+      "8.3"
     ]
   },
   {
@@ -2688,6 +3643,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "27.1",
+      "27.2",
+      "27.3"
     ]
   },
   {
@@ -2703,6 +3663,14 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "21.2",
+      "21.3",
+      "21.4",
+      "21.5",
+      "21.6",
+      "21.7"
     ]
   },
   {
@@ -2718,6 +3686,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "21.13"
     ]
   },
   {
@@ -2733,6 +3704,9 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "21.1"
     ]
   },
   {
@@ -2748,6 +3722,10 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "21.8",
+      "21.11"
     ]
   },
   {
@@ -2763,6 +3741,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "21.9",
+      "21.10",
+      "21.12"
     ]
   },
   {
@@ -2778,6 +3761,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "21.14",
+      "21.15",
+      "21.3"
     ]
   },
   {
@@ -2793,6 +3781,11 @@
           }
         ]
       }
+    ],
+    "requirements": [
+      "20.9",
+      "20.10",
+      "20.14"
     ]
   }
 ]
