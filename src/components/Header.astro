@@ -1,17 +1,46 @@
 ---
 import { NAV, SITE } from '../config';
 const path = Astro.url.pathname;
+const isCurrent = (href: string) => path.startsWith(href);
+// Within a dropdown, only the child with the longest matching href is current,
+// so /controls/library isn't also marked as /controls.
+const matches = (href: string) => path === href || path.startsWith(`${href}/`);
+const currentChild = (children: { href: string }[]) =>
+  children.filter((c) => matches(c.href)).sort((a, b) => b.href.length - a.href.length)[0];
 ---
 <header class="site-header">
   <div class="container bar">
     <a href="/" class="brand">{SITE.name}</a>
     <nav aria-label="Main">
       <ul>
-        {NAV.map((item) => (
-          <li>
-            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
-          </li>
-        ))}
+        {NAV.map((item) =>
+          item.children ? (
+            <li class="dropdown">
+              <button
+                type="button"
+                class:list={['dropdown-toggle', { current: !!currentChild(item.children) }]}
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
+                {item.label}<span class="chevron" aria-hidden="true">▾</span>
+              </button>
+              <ul class="menu">
+                {item.children.map((child) => (
+                  <li>
+                    <a href={child.href} aria-current={currentChild(item.children!) === child ? 'page' : undefined}>
+                      <strong>{child.label}</strong>
+                      <span>{child.text}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          )
+        )}
       </ul>
     </nav>
     <div class="actions">
@@ -30,6 +59,26 @@ const path = Astro.url.pathname;
     document.documentElement.dataset.theme = next;
     localStorage.setItem('theme', next);
   });
+
+  // Dropdowns open on click (and on hover via CSS), close on Escape or an outside click.
+  const toggles = document.querySelectorAll<HTMLButtonElement>('.dropdown-toggle');
+  const closeAll = (except?: HTMLButtonElement) =>
+    toggles.forEach((t) => t !== except && t.setAttribute('aria-expanded', 'false'));
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      closeAll(toggle);
+      toggle.setAttribute('aria-expanded', String(!open));
+    });
+  });
+  document.addEventListener('click', () => closeAll());
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = [...toggles].find((t) => t.getAttribute('aria-expanded') === 'true');
+    closeAll();
+    open?.focus();
+  });
 </script>
 
 <style>
@@ -41,10 +90,39 @@ const path = Astro.url.pathname;
   }
   .bar { display: flex; align-items: center; gap: 1.5rem; min-height: 4rem; }
   .brand { font-weight: 700; color: var(--text) !important; text-decoration: none; white-space: nowrap; }
-  nav { margin-left: auto; overflow-x: auto; }
-  nav ul { display: flex; gap: 1.2rem; list-style: none; margin: 0; padding: 0; }
-  nav a { color: var(--muted) !important; text-decoration: none; font-size: 0.95rem; white-space: nowrap; }
+  nav { margin-left: auto; }
+  nav ul { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; list-style: none; margin: 0; padding: 0; }
+  nav a, .dropdown-toggle { color: var(--muted) !important; text-decoration: none; font-size: 0.95rem; white-space: nowrap; }
   nav a:hover, nav a[aria-current='page'] { color: var(--text) !important; }
+
+  .dropdown { position: relative; }
+  .dropdown-toggle {
+    background: none; border: 0; padding: 0; font: inherit; font-size: 0.95rem; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.25rem;
+  }
+  .dropdown-toggle:hover, .dropdown-toggle.current, .dropdown-toggle[aria-expanded='true'] { color: var(--text) !important; }
+  .chevron { font-size: 0.75em; transition: transform 0.15s; }
+  .dropdown-toggle[aria-expanded='true'] .chevron { transform: rotate(180deg); }
+  .menu {
+    display: none !important;
+    position: absolute; top: 100%; left: -0.9rem; z-index: 6;
+    flex-direction: column; gap: 0 !important;
+    min-width: 17rem; margin-top: 0.6rem !important; padding: 0.4rem !important;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: 0 12px 32px rgb(15 23 42 / 0.12);
+  }
+  /* Invisible bridge so the menu stays open while the pointer crosses the gap. */
+  .menu::before { content: ''; position: absolute; inset: -0.7rem 0 auto; height: 0.7rem; }
+  .dropdown-toggle[aria-expanded='true'] + .menu { display: flex !important; }
+  @media (hover: hover) {
+    .dropdown:hover .menu { display: flex !important; }
+  }
+  .menu a { display: grid; gap: 0.1rem; padding: 0.55rem 0.7rem; border-radius: 8px; white-space: normal; }
+  .menu a strong { color: var(--text); font-weight: 600; font-size: 0.95rem; }
+  .menu a span { color: var(--muted); font-size: 0.82rem; line-height: 1.35; }
+  .menu a:hover, .menu a[aria-current='page'] { background: var(--bg-soft); }
+  .menu a[aria-current='page'] strong { color: var(--accent-strong); }
+  :global(:root[data-theme='dark']) .menu a[aria-current='page'] strong { color: var(--accent); }
   .actions { display: flex; align-items: center; gap: 0.6rem; }
   .icon-btn {
     background: none; border: 1px solid var(--border); color: var(--text);
@@ -55,7 +133,9 @@ const path = Astro.url.pathname;
   .cta { padding: 0.55rem 1rem; font-size: 0.9rem; }
   @media (max-width: 760px) {
     .bar { flex-wrap: wrap; gap: 0.5rem 1rem; padding: 0.6rem 0; }
-    nav { order: 3; width: 100%; margin-left: 0; }
+    nav { order: 3; width: 100%; margin-left: 0; position: relative; }
+    .dropdown { position: static; }
+    .menu { left: 0; right: 0; min-width: 0; }
     .actions { margin-left: auto; }
   }
 </style>

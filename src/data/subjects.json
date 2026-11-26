@@ -1,0 +1,3791 @@
+[
+  {
+    "subject": "Agent code execution",
+    "slug": "agent-code-execution",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The single route by which code an agent writes or is given may run: a tool marked as a code executor with an effect of `write` or higher, and no other evaluation, compilation or shell-out; the executor service behind it, on a pinned, hardened image, with its own principal able only to create and destroy sandboxes; and a trace record of each run (sandbox profile, image, resources, exit status, attempted egress), an attempt outside the allowlist being alertable"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "23.1",
+      "23.5",
+      "23.8"
+    ]
+  },
+  {
+    "subject": "Agent code output",
+    "slug": "agent-code-output",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Screening of what code written by an agent produces from tool results before it enters the model's context window: where that output can reach the context unseen by the input screen, each tool result is screened before the code receives it, and every tool callable from code returns output checked against its declared output schema"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.13"
+    ]
+  },
+  {
+    "subject": "Agent code retention",
+    "slug": "agent-code-retention",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Stopping agent-written code and supplier-run sandboxes from persisting: code an agent writes is never saved anywhere a later run could load or execute it, and becomes a tool or skill only through reviewed change and acceptance testing; a sandbox a supplier operates serves one run only, never another run, installation, tenant or end user, and keeps nothing beyond the data terms recorded for that supplier service"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "23.9",
+      "23.10"
+    ]
+  },
+  {
+    "subject": "Agent fairness",
+    "slug": "agent-fairness",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Fairness testing and bias monitoring for an agent whose output ranks, scores or decides about individuals: before release it passes a fairness evaluation built for that use, and after release its outcomes are monitored in aggregate across the groups that evaluation defines, with a threshold that raises an alert"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "28.4",
+      "28.6"
+    ]
+  },
+  {
+    "subject": "Agent identifier",
+    "slug": "agent-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The permanent unique id (`agent_id`) each agent has, minted once by a person when its definition is first committed, never changed and never reused; a sub-agent packaged inside another agent's Bundle has no id of its own and is known by that bundle's identity plus its name, until a second bundle uses it and it must become an agent in its own right"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.1",
+      "1.8"
+    ]
+  },
+  {
+    "subject": "Approval authority",
+    "slug": "approval-authority",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Who may approve what: only the release role, never the change's author, moves a version to staging or production; changes to governing documents, schemas, automated checks, vocabulary, governance library or CI workflows also need a security reviewer; seven named approvals, recorded with approver and date, unlock riskier behaviour (content capture, automated irreversible actions, skill scripts, classification exception, shared identity, evaluation waiver, degraded operation); each deployment names a group, excluding the agent's owner if `confidential`, to approve its irreversible actions"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "13.2",
+      "13.3",
+      "13.5",
+      "13.7"
+    ]
+  },
+  {
+    "subject": "Approval record",
+    "slug": "approval-record",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The form of an approval: recorded where the approved thing lives (on the pull request, the registry entry or agent definition, the release history, or the record of the reviewed action) and naming the approver by their permanent person id, never by email, a shared account, a bot or a role alone; an approval given only in a message or a meeting does not count"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "13.4",
+      "13.6"
+    ]
+  },
+  {
+    "subject": "Artifact change checks",
+    "slug": "artifact-change-checks",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The automated checks that can block a merge (required status checks): the conformance checks, which test each artifact against its published structure and schema, run on every pull request touching a governed artifact and block it on failure; and no change merges while it refers to a registry entry whose status is not `approved`"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.8",
+      "2.13"
+    ]
+  },
+  {
+    "subject": "Artifact change phase",
+    "slug": "artifact-change-phase",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The two phases of a governed artifact, letting drafts change freely while anything in use meets every rule: build-out (draft) until a record outside the repository first refers to it (its first approved version, an `approved` registry status, its first Release Pointer, the first bundle built on it), then enforcement, computed from recorded data. In build-out, blocking checks only report and references change in the same commit; the crossing runs the full check once and records what then applies"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.14",
+      "2.15",
+      "2.16"
+    ]
+  },
+  {
+    "subject": "Artifact change proposal",
+    "slug": "artifact-change-proposal",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The pull request against the release branch as the only way a change is proposed, by a person or by automation: automated changes (dependency updates, generated files, registry syncs) take the same path and never merge themselves, and each pull request holds one logical change, never unrelated changes combined"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.3",
+      "2.10",
+      "2.12"
+    ]
+  },
+  {
+    "subject": "Artifact change record",
+    "slug": "artifact-change-record",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The audit trail of each merge: a record linking the commit, its author, its approver, the time and the result of the automated conformance checks, kept as a Control Record, so any version can be traced to who made it and who approved it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.11"
+    ]
+  },
+  {
+    "subject": "Artifact change review",
+    "slug": "artifact-change-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The approval a pull request needs before it merges: at least one approval, plus a security (InfoSec) review when the change is to a governing document, a schema, the automated conformance checks, the controlled vocabulary or the shared governance code library, because those change what every other policy enforces; who may approve, and whether it may be the author, is not set here"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.4",
+      "2.9"
+    ]
+  },
+  {
+    "subject": "Artifact change source",
+    "slug": "artifact-change-source",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The single version-controlled repository that is the only source of truth for every governed artifact, and the ban on changing one anywhere else: a change found in a copy (a database row, an object store, a runtime) with no matching commit is a policy violation, so every change has to pass through the repository"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.1",
+      "2.2"
+    ]
+  },
+  {
+    "subject": "Artifact conformance",
+    "slug": "artifact-conformance",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Artifact conformance is how far an artifact an agent produces actually meets the specifications it is supposed to follow: its declared `Artifact schema`, `Artifact format` rules, protocol requirements, and any organisational or regulatory standards. A conforming artifact passes these checks and can be trusted to behave as expected wherever it goes next."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Schema validation: required fields are present, data types are correct, and values fall within allowed ranges or enumerations."
+          },
+          {
+            "type": "li",
+            "text": "Format compliance: the file or payload is well-formed for its declared type (valid JSON, a correctly structured .docx, a MIME type that matches the content)."
+          },
+          {
+            "type": "li",
+            "text": "Protocol adherence: the artifact follows the rules of the exchange it's part of (for example, A2A's artifact and part structure, or a tool's expected output contract)."
+          },
+          {
+            "type": "li",
+            "text": "Policy and quality rules: content standards such as style guides, accessibility, security constraints (no secrets or personal data), or domain regulations."
+          },
+          {
+            "type": "li",
+            "text": "Conformance levels and reporting: a clear pass or fail result, or tiered levels (strict or lenient), with error messages that pinpoint what failed so the output can be fixed or regenerated."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Agents generate output that can vary from run to run, so conformance checks are the guardrail that keeps that output reliable. Automated validation at handoff points catches malformed or non-compliant artifacts early. That stops errors from cascading through multi-agent pipelines, enables self-correction loops in which the agent retries until it conforms, and gives an auditable record that outputs met the required standards."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.16"
+    ]
+  },
+  {
+    "subject": "Artifact format",
+    "slug": "artifact-format",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The formats every Artifact must be written in: the file type, media (MIME) type or serialization it uses, such as Markdown, JSON, HTML, CSV, PDF, a source-code file or a PNG image. The `Artifact schema` defines what an output contains. The format defines how that content is written down, stored and sent."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Media type: a MIME type or file extension (for example application/json, text/markdown, image/png) so the receiver knows how to open it."
+          },
+          {
+            "type": "li",
+            "text": "Encoding: plain text, structured data, or binary (often base64-encoded when embedded in a message)."
+          },
+          {
+            "type": "li",
+            "text": "Delivery mode: whether the artifact is sent inline, as a file attachment, or as a link to where it's stored."
+          },
+          {
+            "type": "li",
+            "text": "Rendering expectations: whether it's meant for machines (JSON, YAML), for people (Markdown, HTML, PDF), or for running (code, scripts)."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "The right format makes an output usable wherever it goes next. JSON suits handoffs between agents and tools, Markdown or HTML suits human review, and native files like .docx or .xlsx suit business workflows. Agents and protocols often negotiate formats. In A2A, for example, agents declare which input and output media types they support, so the sender and receiver agree on a format the receiver can handle."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.1",
+      "3.3",
+      "3.4"
+    ]
+  },
+  {
+    "subject": "Artifact naming attributes",
+    "slug": "artifact-naming-attributes",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The facts worked out from a name at build (its object, its verb, any qualifier, the verb's Effect and its level) and carried on the artifact's build record, so monitoring and policy rules can use them without parsing names again"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.14"
+    ]
+  },
+  {
+    "subject": "Artifact naming grammar",
+    "slug": "artifact-naming-grammar",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The naming convention for agents, skills, internal tools and tool (MCP) servers: every word comes from a controlled vocabulary, a banned synonym being rejected with the approved word named; an agent is named `<object>-<role>`, the role being a job title formed from an outcome-level verb, while skills and internal tools use operation-level verbs, so a name shows its level; a qualifier is added only to separate two colliding names, and then to every sibling"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.8",
+      "3.9",
+      "3.11",
+      "3.12"
+    ]
+  },
+  {
+    "subject": "Artifact naming integrity",
+    "slug": "artifact-naming-integrity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keeping names unambiguous and free of changing context: a name encodes only what its location or type does not already show, never environment, tenant, owner, version, date, host or a type prefix; one name denotes one thing across all agents, skills, tools and servers in the repository; and a third-party tool keeps its name exactly as given, never aliased, so the audit trail names what was actually called"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.10",
+      "3.13",
+      "3.15"
+    ]
+  },
+  {
+    "subject": "Artifact portability",
+    "slug": "artifact-portability",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Artifact portability is how easily an artifact an agent produces can move between different agents, tools, platforms or environments and still work, without losing meaning, structure or fidelity. A portable artifact can be opened, understood and reused outside the system that made it."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "p",
+            "text": "Open, standard formats: widely supported types (JSON, Markdown, CSV, PDF, HTML) rather than proprietary or tool-specific ones."
+          },
+          {
+            "type": "p",
+            "text": "Self-containment: everything the artifact needs is packaged with it (embedded assets, inline styles, bundled dependencies), not tied to external context or a particular runtime."
+          },
+          {
+            "type": "p",
+            "text": "Explicit schema and metadata: the structure, version and provenance are declared, so a new system can interpret the artifact without guessing."
+          },
+          {
+            "type": "p",
+            "text": "No environment lock-in: no hard-coded paths, session-specific references or credentials that only work where the artifact was created."
+          },
+          {
+            "type": "p",
+            "text": "Export and conversion paths: the artifact can be turned into other formats (for example, a doc exported to .docx or PDF) as it moves between systems."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Portability lets work flow across vendor boundaries in multi-agent and multi-platform setups. It avoids lock-in, supports long-term storage and auditing, and lets people pick up and edit what an agent produced. Interoperability protocols such as A2A and MCP rely on portable artifacts so that output from one agent or tool can be consumed by another built on a different"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.5",
+      "3.6"
+    ]
+  },
+  {
+    "subject": "Artifact schema",
+    "slug": "artifact-schema",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The formal definition of the structure, fields and data types each `Artifact format` has, such as reports, code files, data tables, plans or images. It acts as a contract that says what a valid artifact looks like. That lets other agents, tools or people read, check, store and reuse the output reliably, without having to interpret free-form text. Each artifact records the schema version it was written against, every schema change is versioned, and a new major version is adopted only with a migration note for the automated checks and the readers of Control Records."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Identity: a unique ID, name, type and version."
+          },
+          {
+            "type": "li",
+            "text": "Content: the payload and its format, such as text, a file, or structured JSON, often split into typed parts."
+          },
+          {
+            "type": "li",
+            "text": "Metadata: who or what created it, when, from which task or input, and its status (draft or final)."
+          },
+          {
+            "type": "li",
+            "text": "Validation rules: required fields, allowed values and constraints, often written as JSON Schema."
+          },
+          {
+            "type": "li",
+            "text": "Relationships: links to parent tasks, source artifacts or earlier versions."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "In multi-agent systems, artifact schemas let one agent pass its work to another without the meaning getting lost. They also let the system check outputs automatically and track where each one came from. For example, in Google's Agent2Agent (A2A) protocol, an Artifact is the defined output of a task and is made up of typed parts."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "3.2",
+      "3.7"
+    ]
+  },
+  {
+    "subject": "Build host settings",
+    "slug": "build-host-settings",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The CI host's organisation-wide workflow policy, which binds every workflow whatever its own file says: only an explicit allowlist of actions and reusable workflows, SHA pinning enforced, the default workflow token read-only, and no pull request created or approved by a workflow; set by hand and recorded at first setup until a second repository or person, then declared as code and drift-checked"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "29.4"
+    ]
+  },
+  {
+    "subject": "Build workflow actions",
+    "slug": "build-workflow-actions",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Pinning of CI/CD pipeline dependencies: every third-party action or reusable workflow a CI workflow uses is pinned to a full commit SHA, never to a tag or branch, so that a change made upstream cannot silently alter what runs in the pipeline"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "29.3"
+    ]
+  },
+  {
+    "subject": "Build workflow permissions",
+    "slug": "build-workflow-permissions",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Least privilege in the CI/CD pipeline: every job in a CI workflow declares an explicit, minimal set of token permissions, never write-all; and no workflow lets a trigger that holds repository write access (such as `pull_request_target`) check out or run code from an untrusted pull request, any unavoidable use being listed with a reason and never checking out the pull request's code"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "29.1",
+      "29.2"
+    ]
+  },
+  {
+    "subject": "Bundle build",
+    "slug": "bundle-build",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "How the automated build (CI) turns a merged commit into the one Bundle each agent runs for each installation, so an agent never reads the repository, a registry or any changeable source at runtime: references and shared artifacts resolved in, reproducible byte for byte, identified by its hash (`bundle_sha`) with each file's hash listed, signed by the CI identity, failing on any registry entry not `approved`, and recording the Standard version, commit, registry entries and pinned dependency versions used"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "4.1",
+      "4.2",
+      "4.3",
+      "4.4",
+      "4.5",
+      "4.6",
+      "4.7"
+    ]
+  },
+  {
+    "subject": "Bundle promotion",
+    "slug": "bundle-promotion",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The fixed order in which a Bundle is released through the Deployment Environments, `dev`, then `staging`, then `prod`, so production only ever receives a build already released to staging: a bundle reaches `prod` only if the identical hash was released to `staging` first"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "4.15"
+    ]
+  },
+  {
+    "subject": "Bundle release",
+    "slug": "bundle-release",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The single table, keyed by installation and Deployment Environment, that decides which Bundle is live (the Release Pointer), with nothing else (an image tag, an environment variable, a config file) able to decide it; promotion, rollback and revocation are each a pointer change, not a redeployment; every change is copied to an append-only history of who, when, from, to and why; and a pointer may name only a stored bundle with a valid signature"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "4.11",
+      "4.12",
+      "4.13",
+      "4.14"
+    ]
+  },
+  {
+    "subject": "Bundle revocation",
+    "slug": "bundle-revocation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The kill switch for an installation: each has a pre-built, signed quarantine bundle (a known-safe stand-in), so revoking is a Release Pointer change made the same way as a promotion; a running Harness re-reads the pointer within a bound set by the Standard, so revocation needs no restart; and an installation whose pointer cannot be read, or has not been verified in the current refresh window, is treated as revoked and not served"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "4.16",
+      "4.19",
+      "4.20"
+    ]
+  },
+  {
+    "subject": "Bundle storage",
+    "slug": "bundle-storage",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keeping every built Bundle immutable and retrievable: stored write-once, with overwrite and deletion denied by the storage's own access policy rather than by application code; keyed by `agent_id` and the bundle's hash, never by a changeable label; and kept at least as long as audit records, so any bundle the audit trail names can still be fetched"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "4.8",
+      "4.9",
+      "4.10"
+    ]
+  },
+  {
+    "subject": "Bundle verification",
+    "slug": "bundle-verification",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The integrity check the Harness makes on every run before executing any agent content: the bundle's hash matches the Release Pointer, its signature is valid, the agent and installation ids it records match the pointer, its Standard version is one the harness supports, and the installation's Ceiling is not below the agent's Classification; on any failure the harness refuses to run, emits a refusal event naming the reason, and never falls back to a cached or earlier bundle"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "4.17",
+      "4.18"
+    ]
+  },
+  {
+    "subject": "Classification ceiling",
+    "slug": "classification-ceiling",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Every governed component (agent, installation, model, supplier, service, skill, retrieval source, permitted outbound host, secret, control record dataset, tenant) carries a classification or ceiling or fails the build, never handles data above it, and is never used by anything classified higher: build or start-up fails if an agent outranks a model, service, supplier, tool, host, source or installation it uses, or an installation outranks its tenant; loosening needs an approved exception"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.2",
+      "19.3"
+    ]
+  },
+  {
+    "subject": "Classification scheme",
+    "slug": "classification-scheme",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The data classification scheme: exactly three levels (`public`, `internal`, `confidential`), each with a one-sentence test and no other value allowed, and one table of handling rules per level (where it may be stored, whether a customer-managed key encrypts it, who may read it, which regions it may occupy, how long it is kept, how it is backed up) from which every other per-level default is derived"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.1",
+      "19.4"
+    ]
+  },
+  {
+    "subject": "Code baseline",
+    "slug": "code-baseline",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The checks all code passes before merge, as required status checks: formatting and linting, type checking, and from the first workload handling confidential data static analysis (SAST) whose High findings block; lint rules banning unsafe deserialisation, dynamic evaluation, shell execution, environment access outside one settings module and bypasses of the single permitted path for identifiers, telemetry, outbound HTTP and database queries (no concatenated SQL); rule suppressions inline only, with a reason, wider ones security-reviewed"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "27.4",
+      "27.5",
+      "27.6",
+      "21.12",
+      "27.7",
+      "27.8"
+    ]
+  },
+  {
+    "subject": "Code configuration",
+    "slug": "code-configuration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "How running code gets its settings: from the process environment through one settings module, never from an environment (.env) file, with secrets taken from the secret store, so that configuration is read in one place and there is no reason to keep a file of settings or secrets beside the code"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "27.9"
+    ]
+  },
+  {
+    "subject": "Coding agent inventory",
+    "slug": "coding-agent-inventory",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "AI coding agents and MCP servers run locally: each recorded in the registry of connected tools with a version pinned and read from its configuration by script, run in a container or operating-system sandbox, talking only over stdio or loopback with Origin checks, as a non-administrator without access to SSH keys, cloud credentials or the signing key, installed only after its install command is read in full; none needing elevated privileges or wider listening"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.11"
+    ]
+  },
+  {
+    "subject": "Coding agent sandbox",
+    "slug": "coding-agent-sandbox",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The sandbox a coding agent or local tool (MCP) server on a developer's workstation runs its code in: a container or operating-system sandbox, fresh per call, with resource limits, no network by default, and no identity, secret or outside mount, included in the workstation's attestation (its verified security posture)"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "23.7"
+    ]
+  },
+  {
+    "subject": "Coding agent tools",
+    "slug": "coding-agent-tools",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The tool allowlist of a coding agent (an AI assistant that writes code in the dev container): its MCP servers (tool servers) and tools are set by configuration the organisation manages and the agent cannot change, and any server or tool the agent adds or starts for itself is unreachable, so it cannot give itself a tool nobody set"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "30.8"
+    ]
+  },
+  {
+    "subject": "Context window usage",
+    "slug": "context-window-usage",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "How full each model call's context window is: the share its input fills and the share taken by tool definitions, recorded on every call, with an event whenever a run's context is compacted (summarised) or the run is ended at the installation's context limit, so that context pressure can be watched"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "12.16"
+    ]
+  },
+  {
+    "subject": "Control record access",
+    "slug": "control-record-access",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Access** is how control records that may hold confidential content are protected, stored and read, so that the audit trail doesn't itself become a data-leak risk. Such content includes captured prompts, completions, tool parameters, admitted external content, confidential bundles and incident snapshots."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Encryption at rest: confidential records are always encrypted in storage."
+          },
+          {
+            "type": "li",
+            "text": "Regional residency: records stay in the installation's region, which meets data-residency obligations."
+          },
+          {
+            "type": "li",
+            "text": "Role-restricted reading: only roles approved for confidential data can read these records."
+          },
+          {
+            "type": "li",
+            "text": "Break-glass for people: a person reads confidential records only through emergency (break-glass) access. That access is time-limited, logged as an audit event, and reviewed afterwards."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Capturing everything means control records can hold some of the most sensitive data an agent handles. Strict access controls let an organisation keep the detail it needs for accountability without widening exposure. Logging and reviewing break-glass use makes access to the audit trail auditable as well, so the people doing the oversight are overseen too."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.8",
+      "11.9"
+    ]
+  },
+  {
+    "subject": "Control record capture",
+    "slug": "control-record-capture",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Control Record Capture is recording governed events as they happen, so that every agent start, action and change leaves a record at the moment it occurs. It answers three questions: what exactly was this agent running, what did it do, and who changed it?"
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Load-time snapshot: each time an agent starts, a record of exactly what it loaded. That means the bundle hash, the model, the prompt and skill hashes, the tools and tool-server versions, the principal it runs as, and the host."
+          },
+          {
+            "type": "li",
+            "text": "Per-event records: a table row and a matching log event for each tool call, denial, human review, release change, registry update, piece of admitted external content, evaluation run, refused load and incident."
+          },
+          {
+            "type": "li",
+            "text": "Shared identifiers: every record names the agent, installation, bundle and run, so each event links back to the exact configuration that produced it."
+          },
+          {
+            "type": "li",
+            "text": "Change provenance: a who, when, from, to and why row for every release change or merge into a release branch."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Capture is the first link in the chain. Integrity, retention and reconstruction can only protect what was recorded. Because the full loaded configuration is captured, not just the actions, any behaviour can be traced to the exact model, prompt, skill and tool versions involved. Every change also has a named owner and a stated reason."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.1",
+      "11.2",
+      "11.3",
+      "11.4"
+    ]
+  },
+  {
+    "subject": "Control record integrity",
+    "slug": "control-record-integrity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Integrity** is the guarantee that control records, once written, stay complete, unaltered and trustworthy. The audit trail is immutable and append-only, and no one can quietly change or remove it."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Write once: audit rows and log events are written a single time, in the published schema."
+          },
+          {
+            "type": "li",
+            "text": "A single long-term store: all records go to the one designated long-term store, partitioned by date and never rewritten."
+          },
+          {
+            "type": "li",
+            "text": "No updates or deletions: no person and no running workload can update or delete a record. That includes administrators and the agents themselves."
+          },
+          {
+            "type": "li",
+            "text": "Corrections by addition: a mistake is fixed by writing a new row that points to the one it corrects, so the original and the correction both stay visible."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "An audit trail that can be edited can't be trusted as evidence. Immutability means records hold up in audits, incident investigations and regulatory reviews, and a compromised agent or a malicious insider can't cover their tracks. Append-only corrections keep a full history of what was recorded and when it was amended."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.5",
+      "11.6"
+    ]
+  },
+  {
+    "subject": "Control record reconstruction",
+    "slug": "control-record-reconstruction",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Reconstruction** is the ability to rebuild, from the audit trail alone, exactly what an agent installation was running and doing at any past point in time. It also includes regular testing to prove that this still works."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Bundle resolution: every bundle named in the audit trail resolves to its source commit and to the registry entries in force when it was built."
+          },
+          {
+            "type": "li",
+            "text": "Trusted, consistent time: every timestamp comes from the platform's synchronised clock in UTC, never from application code, so records join accurately across tables and suppliers."
+          },
+          {
+            "type": "li",
+            "text": "A published query: a documented, tested query answers \"what did this installation run at time T?\""
+          },
+          {
+            "type": "li",
+            "text": "Regular proof: the query is run at least quarterly to confirm that the chain from records to bundles to source code still holds."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Reconstruction is the payoff of the whole control record system. Capture, schema, integrity, retention and access all exist so that past behaviour can be explained with evidence. Answering what was running, what it was built from, and under which approved configuration is essential for incident investigations, audits, disputes and regulatory inquiries. Routine testing means the capability works when it's needed, instead of being found broken in the middle of a crisis."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.11",
+      "11.12",
+      "11.13"
+    ]
+  },
+  {
+    "subject": "Control record retention",
+    "slug": "control-record-retention",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Retention** is the policy for how long control records are kept and how that is enforced. Retention periods are set by data classification and applied by the storage infrastructure, not by application code."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "A period per classification: each data classification has a defined retention period."
+          },
+          {
+            "type": "li",
+            "text": "Enforcement in storage: storage lifecycle rules apply retention and expiry. That means a software bug or a misbehaving workload can't delete records early or get around the policy."
+          },
+          {
+            "type": "li",
+            "text": "Tenant minimum: a tenant agreement can lengthen retention but never shorten it below the standard."
+          },
+          {
+            "type": "li",
+            "text": "Bundles kept in step: built bundles are kept at least as long as the records that refer to them, so every bundle named in the audit trail can still be retrieved."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Retention meets regulatory and contractual obligations in a way that is consistent and auditable. Enforcing it in storage makes it reliable. Keeping bundles alongside the records means the audit trail never points to a configuration that no longer exists, which reconstruction depends on."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.7"
+    ]
+  },
+  {
+    "subject": "Control record schema",
+    "slug": "control-record-schema",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "**Control Record Schema** is the published, versioned definition of the structure of every audit table and control record dataset: its fields, data types, required values and identifiers. The schema is enforced when records are written, so stored records always match a known, documented format."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Published definitions: each audit table and dataset has a documented shape that reviewers, auditors and query tools can rely on."
+          },
+          {
+            "type": "li",
+            "text": "Versioning: a change to the structure creates a new schema version, so older and newer records can both still be read correctly."
+          },
+          {
+            "type": "li",
+            "text": "Fail-closed writing: any program that writes control records fails rather than write a shape it doesn't recognise. That rules out silent drift, improvised fields and malformed rows."
+          },
+          {
+            "type": "li",
+            "text": "Consistent common fields: identifiers such as agent, installation, bundle, run and UTC timestamp are defined the same way in every table, so records join cleanly."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "An audit trail is only useful if people and tools that didn't write it can read it reliably, possibly years later. Strict, versioned schemas stop the gradual decay that sets in when each writer invents its own format. The fail-closed rule surfaces problems immediately at the source, not during an audit or incident investigation."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "11.10"
+    ]
+  },
+  {
+    "subject": "Dataset backup",
+    "slug": "dataset-backup",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Backup and restore of each registered data store: a backup class with recovery point and recovery time objectives (RPO, RTO) no weaker than its classification's default; the control record store, the registry table, infrastructure state and the store of captured content always in the top class, whose backups are immutable and held in a second permitted region; backups keep their source's classification and deletion; restore tested quarterly per class, a miss being an incident"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.11",
+      "22.12",
+      "22.13"
+    ]
+  },
+  {
+    "subject": "Dataset classification",
+    "slug": "dataset-classification",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Classifying stored conversation content (completions, user messages, attachments, retrieval results) at the higher of its installation's classification and what detection finds in it, a detected secret or higher-classified item raising its handling unless a reviewed record dismisses it; any store pooling conversations across installations or tenants is `confidential`, has its own access review as often as role membership is reviewed, and is unreadable by any agent's principal"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.5",
+      "19.6"
+    ]
+  },
+  {
+    "subject": "Degradation posture",
+    "slug": "degradation-posture",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Graceful degradation: what each installation does when a dependency fails (model provider, tool server, tool-call guard, telemetry collector, release record, secret store, control record store, retrieval source, code executor): stop, the default; carry on with stated, approved losses, never for the model provider or guard; or fall back to its previous release or a refuse-only version; with an event on every failure, a production mismatch treated as an incident, and a yearly test"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.1",
+      "22.2",
+      "22.3",
+      "22.4"
+    ]
+  },
+  {
+    "subject": "Dependency approval",
+    "slug": "dependency-approval",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The allowlist and denylist of packages: each direct dependency needs an approved entry in the package registry for the scope it is used in (runtime, development or build), recording its licence, purpose and replacement, a missing entry being at least reported; and a denied package blocks any pull request that puts it anywhere in the lockfile (the file of exact package versions), directly or transitively"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "25.10",
+      "25.11",
+      "25.12"
+    ]
+  },
+  {
+    "subject": "Dependency assessment",
+    "slug": "dependency-assessment",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Two checks on third-party components: every tool (MCP) server definition is scanned for tool poisoning (descriptions holding instructions to the model, hidden text, encoded content or references to other tools' parameters) before the bundle is signed; and suppliers' open-source repositories are recommended for OpenSSF Scorecard scoring at supplier assessment, a top-tier supplier's needing signed releases, branch protection and dependency-update tooling or an accepted risk"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "25.5",
+      "25.6"
+    ]
+  },
+  {
+    "subject": "Dependency inventory",
+    "slug": "dependency-inventory",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The software bill of materials (SBOM), in CycloneDX format, produced by every bundle build, listing each package, container image and tool (MCP) server definition in the bundle with its version and digest, and kept as control record keyed to the bundle's hash so that what any agent version contains can be looked up"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "25.1"
+    ]
+  },
+  {
+    "subject": "Dependency pinning",
+    "slug": "dependency-pinning",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Exact version pinning: every repository that installs packages commits a lockfile (a file recording the exact version and content hash of every direct and transitive package) as the only place a version is chosen; every install, on workstations, in CI and in image builds, uses it and fails if it is stale; and no release under seven days old is adopted unless a security advisory requires it, enforced in the resolver too"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "25.2",
+      "25.7",
+      "25.8"
+    ]
+  },
+  {
+    "subject": "Dependency sourcing",
+    "slug": "dependency-sourcing",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Where and how packages are installed: from one declared package index per repository, never from a URL, version-control reference or outside path; and as pre-built distributions with install-time scripts (`preinstall`, `postinstall` and the like) disabled, a package needing a source build or such a script being listed with a justification and an unlisted one at least reported, narrowing the ways installing a package runs its author's code"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "25.3",
+      "25.9"
+    ]
+  },
+  {
+    "subject": "Dependency vulnerability",
+    "slug": "dependency-vulnerability",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Known-vulnerability management: repository dependency alerts on and reviewed weekly from the first commit; once anything is live, every SBOM (software bill of materials) matched nightly against named vulnerability sources, with fix deadlines by supplier tier (critical and high: 7 and 30 days for tier 1, 30 and 90 for tier 2, 90 and 180 for tier 3) or an approved, expiring risk acceptance, a missed deadline being raised as an incident"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "25.4"
+    ]
+  },
+  {
+    "subject": "Developer environment declaration",
+    "slug": "developer-environment-declaration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The dev container: declared as code in each repository and the only place people or coding agents (AI assistants that write code) build, run or test code and agents before merge; its base image pinned by digest, each feature or extension pinned in a lockfile and on the approved package list, and Python packages and tools installed only from the repository's lockfile, so everyone works in one reproducible environment"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "30.1",
+      "30.2",
+      "30.3"
+    ]
+  },
+  {
+    "subject": "Developer environment isolation",
+    "slug": "developer-environment-isolation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Isolation of the dev container from its host machine and from production: it runs as a non-root user, unprivileged and with no added capabilities, mounts only the repository's working copy (never the container engine socket, home or SSH directories or cloud credential files), runs none of its declared commands on the host, cannot use the person's Git sign-in or signing key, and cannot reach or hold credentials for any Deployment Environment holding tenant data"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "30.4",
+      "30.5",
+      "30.6",
+      "20.17",
+      "30.7"
+    ]
+  },
+  {
+    "subject": "Document review",
+    "slug": "document-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The review of every Governing Document (policies, control policies, the Standard, the template, procedures, the limitations document and organisation documents) at least yearly and whenever a post-incident review names it, recording the reviewer and the outcome (confirmed, amended or retired), with an overdue document listed in the framework's published known limitations until reviewed"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.5"
+    ]
+  },
+  {
+    "subject": "Document terminology",
+    "slug": "document-terminology",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Consistent terminology across every Governing Document: each defined glossary term used as defined, its first use capitalised and linked to its definition, no listed discouraged synonym in its place, and only qualified forms of words with several meanings; the yearly document review records each departure, and the next change to that document corrects it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.7"
+    ]
+  },
+  {
+    "subject": "Egress allowlist",
+    "slug": "egress-allowlist",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Outbound network allowlisting: the hosts an agent may reach, directly, through a fetching tool or through a server acting for it, listed per installation and denied by default; each entry has an owner, purpose, classification ceiling and status and is approved before use; enforced both on each tool call's target and by the network rule on the installation's principal, so bypassing one still cannot reach an unlisted host"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "8.17",
+      "8.18",
+      "8.19"
+    ]
+  },
+  {
+    "subject": "End-user authority",
+    "slug": "end-user-authority",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Acting on behalf of a user (delegated authority) on an installation serving more than one person: the user's identity is carried on every tool call, retrieval and audit record, taken only from the authenticated session, never from a request body, model output or retrieved content; the agent may read or change only what that user could; until the identity is carried, the installation stays at `internal` classification or below"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.7",
+      "31.10",
+      "31.11"
+    ]
+  },
+  {
+    "subject": "End-user disclosure",
+    "slug": "end-user-disclosure",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "AI disclosure (transparency) to the people an agent serves: every end user is told, before or at the start of an interaction, that they are dealing with an AI system, so that no one takes an agent's replies for a person's"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "28.1"
+    ]
+  },
+  {
+    "subject": "End-user identifier",
+    "slug": "end-user-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The id (`end_user_id`) reserved for the person at a Tenant on whose behalf a run acts: issued by the Tenant, meaningless to the organisation itself, present as a column on every record that carries a run id, and left empty until per-end-user identity is implemented for that installation"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.12"
+    ]
+  },
+  {
+    "subject": "End-user rights",
+    "slug": "end-user-rights",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Data subject rights (access, export, erasure): every Installation can find, export and erase one person's data within the period the applicable law sets, except data the law requires kept or data de-identified beyond linking back; and human appeal: a route for an end user to challenge an output or decision and to reach a person"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "28.8",
+      "28.9"
+    ]
+  },
+  {
+    "subject": "Evaluation case content",
+    "slug": "evaluation-case-content",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "What each evaluation test case states (an input, the expected behaviour and the criterion for judging the output) and what data it may hold: every case and test fixture carries a classification, holds no confidential or personal data unless synthetic or the installation's own within its ceiling, and contains no secret-shaped string"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "14.2",
+      "14.11"
+    ]
+  },
+  {
+    "subject": "Evaluation coverage",
+    "slug": "evaluation-coverage",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The pre-release behaviour tests (evaluations, together the agent's golden dataset) every agent carries in its bundle, without which it cannot be promoted beyond development: at least one case for each thing it is told never to do, each tool it may call and each shared skill whose tools can write or act irreversibly, plus runs with its full tool list and its context filled to its limit, as in production, covering every prohibition and the choice between tools that overlap"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "14.1",
+      "14.3",
+      "14.12"
+    ]
+  },
+  {
+    "subject": "Evaluation gates",
+    "slug": "evaluation-gates",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Evaluations as regression tests guarding change and release: the agent's evaluations run before merging any change to its prompt or included fragments, skills, tool allowlist, tool-server versions or effects, or model (including a provider's new version under the same model name), a result below threshold blocking the merge; and no bundle reaches staging or production without a passing run against that exact bundle"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "14.4",
+      "14.9"
+    ]
+  },
+  {
+    "subject": "Evaluation record",
+    "slug": "evaluation-record",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The record of every evaluation run: the exact bundle it ran against, so a result is never credited to a version that was not tested, and its cases, pass or fail per case, threshold and outcome, written to the long-term control record store and linked to the source commit"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "14.6",
+      "14.8"
+    ]
+  },
+  {
+    "subject": "Evaluation thresholds",
+    "slug": "evaluation-thresholds",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The pass rate on its pre-release behaviour tests (evaluations) that each agent declares in its definition: for a confidential agent every case marked required must pass, for others a minimum set by the Standard; lowering the threshold or removing or waiving a required case needs a recorded approval"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "14.5",
+      "14.7"
+    ]
+  },
+  {
+    "subject": "Framework review",
+    "slug": "framework-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "An independent review of the framework, by someone who wrote no control policy in the period, before the first `confidential` production deployment and yearly after, with findings actioned within thirty days; and management review, monthly for six months then quarterly, covering incidents, open backlog, known limitations, automated check results, review records and threat findings, each action recorded as an approval with an owner and a date"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.2",
+      "26.6"
+    ]
+  },
+  {
+    "subject": "Framework scope",
+    "slug": "framework-scope",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The scope statement of the information security management system (ISMS): the systems, environments, tenants, locations and suppliers the framework covers and what it excludes with the justification, reviewed at least yearly and whenever the tenant or supplier registry gains a kind not yet named"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.1"
+    ]
+  },
+  {
+    "subject": "Identifier integrity",
+    "slug": "identifier-integrity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keeping ids authoritative and stable: only the definition in the repository may mint an `agent_id` or `installation_id`, a duplicate fails the automated checks, and databases, stores and runtimes hold only copies; no id encodes changeable context (environment, tenant name, owner, version, date or host); every id is unique across all tenants, environments and clouds, so control record joins without qualification; and the human-readable name (`slug`) may be renamed, each rename recorded with its commit"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.5",
+      "1.7",
+      "1.9",
+      "1.10"
+    ]
+  },
+  {
+    "subject": "Identifier propagation",
+    "slug": "identifier-propagation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Carrying an agent's identity on everything it produces or touches, so any trace of it leads back to one agent: the storage keys of its bundles, database rows, log lines and traces, tool-call metadata, cloud access-control (IAM) tags and labels, and the metadata of its requests to model providers"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.6"
+    ]
+  },
+  {
+    "subject": "Incident containment",
+    "slug": "incident-containment",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Preserving forensic records and tidying up after emergency fixes: before any rotation, revocation, deletion, redeploy or configuration change made for an incident, the logs, state exports, webhook payloads and registry rows it would alter are snapshotted under the incident id; every emergency change, hotfix and emergency access grant (break-glass) cites the incident and is made permanent by reviewed change or reverted within one business day of closing"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.9",
+      "22.10"
+    ]
+  },
+  {
+    "subject": "Incident declaration",
+    "slug": "incident-declaration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "What counts as an incident and how one is declared: a fixed list (confirmed secret exposure, drift or unmanaged resources outside development, a refused load in production, a failure behaving otherwise than declared, cross-tenant access, a supplier breach notice, emergency change or access outside an incident, a missed restore test, an overdue vulnerability fix) declared within an hour at severity S1 to S4, one record each that every emergency action cites, and S1 or S2 confirmed by the owner"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.5",
+      "22.6",
+      "22.7"
+    ]
+  },
+  {
+    "subject": "Incident notification",
+    "slug": "incident-notification",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Breach notification to tenants: regulatory and contractual deadlines counted from the moment of awareness recorded on the incident, and each affected tenant notified within the period its agreement sets, or 72 hours when it sets none, with every notice recorded with its time"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.15"
+    ]
+  },
+  {
+    "subject": "Incident review",
+    "slug": "incident-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Learning from incidents: a post-incident review within five business days of closing that records the timeline, root cause, whether an evaluation covered the behaviour (and the one added if not) and any change to controls or requirements; and a yearly resilience exercise that rehearses a supply-chain compromise and a compromised developer account, triggers every declared failure behaviour in staging, and restores one top-class data store end to end"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.14",
+      "22.16"
+    ]
+  },
+  {
+    "subject": "Ingress admission",
+    "slug": "ingress-admission",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The routes (ingress channels) by which external context reaches an agent: each installation declares which it accepts, only user messages by default, all others closed, with per-route limits on size, content type, items per run and rate enforced before the model sees anything; attachments converted to plain text or data with no macros or scripts; and the context compacted or the run ended at a set share of the context window"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.1",
+      "15.2",
+      "15.3",
+      "15.15"
+    ]
+  },
+  {
+    "subject": "Ingress provenance",
+    "slug": "ingress-provenance",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The record of every item of external context admitted to a run (its route, source, size, content hash and screening result), kept as a trace attribute and an audit row, so that what the model was shown can be reconstructed without storing the content itself"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.11"
+    ]
+  },
+  {
+    "subject": "Ingress screening",
+    "slug": "ingress-screening",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Prompt-injection defence at input: one screening point every piece of external context passes before the model reads it, with no bypass, using fixed patterns rather than a model; injection attempts stripped, quarantined or the run refused, as each installation declares (refuse by default for confidential); secret-shaped values redacted; and evaluations that test injection through every accepted route and a malformed attachment of each accepted type"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.4",
+      "15.5",
+      "15.6",
+      "15.12"
+    ]
+  },
+  {
+    "subject": "Ingress trust treatment",
+    "slug": "ingress-trust-treatment",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keeping external context apart from instructions, a defence against indirect prompt injection: the model receives it wrapped in explicit markers naming it as data and giving its route and source (the web host, for fetched content), never mixed into instructions, and the markers survive when the context is summarised, so outside text never becomes the agent's own words"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.9",
+      "15.14"
+    ]
+  },
+  {
+    "subject": "Installation identifier",
+    "slug": "installation-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The one id (`installation_id`) each Installation, a deployment of an agent for one Tenant, has, minted once in the version-controlled repository; its Release Pointer, its Principal and its Control Records are all keyed by that id, so everything about one deployment can be found by one value"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.2"
+    ]
+  },
+  {
+    "subject": "Installation quotas",
+    "slug": "installation-quotas",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The usage limits (rate limits and cost caps) declared for each installation: model calls, tokens, cost and runtime per period, concurrent runs, tool calls and `write` calls per run, and tool calls per run of agent-written code; enforced by the harness and by the cloud where possible, stopping the run when exceeded; and widening any quota, permission or network rule only by changing the installation's registry entry, a console change being reverted as drift"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "10.8",
+      "10.9"
+    ]
+  },
+  {
+    "subject": "Installation risk review",
+    "slug": "installation-risk-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The review, at least quarterly, of each installation's risk profile (its data classification, the effects it can reach, the data it touches, and whether it shares a principal), where a change in profile leads to a dedicated principal or narrower cloud permissions, made without changing the agent's bundle"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "10.10"
+    ]
+  },
+  {
+    "subject": "Integration inventory",
+    "slug": "integration-inventory",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The inventory of third-party apps, AI tools and MCP clients holding an OAuth grant, access token or app installation on an organisation account, each with scopes, owner, purpose, account and supplier; least-privilege scopes, with security approval before broad ones (mail, whole drive, admin, repository write); an alert within an hour and review within a business day for new grants, tokens, installations or MFA enrolments; weekly automated reconciliation; unrecorded grants revoked"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.5",
+      "20.6",
+      "20.7",
+      "20.8"
+    ]
+  },
+  {
+    "subject": "Model assessment",
+    "slug": "model-assessment",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Model assessment is the systematic evaluation of the AI model (or models) behind an agent. It checks whether the model is capable, reliable, safe and cost-effective enough for the agent's intended tasks. It answers the question \"is this model fit for this job?\" both before deployment and on an ongoing basis."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Capability: performance on task-relevant evaluations such as reasoning, coding, following instructions, tool or function calling, long-context handling, and producing outputs in a set structure. General benchmarks are a starting point, but custom evaluations built from real use cases count for more."
+          },
+          {
+            "type": "li",
+            "text": "Reliability: how consistent outputs are across repeated runs, how often the model hallucinates, how it handles ambiguous or edge-case inputs, and how well it recovers from errors in multi-step workflows."
+          },
+          {
+            "type": "li",
+            "text": "Safety and alignment: resistance to prompt injection and jailbreaks, refusal behaviour, bias and fairness checks, and whether it respects permissions and guardrails when acting autonomously."
+          },
+          {
+            "type": "li",
+            "text": "Operational fit: latency, throughput, cost per task, context window size, and deployment constraints (hosting, data residency, privacy)."
+          },
+          {
+            "type": "li",
+            "text": "Comparison and monitoring: benchmarking candidate models side by side, then tracking production performance over time to catch drift or regressions when models or prompts change."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "An agent can be no more capable or trustworthy than the model driving it. Rigorous assessment makes model choice an evidence-based decision rather than a guess. It shows the trade-offs between quality, speed and cost, surfaces risks before they reach users, and gives a baseline for deciding when to upgrade, switch models, or route different tasks to different ones."
+          }
+        ]
+      }
+    ],
+    "requirements": []
+  },
+  {
+    "subject": "Model fairness",
+    "slug": "model-fairness",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The fairness (bias) evaluation result a model must have recorded on its registry entry before it is approved for an agent whose output ranks, scores or decides about individuals; only that a result is recorded is required, not what it must show"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "28.5"
+    ]
+  },
+  {
+    "subject": "Model hosting",
+    "slug": "model-hosting",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Self-hosting of models: barred until approved; an inference server the organisation runs is registered as a workload (a service it runs) of category inference with a matching supplier-service entry, patched within the vulnerability fix deadlines, and able to reach only its model store over the network"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "23.6"
+    ]
+  },
+  {
+    "subject": "Model identity",
+    "slug": "model-identity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The record of which model served each run: the registry's model id and the provider's exact model id are written to the record made when each run starts and onto every model-call trace span, so any output can be traced to the model that produced it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "9.5"
+    ]
+  },
+  {
+    "subject": "Model parameters",
+    "slug": "model-parameters",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The request settings that change how a model generates responses: declared in the agent's bundle and hashed with it, never set at run time, so they change only with a new bundle."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Randomness controls: temperature (low gives focused, repeatable output; high gives more varied, creative output), top-p (nucleus sampling) and top-k, which limit which tokens the model can choose from."
+          },
+          {
+            "type": "li",
+            "text": "Length and stopping: max tokens caps how long a response can be, and stop sequences tell the model where to end its output."
+          },
+          {
+            "type": "p",
+            "text": "Repetition controls: frequency and presence penalties that discourage repeated words or topics (supported by some providers)."
+          },
+          {
+            "type": "li",
+            "text": "Reasoning and effort settings: options on newer models that set how much the model \"thinks\" before answering, such as extended thinking budgets or effort levels, trading depth for speed and cost."
+          },
+          {
+            "type": "li",
+            "text": "Output and tool settings: structured-output or JSON modes, response format, and tool-choice options (auto, required or none) that govern when the agent calls functions."
+          },
+          {
+            "type": "li",
+            "text": "Learned parameter count: model size (for example 8B or 70B parameters for open-weight models) as a rough indicator of capability and of the hardware needed to host it."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Parameter settings strongly shape agent behaviour. Low temperature and strict output modes suit tasks that need consistent, schema-conforming results, such as data extraction or tool calls. Higher values suit brainstorming or creative writing. Tuning token limits and reasoning effort balances quality against latency and cost. Recording parameter settings alongside prompts and model versions is also key to reproducing results and keeping agent runs consistent."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "9.11"
+    ]
+  },
+  {
+    "subject": "Model resolution",
+    "slug": "model-resolution",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Translating an agent's model registry reference into the exact model id the provider uses on the installation's runtime and cloud, done at build with both ids recorded in the build's list of contents; a model with no id for that runtime and cloud fails the build, so a missing mapping is caught before release"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "9.2"
+    ]
+  },
+  {
+    "subject": "Model selection",
+    "slug": "model-selection",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Model selection is deciding which AI model (or combination of models) an agent should use, overall or for each task within it: named in the agent's configuration only as a reference to an entry in the model registry, never as a provider's model name, which fails validation, so the model is chosen from the `Model registry` rather than hard-coded. `Model assessment` produces the control record. Model selection is the decision that weighs that record against the agent's requirements, constraints and budget, to pick the best fit rather than simply the most powerful option."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Task requirements: the complexity of reasoning needed, coding or tool-use ability, multimodal inputs (images, audio, documents), context window size, and how reliably the model follows output formats."
+          },
+          {
+            "type": "li",
+            "text": "Quality versus speed versus cost: larger frontier models give stronger reasoning, while smaller, faster models suit high-volume, simple or real-time tasks at a fraction of the cost."
+          },
+          {
+            "type": "li",
+            "text": "Constraints: data privacy and residency, hosting options (managed API or self-hosted open-weight models), licensing terms, regulatory requirements, and vendor availability."
+          },
+          {
+            "type": "li",
+            "text": "Multi-model strategies: routing sends each request to the most suitable model (for example, a small model for classification and a frontier model for complex planning). Cascading tries a cheaper model first and escalates if needed. Fallbacks keep the agent running during outages."
+          },
+          {
+            "type": "li",
+            "text": "Lifecycle management: pinning model versions for consistency, re-evaluating when new models are released, and testing before switching so changes don't break prompts or downstream workflows."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "The model is the agent's core engine, so selection directly affects output quality, user experience, operating cost and risk. A sound, evidence-based choice avoids overpaying for capability a task doesn't need, and avoids under-powering tasks that need strong reasoning. Many production agent systems now use several models, each matched to the steps it handles best."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "9.1"
+    ]
+  },
+  {
+    "subject": "Model usage",
+    "slug": "model-usage",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Model usage is how an agent actually uses its AI model day to day: how requests are built and sent, how responses are handled, and how use is tracked, governed and optimised. `Model Selection` decides which model to use and `Model hosting` decides where it runs. Usage covers how the model is put to work in practice."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Token usage and cost attribution: every model call records its prompt and completion token counts, so cost and usage can be attributed per agent, installation and tenant without the provider's dashboard; requests are recommended, not required, to carry the agent and installation ids so the provider's own usage figures reconcile with internal records"
+          },
+          {
+            "type": "li",
+            "text": "Invocation patterns: how the agent calls the model, whether single requests, multi-turn conversations, loops that call tools and feed the results back in, streaming responses, or batch processing for large offline workloads."
+          },
+          {
+            "type": "li",
+            "text": "Context management: what goes into each request (system prompt, instructions, retrieved documents, conversation history, tool definitions) and techniques such as summarisation, truncation and prompt caching that keep context relevant and within limits."
+          },
+          {
+            "type": "li",
+            "text": "Consumption tracking: tokens processed (input and output), number of requests, cost per task or user, and staying within rate limits and quotas."
+          },
+          {
+            "type": "li",
+            "text": "Governance and acceptable use: following the provider's usage policies and organisational rules, controlling who and which agents may use which models, protecting sensitive data in prompts, and keeping audit logs of interactions."
+          },
+          {
+            "type": "li",
+            "text": "Optimisation and observability: logging and tracing model calls, monitoring latency, errors and output quality, and cutting waste through caching, smaller models for simple steps, or tighter prompts."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "How a model is used determines much of an agent's real-world cost, performance, reliability and compliance. Disciplined usage, with efficient context, careful monitoring and clear governance, keeps spending predictable and catches problems early. It also ensures the model is used responsibly and within policy, especially as agents scale to many users and run autonomously."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "9.6",
+      "9.12"
+    ]
+  },
+  {
+    "subject": "Output harm",
+    "slug": "output-harm",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "How strictly the output guardrails (content filters) act on harmful content in what reaches an end user, whether a match is logged, masked or blocked, recorded for each Installation so the level chosen is explicit; how harmful content is detected is not covered here"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "28.7"
+    ]
+  },
+  {
+    "subject": "Output provenance",
+    "slug": "output-provenance",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Traceability of what end users receive: every output that reaches an end user is attributable to the agent and the run that produced it, through an output event holding a hash of its content; and an answer drawn from retrieved sources is traceable to those sources, with citing them to the user recommended, not required, where the Installation permits"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "28.2",
+      "28.3"
+    ]
+  },
+  {
+    "subject": "Person access review",
+    "slug": "person-access-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "A quarterly user access review, held with the role-membership review, of each person's access rights, the list of privileged accounts, the registry of connected third-party apps and tools, and workstation compliance attestations, with unused accounts, grants and integrations disabled within one business day and the review recorded"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.13"
+    ]
+  },
+  {
+    "subject": "Person account authentication",
+    "slug": "person-account-authentication",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "How a person signs in to any account that can merge, approve, release, administer or publish: multi-factor authentication without SMS or voice codes and with a passkey enrolled by each person, through the organisation's identity provider (single sign-on from the second person, Git host passkeys until then), and no local, shared or personal accounts holding those powers except the break-glass (emergency) role"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.2",
+      "20.3"
+    ]
+  },
+  {
+    "subject": "Person account lifecycle",
+    "slug": "person-account-lifecycle",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The inventory of privileged human accounts (any that can merge, approve, release, administer a cloud project, write the registry database or publish a package), each listed in the repository's code-ownership file with the person's id, systems and roles, unlisted ones disabled; and the mover and leaver process: within one business day accounts, grants and sessions disabled or re-scoped, OAuth grants revoked, readable secrets rotated, each action audit-logged"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.1",
+      "20.4"
+    ]
+  },
+  {
+    "subject": "Person awareness",
+    "slug": "person-awareness",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "A security awareness record, not a training programme: each person holding a role in the framework has, for the current year, a record of which control policies they have read and when, and a person without one cannot be given an approval or break-glass (emergency access) role"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.3"
+    ]
+  },
+  {
+    "subject": "Person identifier",
+    "slug": "person-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The one id (`person_id`) each human who authors, approves, releases, reviews or administers has, minted once in the repository and kept across every repository governed; any field in a governed record that names a person holds this id and nothing else, not an email or a name, so every human action can be attributed to one person"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.11"
+    ]
+  },
+  {
+    "subject": "Person key custody",
+    "slug": "person-key-custody",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The keys a person uses for Git: an Ed25519 SSH key made on its own device, never copied, hardware-backed or keychain-held, signing every commit; each key recorded against person and device and checked quarterly against the Git host; no classic tokens, deploy keys, HTTPS password access or agent forwarding, fine-grained tokens of at most 30 days, automation never using a person's key; offline recovery codes and a second passkey; replacement on loss, departure, compromise or new device"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.12",
+      "20.15",
+      "20.16",
+      "20.17",
+      "20.18"
+    ]
+  },
+  {
+    "subject": "Personal data identification",
+    "slug": "personal-data-identification",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Identifying personal data when an installation is classified: an installation that processes it records on its entry the categories of data subject, the lawful-basis reference and the data subjects' region, and is classified at least `internal`"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.7"
+    ]
+  },
+  {
+    "subject": "Principal lifecycle",
+    "slug": "principal-lifecycle",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The principal each installation runs as, from creation to deletion: named from the installation and its tenant, created only from its registry entry, recorded at every start-up and on every log, trace and metric so the cloud's own audit log traces each action to an installation, checked before each run (a mismatch refuses the run), and disabled with its permissions removed at retirement, then deleted"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "10.1",
+      "10.2",
+      "10.11",
+      "10.12"
+    ]
+  },
+  {
+    "subject": "Principal permissions",
+    "slug": "principal-permissions",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Least privilege for the principal an installation runs as: every cloud permission derived from the installation's registry entry (its tool servers, secrets and storage) and labelled with agent and installation; a network egress rule blocking every host not on its allowlist, even by a route around the harness; and no runtime identity able to write the stores serving releases, registry entries or prompts, so a compromised run cannot change what any installation runs"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "10.6",
+      "10.7",
+      "10.13"
+    ]
+  },
+  {
+    "subject": "Principal sharing",
+    "slug": "principal-sharing",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "When installations may share one principal: only at the same data classification, never for a `confidential` installation (which always has its own), across tenants only below `confidential`, declared on each sharing installation's entry and approved; and how installations sharing a container stay distinguishable in every log and audit record, by binding agent, installation, run and principal to each request rather than each process"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "10.3",
+      "10.4",
+      "10.5"
+    ]
+  },
+  {
+    "subject": "Prompt composition",
+    "slug": "prompt-composition",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Reuse of prompt text across agents: text used by more than one agent is kept once as a shared, versioned snippet in a registry and copied into each prompt when the agent is built, never fetched by link at run time; each agent pins the snippet's version, so a change to the snippet changes no agent until that agent's pin is updated"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "6.3",
+      "6.4"
+    ]
+  },
+  {
+    "subject": "Prompt content",
+    "slug": "prompt-content",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The standing instructions an agent is given before any user input (its system prompt): kept only in the agent's file in the repository, never in code, configuration or a database; written in six non-empty sections (role, inputs, steps, outputs, what it must never do, how to treat external content) so every prompt is reviewed against one structure; and holding no secret, credential, personal identifier or tenant-specific value"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "6.1",
+      "6.2",
+      "6.8"
+    ]
+  },
+  {
+    "subject": "Prompt ingress instruction",
+    "slug": "prompt-ingress-instruction",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The instruction every agent's system prompt carries that content inside the markers wrapping outside material is data to be processed, never instructions to follow, and that the model must not act on instructions found there: a prompt-level defence against prompt injection"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.10"
+    ]
+  },
+  {
+    "subject": "Prompt provenance",
+    "slug": "prompt-provenance",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Being able to show exactly what an agent was told: a hash (fingerprint) of every prompt and shared snippet is recorded in each build's list of contents, the prompt's hash is recorded for every run in the record written when the run starts, and it is recommended, not required, on telemetry so a change in behaviour can be lined up with a prompt change"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "6.5",
+      "6.6",
+      "6.7"
+    ]
+  },
+  {
+    "subject": "Registry entry identity",
+    "slug": "registry-entry-identity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The `id` of each registry entry, unique within its kind and never reused, even after retirement, so old records stay unambiguous; a retired agent or installation entry stays in the registry and its table, since retiring is a status, not a deletion, and a retired agent's human-readable name (`slug`) may pass to a new agent with a new `agent_id`"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "5.2",
+      "5.9"
+    ]
+  },
+  {
+    "subject": "Registry entry lifecycle",
+    "slug": "registry-entry-lifecycle",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The approval lifecycle every registry entry follows, in this order only: `proposed`, `approved`, `deprecated`, `retired`; approval needs a record naming the approver, the date and the policy it was approved under; deprecation needs a `retire_after` date and produces the list of every agent that references the entry; and retirement is blocked while any `approved` Bundle still references it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "5.5",
+      "5.6",
+      "5.7",
+      "5.8"
+    ]
+  },
+  {
+    "subject": "Registry entry selection",
+    "slug": "registry-entry-selection",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Which of the approved registry entries a particular agent may choose to reference; no requirement is yet written under this subject, so nothing here limits that choice"
+          }
+        ]
+      }
+    ],
+    "requirements": []
+  },
+  {
+    "subject": "Registry kinds",
+    "slug": "registry-kinds",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Which things are recorded as registry entries rather than declared inside an agent's own definition: models, suppliers, services, workloads, datasets, devices, shared skills, shared prompts, policy rules, installations, tenants and the controlled vocabulary; what the vocabulary holds (each term's definition and banned synonyms, each verb's level and Effect); and that a skill or prompt becomes a shared entry with its own id and version once a second agent uses it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "5.16",
+      "5.17",
+      "5.19"
+    ]
+  },
+  {
+    "subject": "Registry pattern",
+    "slug": "registry-pattern",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The shape every kind of registry shares, so one set of tools and checks serves them all: one entry per file in a version-controlled directory, one published schema per kind, the same four fields on every entry (`id`, `status`, `owner`, `approvals`), a queryable table rebuilt from the files on every merge and never edited directly, and a schema, a place in the dependency map and a Standard change before any new kind is added"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "5.1",
+      "5.3",
+      "5.4"
+    ]
+  },
+  {
+    "subject": "Registry reference integrity",
+    "slug": "registry-reference-integrity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "That an agent's definition or an installation may point only at `approved` registry entries, checked at merge and at build; that a pointer to a `deprecated` entry is reported at build and at start-up, keeping the migration list visible; that every Bundle records the commit of each entry it was built against; and that the map of which agent uses which entry, both ways, can be derived from the registries and bundles alone"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "5.10",
+      "5.11",
+      "5.12",
+      "5.13"
+    ]
+  },
+  {
+    "subject": "Repository configuration",
+    "slug": "repository-configuration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Repository settings as code: branch protection, code ownership, required checks, deployment environments, secret scanning and push protection declared as code and drift-checked like cloud resources, the infrastructure repository included; and repository teams and roles taken from the organisation's register of groups, with no access for anyone else, set by hand and attested quarterly until a second repository or person; what each setting must be is not set here"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "17.11",
+      "17.16"
+    ]
+  },
+  {
+    "subject": "Repository protection",
+    "slug": "repository-protection",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The repository settings that stop the change path being bypassed: the release branch accepts no direct or force pushes and keeps a linear history; where commit signing is in place, unsigned commits are rejected; and ownership is declared per directory (code owners), so the approver a change requires follows the files it touches, not its author"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "2.5",
+      "2.6",
+      "2.7"
+    ]
+  },
+  {
+    "subject": "Resource bootstrap",
+    "slug": "resource-bootstrap",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The one-time setup that must exist before the infrastructure pipeline can run: its state store (record of what was applied) and its own identity, created outside the pipeline by a written runbook with a recorded approval, plus resources the platform creates only with a person's approval in a browser, which the pipeline's identity must create, the runbook must name and the next apply brings under code; no other exception"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "17.10"
+    ]
+  },
+  {
+    "subject": "Resource change",
+    "slug": "resource-change",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Who may change cloud resources in staging and production: only the infrastructure pipeline's identity, people being read-only except a time-boxed, logged break-glass role; each change shows its plan (preview of changes) on the pull request and applies on merge, production applies need the release reviewer, and policy-as-code checks reject unlabelled resources, service-account keys, primitive IAM roles, resources outside the Installation's region, public ingress to a Harness, unencrypted buckets of confidential Control Records and runtime write grants on generated governance tables"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "17.2",
+      "17.3",
+      "17.5"
+    ]
+  },
+  {
+    "subject": "Resource declaration",
+    "slug": "resource-declaration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Infrastructure as code: every cloud resource in scope written as declarative code in the repository and labelled with the pipeline that manages it, the supplier service it comes from and, where they apply, its agent, Installation and workload, so each can be traced to its source; the resources an Installation needs (its Principal, access grants, egress rule, quota, secret bindings) are generated from its registry entry by one module, never hand-written"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "17.1",
+      "17.4"
+    ]
+  },
+  {
+    "subject": "Resource drift",
+    "slug": "resource-drift",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Configuration drift detection, run at least daily: differences between the declared code and the live resources are reported as an event, and resources that exist outside the code are found by comparing the cloud's inventory over the resource types of approved supplier services; an unmanaged resource is deleted automatically in dev, and drift or an unmanaged resource in staging or production is an incident"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "17.6",
+      "17.7"
+    ]
+  },
+  {
+    "subject": "Resource inventory",
+    "slug": "resource-inventory",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The organisation's asset inventory, generated rather than kept by hand: cloud infrastructure state joined, by the id labels on each resource, to the workload, service, supplier, installation and tenant entries, so every resource shows what it is, which service provides it, which supplier stands behind it, which workload runs on it and for whom; a resource that cannot be joined to an approved entry is reported as unmanaged"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "5.20"
+    ]
+  },
+  {
+    "subject": "Resource state",
+    "slug": "resource-state",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The infrastructure state (the deployment tool's record of what it has applied): stored remotely, versioned, locked against concurrent changes, encrypted and classified confidential, readable only by the pipeline and break-glass, and held in the region of the Installations it describes once Tenants need different regions; and the archive, as Control Records, of every applied plan and drift report with its commit, actor and time"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "17.8",
+      "17.9"
+    ]
+  },
+  {
+    "subject": "Response screening",
+    "slug": "response-screening",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Output guardrails: the screen every response from an agent passes before it reaches its caller, with one action for each kind of content detected (log, mask or block; for example personal data masked, hateful text logged, harmful content blocked) and a record of every match, whatever the action"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "12.15"
+    ]
+  },
+  {
+    "subject": "Retrieval source declaration",
+    "slug": "retrieval-source-declaration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The retrieval (RAG) sources each installation may draw from: each declared with owner, classification and status, with results from an undeclared source discarded, and no source, nor any other external context, admitted above the installation's classification ceiling"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "15.7",
+      "15.8"
+    ]
+  },
+  {
+    "subject": "Risk assessment",
+    "slug": "risk-assessment",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Risk assessment and treatment: every kind of asset a control policy names has a document whose risks are rated and treated by one method before it leaves draft, each treatment chosen by its risk owner and residual risk accepted only within set limits; reviewed yearly and on triggers (a new registry kind or supplier class, or an incident review or threat finding naming the kind), with overdue accepted risks listed as known limitations"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.8",
+      "26.9"
+    ]
+  },
+  {
+    "subject": "Role elevation",
+    "slug": "role-elevation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Break-glass (emergency) elevation of a person's role: limited in time (four hours by default), never granted to oneself, logged as an audit event when granted and when it expires, and reviewed by the information security (InfoSec) team within one business day, with the review recorded against the incident it served"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "13.8",
+      "13.9"
+    ]
+  },
+  {
+    "subject": "Role membership",
+    "slug": "role-membership",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Who holds each person role, declared in the repository's code-ownership file and reviewer groups so that changing a role's members is itself a reviewed change, and a recorded review, at least quarterly, of role membership and of the segregation-of-duties rules"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "13.10",
+      "13.11"
+    ]
+  },
+  {
+    "subject": "Role separation",
+    "slug": "role-separation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Segregation of duties: every governed change is approved by someone other than its author. While one person holds every role, the exception sits in the risk register until a second person joins, compensating controls stand in (signed commits, a pull request for every change, automated checks that cannot be bypassed, a logged approval step on each production release, an append-only audit log), and from the first `confidential` tenant an external reviewer approves `confidential` production releases"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "13.1",
+      "13.12",
+      "13.1"
+    ]
+  },
+  {
+    "subject": "Run identifier",
+    "slug": "run-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The correlation ids every run of an agent records together, so any record of a run can be traced: the agent (`agent_id`), the installation (`installation_id`), the exact built version (`bundle_sha`, the hash of its Bundle) and the run (`run_id`), a record with fewer being non-conformant; a run in a multi-turn conversation also records a `session_id`, taking a runtime's own session id unchanged"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.3",
+      "1.4"
+    ]
+  },
+  {
+    "subject": "Sandbox isolation",
+    "slug": "sandbox-isolation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The sandbox agent code executes in: fresh for every call and destroyed after, with declared limits on CPU, memory, wall time and scratch disk; no network except destinations its profile allowlists, never a package index, code host, cloud metadata endpoint, link-local address or control-plane service; no identity, secret, credential or outside mount; inputs passed as parameters and outputs returned as results; and only the packages built into its image"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "23.2",
+      "23.3",
+      "23.4",
+      "23.11"
+    ]
+  },
+  {
+    "subject": "Secret access",
+    "slug": "secret-access",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Who reads secret values and the trail it leaves: a person only through break-glass (emergency) access that is time-boxed, logged and reviewed within one business day; and every read logged with the reading principal, installation and time, queryable beside the records of each harness start-up, so it can be shown which secrets an installation could reach at any moment"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.5",
+      "16.7"
+    ]
+  },
+  {
+    "subject": "Secret avoidance",
+    "slug": "secret-avoidance",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keeping credentials out of reach: no secret (API key, token, password, private key, connection string, service-account key file) in any repository or its history, bundle, manifest, registry entry, prompt, skill, log, trace, metric label, evaluation file or CI output; and agents holding none, authenticating by the installation's workload identity instead, with tool servers holding their own downstream credentials"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.1",
+      "16.2"
+    ]
+  },
+  {
+    "subject": "Secret detection",
+    "slug": "secret-detection",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Secret scanning at four points (on commit, on push, over the built bundle in CI, and over every log, trace and metric in the telemetry collector), failing the merge or build, or masking the value and raising a violation; and environment files, private keys, credential files and infrastructure state files excluded from every repository and image build by ignore rules and rejected by name at commit and push"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.8",
+      "16.11"
+    ]
+  },
+  {
+    "subject": "Secret exposure",
+    "slug": "secret-exposure",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The response to a confirmed secret leak, handled as a security incident: within one hour a pre-written runbook establishes which secrets leaked, where, who rotates them, which installations could read them and how tenants are told; then revoke first, rotate second, investigate third, with the incident record naming every installation that could read the secret while it was exposed"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.9"
+    ]
+  },
+  {
+    "subject": "Secret exposure response",
+    "slug": "secret-exposure-response",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The readiness of the incident response to a leaked secret: a runbook written in advance so that within one hour of the exposure being confirmed it answers which secrets are where, who rotates them, which installations could read them and how affected tenants are told"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "22.8"
+    ]
+  },
+  {
+    "subject": "Secret lifecycle",
+    "slug": "secret-lifecycle",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The ownership and key rotation of every stored secret: a named owner, a data classification of at least `confidential`, scheduled rotation at least every 90 days, extra rotation on suspected exposure, on the departure of anyone who had access and on a change of the owning supplier, and a documented way to revoke it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.6"
+    ]
+  },
+  {
+    "subject": "Secret storage",
+    "slug": "secret-storage",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Where an unavoidable secret is kept: in the one designated secret store (vault), named by installation and purpose, referenced by name from the installation's registry entry but never written into it, fetched at runtime through one library, and readable only by that installation's principal, so each secret is scoped to one installation unless sharing is justified and approved"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.3",
+      "16.4"
+    ]
+  },
+  {
+    "subject": "Security code review",
+    "slug": "security-code-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Secure code review: a change touching access control, row-level security, authentication, secret handling or address validation is reviewed against a published security checklist, the review records the checklist version and each item checked, and an AI model's summary of the code does not satisfy an item that requires the reviewer to read it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "13.13"
+    ]
+  },
+  {
+    "subject": "Signing identity",
+    "slug": "signing-identity",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keyless code signing of bundles: each bundle is signed with the CI pipeline's short-lived OIDC identity so that no long-lived signing key exists to be stolen, and the harness accepts a signature only when its issuer and subject match the expected CI identity; changing that identity is a formal change to the framework's technical standard"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "16.10"
+    ]
+  },
+  {
+    "subject": "Skill content",
+    "slug": "skill-content",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "What a skill (instructions and reference material an agent loads only when needed) may contain: it behaves the same under every runtime the organisation uses, so it uses no runtime-specific feature (command injection, argument substitution, forked contexts, hooks); its header carries only the portable fields of the Agent Skills specification, with no runtime behaviour in its metadata; and its supporting files are data only (Markdown, JSON, CSV, YAML or images), never code"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "7.1",
+      "7.2",
+      "7.3"
+    ]
+  },
+  {
+    "subject": "Skill loading",
+    "slug": "skill-loading",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Progressive loading of a skill and the record of what the model read: the skill's header (metadata) at start, its body when it is invoked, its other files on demand; every load is recorded as a trace span carrying the skill's hash and how much was loaded, so what the model saw can be reconstructed from the trace"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "7.10"
+    ]
+  },
+  {
+    "subject": "Skill scripts",
+    "slug": "skill-scripts",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Executable scripts packaged with a skill: off by default and absent from the bundle unless the agent's configuration file (manifest) enables them with a recorded approval, in which case the agent's classification ceiling is reassessed as if the scripts were tools; also, each skill's folder is hashed as one unit at build, so a change to any file in it, a reference file included, counts as a change to the skill"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "7.6",
+      "7.7",
+      "7.8"
+    ]
+  },
+  {
+    "subject": "Skill sharing",
+    "slug": "skill-sharing",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Reuse of one skill by several agents: once a second agent needs a skill, it becomes a single shared, versioned registry entry instead of being copied into each agent, and each agent pins the version it uses, so a change to the shared skill changes no agent until that agent's pin is updated"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "7.4",
+      "7.5"
+    ]
+  },
+  {
+    "subject": "Skill suitability",
+    "slug": "skill-suitability",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Two limits on which agents may pin a shared skill: the skill is recommended to declare the agent classifications (data sensitivity levels) it suits, and an agent above them cannot pin it; and it carries a licence from an approved list, so a skill or reference file the organisation has no right to use cannot be pinned, the build failing on a missing or unapproved licence"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "7.12",
+      "7.13"
+    ]
+  },
+  {
+    "subject": "Skill tool access",
+    "slug": "skill-tool-access",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Least privilege for skills: the list of tools a skill says it needs (`allowed-tools`) can only narrow what the agent may call, never grant a tool outside the agent's own allowlist of permitted tools; the harness treats it that way"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "7.9"
+    ]
+  },
+  {
+    "subject": "Supplier assessment",
+    "slug": "supplier-assessment",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Third-party (vendor) risk assessment before a supplier is approved: data handling and residency, sub-processors, security attestations, authentication options, deprecation and change notice, incident and breach-notification terms, exit terms and, for software, a repository health score; the licence or terms of use and output restrictions of any model, dataset or library; each assessment kept as a control record for the entry's life plus the audit retention period"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.2",
+      "18.3",
+      "18.13"
+    ]
+  },
+  {
+    "subject": "Supplier ceiling",
+    "slug": "supplier-ceiling",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The highest data classification a supplier may receive, set from a list made in its assessment of what will be sent to it (prompts, documents, tool parameters, telemetry) and what may come back from it, and never left at a default value"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.4"
+    ]
+  },
+  {
+    "subject": "Supplier credential",
+    "slug": "supplier-credential",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Approving a supplier that offers only a static credential (a long-lived key or password instead of workload identity): an explicit decision on its entry, and a `confidential` ceiling only if that decision records that the credential lives only in the secret store and is never typed or shown, is read only by a purpose-made non-human identity, is encrypted at rest and in transit, travels over certificate-verified connections and is rotated at least every 90 days"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.7"
+    ]
+  },
+  {
+    "subject": "Supplier exit",
+    "slug": "supplier-exit",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Offboarding a supplier that fails re-assessment or is no longer needed: marked deprecated with a retirement date, which lists the agents affected, and not retired while any approved bundle uses it; every credential and identity binding to it revoked; and deletion of the organisation's data at the supplier confirmed where the terms allow, with the exit record stating both"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.9",
+      "18.10"
+    ]
+  },
+  {
+    "subject": "Supplier inventory",
+    "slug": "supplier-inventory",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The supplier inventory: an entry for every outside party whose service is used at build or runtime, holding its legal identity, contract and exit terms, and an entry for each product used (compute, model, storage, identity, observability, source control, CI, package registry, AI tool) holding what is assessed; package, image and CI-action authors and AI tool vendors count, and nothing without a product entry may be used"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.1",
+      "18.12"
+    ]
+  },
+  {
+    "subject": "Supplier monitoring",
+    "slug": "supplier-monitoring",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Ongoing supplier monitoring: re-assessment on its risk tier's cadence (yearly, every two years or periodically) and on any material change (new terms or privacy policy, new sub-processor, security incident at the supplier, major version or deprecation notice, change in what is sent), with an overdue supplier reported at build and start-up; deprecation notices entered in the registry within one business day so affected agents' migration lists exist before the end date"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.6",
+      "18.8"
+    ]
+  },
+  {
+    "subject": "Supplier tier",
+    "slug": "supplier-tier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Third-party (vendor) risk tiering: each service's tier is set from the classification of data it receives, how critical the agents relying on it are and how deeply it integrates (credential held, network reached, code run), and fixes its assessment: tier 1 an independent attestation (SOC 2 Type II or ISO/IEC 27001) and yearly re-assessment, tier 2 a questionnaire every two years, tier 3 self-attestation and periodic review; lowering a tier needs re-assessment"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "18.11"
+    ]
+  },
+  {
+    "subject": "Telemetry content",
+    "slug": "telemetry-content",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "What telemetry holds of prompts, completions and tool parameters: each agent declares none, hashes or full capture (none by default, full only with a recorded approval); admitted external content is only ever hashed; secret-shaped values and data-exfiltration patterns in outgoing completions and tool results are masked and raise a policy violation; and signals that may hold confidential content are readable only by roles approved for it"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "12.9",
+      "12.10",
+      "12.13"
+    ]
+  },
+  {
+    "subject": "Telemetry contract",
+    "slug": "telemetry-contract",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The traces, metrics and logs every agent emits through OpenTelemetry and no other path, using only published attribute, metric and event names; identity, classification and content-capture setting stamped on every signal from the loaded bundle; token counts and model ids on model calls, effect and allow or deny on tool calls, and a hash on skill loads, so cost and risk are attributable without content; and log events as the control records of governed events"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "12.1",
+      "12.2",
+      "12.3",
+      "12.4",
+      "12.11"
+    ]
+  },
+  {
+    "subject": "Telemetry monitoring",
+    "slug": "telemetry-monitoring",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Dashboards and alert rules kept as code and applying to every agent without per-agent setup: alerts on denial rate, irreversible actions, refused loads, policy violations, quota exhaustion, every event that declares an incident and a change to the published registry table with no matching merge; and, recommended rather than required, per-installation anomaly-detection baselines (retrieval volume per user and session, cross-user retrieval, repeated injection hits from one source, probing) to catch data harvesting"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "12.12",
+      "12.14"
+    ]
+  },
+  {
+    "subject": "Telemetry processing",
+    "slug": "telemetry-processing",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The path telemetry takes out of the agent's environment: only through a company-run telemetry collector (processing pipeline) that drops any signal missing its identity attributes and raises a policy violation; exported to an operational monitoring backend and, unsampled and unfiltered, to the long-term control record store; traces sampled only for successful production runs with no error, denial, human review or irreversible action, metrics and logs never; instrumentation and collector versions pinned in the bundle"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "12.5",
+      "12.6",
+      "12.7",
+      "12.8"
+    ]
+  },
+  {
+    "subject": "Tenant agreement",
+    "slug": "tenant-agreement",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The record of each tenant and its signed agreement: legal name, a ceiling no higher than the agreement allows, permitted regions, contract and data-processing terms references, signing date and incident notification period, updated before any installation relies on a change, with no installation for a tenant lacking an approved entry; and data residency: the installation, its control records and every model, supplier and source it uses stay within the permitted regions"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.8",
+      "19.9",
+      "19.10"
+    ]
+  },
+  {
+    "subject": "Tenant exit",
+    "slug": "tenant-exit",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Deleting or returning a departing tenant's data from every store (control records, conversation records, retrieval indexes, secrets, checkpoints, backups) within the agreed period, 30 days if the agreement is silent, with each store's deletion logged as an audit event; a legal retention duty overrides deletion only when recorded on the exit record and the tenant is told"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.13"
+    ]
+  },
+  {
+    "subject": "Tenant isolation",
+    "slug": "tenant-isolation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Tenant isolation: one tenant's data is unreadable by any principal, installation, retrieval source or store serving another tenant, and every release runs an acceptance test that tries cross-tenant access through each tool and source the installation has, failing the release if the attempt succeeds"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.11"
+    ]
+  },
+  {
+    "subject": "Threat intelligence review",
+    "slug": "threat-intelligence-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Threat intelligence review: at least quarterly, over supplier advisories, vulnerability sources and published research on attacks against agents, recording which findings re-rate a supplier, change how an agent behaves when something it depends on fails, change an incident class or change a requirement"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "26.4"
+    ]
+  },
+  {
+    "subject": "Tool allowlist",
+    "slug": "tool-allowlist",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Least privilege for tools: the list, per tool server, of the tools an agent is permitted to call, fixed in its bundle; the harness attaches only those, so a tool the server offers but the list omits is unreachable, not merely unused, and a skill's own tool list (`allowed-tools`) cannot widen it: it is removed and recorded, leaving the allowlist the only grant"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "8.5",
+      "8.15"
+    ]
+  },
+  {
+    "subject": "Tool call confirmation",
+    "slug": "tool-call-confirmation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "An optional pause before an agent's `write` tool call, set per installation: none, the default, lets the call proceed; soft shows the caller the pending call with a cancel option and proceeds after a set timeout; choosing soft is recorded with a reason, the setting shows on each such call's trace, and a confirmation never counts as an approval or as human review"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.6",
+      "31.9"
+    ]
+  },
+  {
+    "subject": "Tool call mediation",
+    "slug": "tool-call-mediation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "A single policy enforcement point (the tool guard) that every tool call passes in every runtime: it receives the agent, installation, run, caller (the model, or agent-written code), server, tool, effect and arguments, applies any extra policy rules, and allows or denies with a reason; every denial is audit logged; an MCP gateway, if deployed, calls the same guard; code reaches only tools marked callable from code, whatever a provider says"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.1",
+      "31.2",
+      "31.3",
+      "31.8",
+      "31.12"
+    ]
+  },
+  {
+    "subject": "Tool call review",
+    "slug": "tool-call-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Human-in-the-loop review: an agent that can reach a tool with an irreversible effect either has a person approve each such call before it runs (the call is blocked until approved, a rejection or a timeout ends the run, and the reviewer is recorded) or holds a recorded approval to automate it; either way a record of the action is kept, holding at least a hash of its content"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.4",
+      "31.5"
+    ]
+  },
+  {
+    "subject": "Tool code access",
+    "slug": "tool-code-access",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Limits on tools reached from code the agent writes rather than called by the model one at a time: only tools marked callable from code (`code_callable`) may be, never an irreversible one; and a tool that runs agent-written code against another system takes the highest effect its code can reach and is permitted only if each operation is checked as a separate tool call or its credential can only read"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "8.24",
+      "8.25"
+    ]
+  },
+  {
+    "subject": "Tool definition",
+    "slug": "tool-definition",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Defence against a tool server changing what it tells the model (tool poisoning): each tool's approved name, description and input and output schemas are hashed at build and checked against what the server advertises at start-up and on every change notice, a mismatch blocking the tool; descriptions and schemas are screened for hidden instructions; and the model is shown no more tools than a set cap and context budget allow, the rest found by searching the allowlist"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "8.20",
+      "8.21",
+      "8.23"
+    ]
+  },
+  {
+    "subject": "Tool effect",
+    "slug": "tool-effect",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "How much a tool can change (read only, write, or irreversible): required for every tool an agent may call, worked out from the verb in the name of the organisation's own tools and declared for third-party ones, a tool without one failing the build, and recorded on every call's trace span and audit record so irreversible actions can be counted without parsing tool names"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "8.6",
+      "8.7"
+    ]
+  },
+  {
+    "subject": "Tool surface",
+    "slug": "tool-surface",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The only route by which an agent acts on an outside system: every tool sits behind an MCP server (a Model Context Protocol tool server) declared in the agent's bundle, pinned to an exact image digest and to an approved service registry entry, an unregistered or floating-tag server failing the build; the organisation's own tools are named verb then object from a controlled vocabulary, third-party tool names kept verbatim"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "8.1",
+      "8.2",
+      "8.3"
+    ]
+  },
+  {
+    "subject": "Toolchain configuration",
+    "slug": "toolchain-configuration",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "One project file at each repository's root declaring the interpreter version, the dependencies and every development tool's settings, with none in sub-packages; the interpreter and tools pinned, the same versions used on workstations, in CI and in image builds; and the file's governed settings and ignore-file block kept equal to a published baseline that a repository may add to but not weaken, so every repository builds and checks code alike"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "27.1",
+      "27.2",
+      "27.3"
+    ]
+  },
+  {
+    "subject": "Workload authentication",
+    "slug": "workload-authentication",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Authentication at every endpoint of a service the organisation runs (a workload), `dev` included, health checks aside: tokens checked for signature, issuer, expiry and an audience naming that workload; no token passthrough, downstream calls using its own identity or a per-call exchanged token; tokens lasting 15 minutes by default, an hour at most; sessions bound to the caller, random, expiring, never a substitute for authentication; and OAuth safeguards for third-party clients"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "21.2",
+      "21.3",
+      "21.4",
+      "21.5",
+      "21.6",
+      "21.7"
+    ]
+  },
+  {
+    "subject": "Workload baseline",
+    "slug": "workload-baseline",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The container hardening of every service the organisation runs (a workload): a non-root user, a base image pinned by digest, a read-only root filesystem and no shell where the runtime allows, declared and checked by the infrastructure pipeline, to limit what an attacker who gets inside a service can do"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "21.13"
+    ]
+  },
+  {
+    "subject": "Workload inventory",
+    "slug": "workload-inventory",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The registry of every workload the organisation builds and runs (a workload: an agent harness, internal tool server, gateway, dashboard or API), each entry recording its category, image digest, principal, token audience and each endpoint's path, method, purpose and authentication mode; an unregistered workload is not deployed and an undeclared endpoint is unreachable, and a workstation tool server that signs in to a remote service is covered by its integration record"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "21.1"
+    ]
+  },
+  {
+    "subject": "Workload permissions",
+    "slug": "workload-permissions",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Least privilege for a service the organisation runs (a workload): its downstream access listed as named scopes on its registry entry, no wildcard scopes, widened only by a registry change; and a database role limited to what its endpoints need, with no schema changes, no writes to prompt, registry or release tables beyond what releases grant, parameterised queries only (against SQL injection), and changes to the role or access logic reviewed against a security checklist"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "21.8",
+      "21.11"
+    ]
+  },
+  {
+    "subject": "Workload request handling",
+    "slug": "workload-request-handling",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Input and output validation in services the organisation runs (workloads): a JSON Schema on every endpoint's and tool's input and output, unknown fields and oversize payloads rejected before processing; errors that reveal no stack trace, internal path, query, token or secret, logged with a correlation id; and server-side request forgery (SSRF) defence when fetching URLs: private, loopback, link-local, multicast and cloud-metadata addresses denied unless allowlisted, the resolved address pinned, every redirect rechecked"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "21.9",
+      "21.10",
+      "21.12"
+    ]
+  },
+  {
+    "subject": "Workload security testing",
+    "slug": "workload-security-testing",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Penetration testing and pre-release probes of services the organisation runs (workloads): for those used by a `confidential` installation, a test by an external tester before it first reaches `prod`, then at least yearly, covering endpoint authentication, cross-user and cross-tenant access, injection, token passthrough and SSRF, with High or worse (CVSS) findings blocking promotion unless fixed or accepted; and automated `staging` probes (no token, wrong audience, unknown field, oversize payload) that block promotion if any succeeds"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "21.14",
+      "21.15",
+      "21.3"
+    ]
+  },
+  {
+    "subject": "Workstation baseline",
+    "slug": "workstation-baseline",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Endpoint security for workstations used to author, approve, operate or administer: full-disk encryption, automatic operating-system and browser updates, endpoint protection, five-minute screen lock and a non-administrator daily account, attested at onboarding and each access review; no production secrets or data or non-public tenant data on it outside emergency access, nor pasted into AI tools or chats; pre-commit secret scanning; no removable media; verified, recorded wipe before disposal"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "20.9",
+      "20.10",
+      "20.14"
+    ]
+  }
+]

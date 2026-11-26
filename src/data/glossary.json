@@ -1,0 +1,187 @@
+[
+  {
+    "term": "Agent",
+    "slug": "agent",
+    "meaning": "A governed unit of behaviour defined by a manifest: prompt, model, skills, tools and policies."
+  },
+  {
+    "term": "Artifact",
+    "slug": "artifact",
+    "meaning": "Any text or file an agent is built from or loads at runtime, such as its manifest, system prompt, prompt fragments, skills, tool definitions and evaluation cases. The agent's own artifacts live in its folder in the repository; shared ones are Registry entries, resolved into the Bundle at build."
+  },
+  {
+    "term": "Asset Owner",
+    "slug": "asset-owner",
+    "meaning": "The person accountable for an asset through its life: its classification, who may access it, and its handling up to disposal (ISO/IEC 27001 A.5.9). For an asset recorded as a registry entry, the Entry Owner is its Asset Owner. Each Asset Class names the Asset Owner of the class in its asset document."
+  },
+  {
+    "term": "Build Environment",
+    "slug": "build-environment",
+    "meaning": "The CI (continuous integration) runners and images that turn a merged commit into a bundle or a workload image."
+  },
+  {
+    "term": "Bundle",
+    "slug": "bundle",
+    "meaning": "An immutable, content-addressed package of every artifact one agent version needs, built by CI for one Installation: for example, the agent's manifest, its prompt with shared fragments inlined, its skills and tool definitions, its model parameters and its evaluations. It is identified by its hash (`bundle_sha`) and held in write-once bundle storage."
+  },
+  {
+    "term": "Ceiling",
+    "slug": "ceiling",
+    "meaning": "The highest classification a model, supplier or installation is approved for."
+  },
+  {
+    "term": "Classification",
+    "slug": "classification",
+    "meaning": "The sensitivity of data: `public`, `internal`, `confidential`."
+  },
+  {
+    "term": "Conformance Checks",
+    "slug": "conformance-checks",
+    "meaning": "The global, agent-agnostic set of Check Controls every bundle must pass, applied gate by gate. A bundle conforms at a Gate when every blocking Check Control for that Gate, and for every Gate before it, has passed for its `bundle_sha`. `CHK-28` is the gate check at each CI Gate."
+  },
+  {
+    "term": "Control Owner",
+    "slug": "control-owner",
+    "meaning": "The role accountable for one control operating as defined and producing its control records, wherever the control applies."
+  },
+  {
+    "term": "Control Record",
+    "slug": "control-record",
+    "meaning": "The record that a control of any kind operated: a CI result, an audit row, a signed approval, a drift report. The audit row and log event a Governed Event leaves are one kind of Control Record. ISO/IEC 27001 and auditors call this evidence."
+  },
+  {
+    "term": "Deployment Environment",
+    "slug": "deployment-environment",
+    "meaning": "A stage an installation is released to, such as `dev`, `staging` or `prod`, recorded as an `environments` registry entry."
+  },
+  {
+    "term": "Developer Environment",
+    "slug": "developer-environment",
+    "meaning": "The declared container in which a person or a coding agent writes, runs and tests code and agents before merge."
+  },
+  {
+    "term": "Effect",
+    "slug": "effect",
+    "meaning": "The side-effect class of an action: `read`, `write` or `irreversible`."
+  },
+  {
+    "term": "End User",
+    "slug": "end-user",
+    "meaning": "Someone at a Tenant, its staff or a customer, who uses an Installation and on whose behalf a run may act."
+  },
+  {
+    "term": "Entry Owner",
+    "slug": "entry-owner",
+    "meaning": "The person accountable for a registry entry: its accuracy, its status and its approvals."
+  },
+  {
+    "term": "Evaluation",
+    "slug": "evaluation",
+    "meaning": "A test case of an agent's behaviour: an input, the output or action the agent must produce, and how a pass is judged. An agent's evaluations together are its evaluation set, also called a golden dataset; they are part of its bundle and run before it is released."
+  },
+  {
+    "term": "Governing Document",
+    "slug": "governing-document",
+    "meaning": "This policy, a control policy file, the Standard (including the control catalogue and the risk method), the Reference Implementation (formerly the Template), the Procedures, an asset document, the Graph Schema or the Limitations document."
+  },
+  {
+    "term": "Guardrail",
+    "slug": "guardrail",
+    "meaning": "A named class of content the response screen detects in what an agent returns to its caller — personal data, hateful text, harmful content — with one action: log, mask or block. Every match is logged, whatever the action."
+  },
+  {
+    "term": "Harness",
+    "slug": "harness",
+    "meaning": "The program that runs an agent. It loads the agent's bundle, gives the model only the tools and data the bundle allows, and runs the callbacks that check each call before and after it happens."
+  },
+  {
+    "term": "Installation",
+    "slug": "installation",
+    "meaning": "One deployment of an agent for one tenant, with its own principal, region, classification ceiling and release pointer."
+  },
+  {
+    "term": "Model",
+    "slug": "model",
+    "meaning": "The AI model, usually a large language model, that reads an agent's prompt and produces its replies and tool calls. An agent names its model only by a model registry entry, never by a provider's model name."
+  },
+  {
+    "term": "Organisation",
+    "slug": "organisation",
+    "meaning": "The company that adopts this framework and builds and runs its agents and workloads."
+  },
+  {
+    "term": "Person",
+    "slug": "person",
+    "meaning": "A human with a role in the framework (author, reviewer, approver, operator or administrator), identified by one permanent `person_id` and governed as the asset class `person`."
+  },
+  {
+    "term": "Principal",
+    "slug": "principal",
+    "meaning": "The workload identity (service account) an installation runs as."
+  },
+  {
+    "term": "Production",
+    "slug": "production",
+    "meaning": "The Deployment Environment `prod`, last in promotion order, in which installations serve their tenant's real End Users and data."
+  },
+  {
+    "term": "Prompt",
+    "slug": "prompt",
+    "meaning": "The instruction text an agent is given before any user input, composed from the agent's own text and shared fragments from the `prompts` registry."
+  },
+  {
+    "term": "Registry",
+    "slug": "registry",
+    "meaning": "The version-controlled source of truth for one kind of entity that is defined once and referred to elsewhere only by id, such as models, suppliers, tenants or shared skills. It changes only by merge, and each projection is a Governed Event; every Governed Event is judged against the entries in force when it happened."
+  },
+  {
+    "term": "Release Pointer",
+    "slug": "release-pointer",
+    "meaning": "The record stating which bundle is live for an installation in an environment."
+  },
+  {
+    "term": "Repository",
+    "slug": "repository",
+    "meaning": "A version-controlled Git repository holding governed artifacts, the Governance Project's or a Governed Project's. It is the one source of truth for what it holds and changes only by a reviewed, merged pull request."
+  },
+  {
+    "term": "Risk Owner",
+    "slug": "risk-owner",
+    "meaning": "The person with the accountability and authority to manage a risk: they choose its treatment and accept the residual risk (ISO/IEC 27001 6.1.2 c) 2), 6.1.3 f))."
+  },
+  {
+    "term": "Runtime Environment",
+    "slug": "runtime-environment",
+    "meaning": "The harness and workloads an installation runs on once released, with their principal and network."
+  },
+  {
+    "term": "Secret",
+    "slug": "secret",
+    "meaning": "Any value whose possession grants access, such as an API key, password, token or private key. Where workload identity cannot replace it, it is held only in the secret store."
+  },
+  {
+    "term": "Skill",
+    "slug": "skill",
+    "meaning": "Instruction and reference material, with any scripts, that an agent loads on demand rather than at start, held in a folder with a `SKILL.md` file. A skill used by more than one agent is a `skills` registry entry."
+  },
+  {
+    "term": "Supplier",
+    "slug": "supplier",
+    "meaning": "An external party whose services the organisation or its agents consume, such as a model provider, a cloud or a tool-server vendor; each product consumed from it is a separate service. `INTERNAL` stands for the organisation itself."
+  },
+  {
+    "term": "Tenant",
+    "slug": "tenant",
+    "meaning": "The organisation on whose behalf an installation runs; `internal` for the company itself."
+  },
+  {
+    "term": "Tool",
+    "slug": "tool",
+    "meaning": "A named operation an agent can call to act outside its own context, such as reading a record or sending a message. A tool is served by a tool server (an MCP server), has an Effect and can be called only if it is on the agent's allowlist."
+  },
+  {
+    "term": "Workload",
+    "slug": "workload",
+    "meaning": "A program the organisation builds and runs, such as a harness, internal MCP server, gateway, executor, dashboard or collector, each with its own image and principal."
+  }
+]

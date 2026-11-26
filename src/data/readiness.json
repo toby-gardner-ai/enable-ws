@@ -1,0 +1,1547 @@
+[
+  {
+    "id": "use-cases-value",
+    "name": "Use Cases & Value",
+    "questions": [
+      {
+        "id": "machine-learning-how-do-you-define-and-align-performance-requirements-with-business-object",
+        "title": "How do you define and align performance requirements with business objectives for your ML initiatives?",
+        "description": "Establish clear performance efficiency targets that directly support your ML business goals.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Determine key performance indicators",
+            "why": "Use guidance from business stakeholders to capture key performance indicators (KPIs) relevant to the business use case. The KPIs should be directly linked to business value to guide acceptable model performance. Consider that machine learning inferences are probabilistic and will not provide exact results. Identify a minimum acceptable accuracy and maximum acceptable error in the KPIs. This enables you to achieve the required business value and manage the risk of variable results."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-do-you-define-the-specific-problem-you-are-trying-to-solve",
+        "title": "How do you define the specific problem you are trying to solve?",
+        "description": "The narrower the use case, the more precisely you can assess and mitigate risks and measure performance.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Clarify the business problem",
+            "why": "Describe the specific problem or business challenge. Assess how frequently the challenge occurs, where it occurs, and its concrete impacts. Describe the specific benefit of solving the challenge for the primary user for your use case."
+          },
+          {
+            "title": "Verify that AI is required to solve the problem",
+            "why": "Before committing to using AI, evaluate whether traditional software approaches or even manual processes could meet your requirements. Choose AI if it provides clear, substantial benefits over competing solutions, and not simply because it is technically possible to apply AI to the problem."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-characterize-intended-benefits",
+        "title": "How will you characterize intended benefits?",
+        "description": "Identify the benefits to each type of downstream stakeholder. Example benefits could include efficiency improvements, cost reductions, and enhanced experiences. Benefits are the fundamental justification for your system and provide a foundation for making trade-off decisions throughout the development lifecycle. Capture the highest impact benefits, irrespective of how precisely they can be measured. This approach assists you to align development priorities with stakeholder needs rather than being driven by technical capabilities alone.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Aggregate beneficial events into intended benefits",
+            "why": "Identify the specific beneficial events that could assist each type of downstream stakeholder. Translate these events into specific intended benefits for the use case."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  },
+  {
+    "id": "people-skills-culture",
+    "name": "People, Skills & Culture",
+    "questions": [
+      {
+        "id": "machine-learning-how-does-your-organizational-structure-and-culture-support-your-business",
+        "title": "How does your organizational structure and culture support your business outcomes?",
+        "description": "Organizational structure and organizational culture have a direct impact on business outcomes. Your teams must understand their part in achieving business outcomes. Teams need to understand their roles in the success of other teams, the role of other teams in their success, and have shared goals. Understanding responsibility, ownership, how decisions are made, and who has authority to make decisions will help focus efforts and maximize the benefits from your teams.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Develop the right skills with accountability and empowerment",
+            "why": "Artificial intelligence (AI) has many different and growing branches, such as machine learning, deep learning, and computer vision. Given the complexity and fast-growing nature of ML technologies, plan to hire specialists with the understanding that additional training will be needed as ML evolves. Keep teams learning new skills, engaged, and motivated while encouraging accountability and empowerment. Building ML models is a complex and iterative process that can infuse bias or unfair predictions against a certain entity. It's important to promote and enforce the ethical use of AI across enterprises. AWS provides clear guidance to customers for responsible AI practices."
+          },
+          {
+            "title": "Discuss and agree on the level of model explainability",
+            "why": "Establish clear expectations with business stakeholders about the level of model explainability needed for your machine learning use case. Explainability provides an understanding of how and why a model makes predictions, which builds trust, enables auditing, and supports adherence to regulatory requirements."
+          },
+          {
+            "title": "Monitor model adherence to business requirements",
+            "why": "Machine learning models degrade over time due to changes in the real world, such as data drift and concept drift. If not monitored, these changes could lead to models becoming inaccurate or even obsolete over time. It's important to have a periodic monitoring process in place to make sure that your ML models continue to comply to your business requirements and that deviations are captured and acted upon promptly."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  },
+  {
+    "id": "data-foundations",
+    "name": "Data Foundations",
+    "questions": [
+      {
+        "id": "machine-learning-how-do-you-ensure-reliable-and-resilient-data-processing-pipelines-for-yo",
+        "title": "How do you ensure reliable and resilient data processing pipelines for your ML workflows?",
+        "description": "Implement robust and fault-tolerant data processing pipelines that maintain data quality and availability for ML workflows.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Use a data catalog",
+            "why": "Process data across multiple data stores using data catalog technology. An advanced data catalog service can enable ETL process integration. This approach improves reliability and efficiency."
+          },
+          {
+            "title": "Use a data pipeline",
+            "why": "Automate the processing, movement, and transformation of data between different compute and storage services. This automation enables data processing that is fault tolerant, repeatable, and highly available."
+          },
+          {
+            "title": "Automate managing data changes",
+            "why": "Effective management of machine learning training data changes is crucial for maintaining model reproducibility and providing consistent performance over time. By implementing automated version control for training data, you can precisely recreate a model version when needed and maintain a clear audit trail of data transformations."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-identify-which-datasets-are-needed-to-evaluate-train-and-opera",
+        "title": "How will you identify which datasets are needed to evaluate, train, and operate your AI system?",
+        "description": "Datasets assist you to develop an AI system that solves your use case and evaluate whether your system has met your release criteria.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Identify evaluation datasets needed to measure system performance against release criteria",
+            "why": "Work backwards from your release criteria to identify the specific evaluation datasets needed to test each one. Validate that each dataset has the right characteristics for its purpose (for example, demographic labels for fairness testing, harmful content examples for safety testing, and sufficient sample sizes for statistical confidence). Track mappings between datasets and criteria so you can verify complete coverage and maintain traceability between your release criteria and testing approach."
+          },
+          {
+            "title": "Identify the datasets needed for training and customizing your system",
+            "why": "Identify and plan datasets needed to train your AI system to meet your release criteria. Determine which dataset types (training, fine-tuning, validation, calibration, and alignment) you need based on your training approach, assess existing data to identify gaps, then acquire or build the missing datasets through external sources, your own collection, crowdsourcing, or synthetic generation. Finally, plan how to combine and allocate your datasets while keeping them separate from evaluation data and maintaining proper representation across user groups."
+          },
+          {
+            "title": "Identify auxiliary datasets needed to operate your system",
+            "why": "Auxiliary data covers additional data that affects your system behavior beyond the training, validation, and evaluation datasets, such as knowledge bases used at inference time by RAG systems. Identify auxiliary data sources that affect system behavior during operation. Determine whether auxiliary datasets should be identical between evaluation and deployment environments or if differences are acceptable based on your use case requirements."
+          },
+          {
+            "title": "Identify potential overlaps between datasets",
+            "why": "Check for unintended data overlap between your training, evaluation, and auxiliary datasets. Ideally, evaluation datasets will contain entirely new examples that your system has never encountered during training, as testing on previously seen data can result in overconfidence in your system capabilities due to overfitting or memorization. Verify that you do not include public benchmarks used for evaluation in training data, particularly when using foundation models where training data provenance may be unclear. Document unavoidable overlaps and assess their potential impact on evaluation validity."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-assess-dataset-quality",
+        "title": "How will you assess dataset quality?",
+        "description": "Measure the quality, representativeness, and coverage of your datasets. Does the dataset cover the range of inputs that your system needs to handle? Are there enough examples in the dataset to measure every release criterion with high confidence?",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Validate the representativeness of datasets for the use case",
+            "why": "Consider whether your datasets accurately reflect the real-world conditions where your system will be used. Gather examples that represent your users while filtering out data from contexts that don't match your use case. This is especially relevant for fine-tuning, alignment, and calibration sets, and for evaluation sets since testing on unrepresentative data can make it seem that your system works better (or worse) than it really does. Ask yourself: \"Does this dataset reflect how my system will be used and exclude scenarios that are not part of my use case?\" Document what you've included and excluded so you know where your results might not be sufficient."
+          },
+          {
+            "title": "Set dataset quality requirements based on your release criteria",
+            "why": "Work backwards from your release criteria to define the quality standards for each dataset, then select metrics and thresholds to measure when your data meets those standards. Think of this as creating data readiness criteria just like your system release criteria. Data quality means different things depending on how you'll use the data and what your release criteria need. For example, it could mean label accuracy, representation across user groups, diversity of examples, or completeness of coverage. For each dataset, pick specific quality metrics that align with your release criteria and set minimum thresholds that should be met before using that data. Different datasets need different quality bars. For example, evaluation sets require higher quality standards than training sets."
+          },
+          {
+            "title": "Validate the quality of human and generated labels and features in your dataset",
+            "why": "Implement quality control mechanisms for human annotators including training processes, unwanted bias identification, and inter-rater agreement measurements. Assess potential sources of unwanted human bias and establish procedures to minimize their impact on label quality. When using synthetic or model-generated labels, validate their accuracy against human judgment and document known limitations that affect reliability. Track annotator performance over time and implement feedback mechanisms to maintain consistent labeling standards across your datasets."
+          },
+          {
+            "title": "Validate the quality and reliability of augmented or synthetic datasets",
+            "why": "Assess the quality of model-generated labels and synthetic examples against human evaluation standards. Identify potential sources of unwanted bias in synthetic data generation. Validate that synthetic data maintains the statistical properties needed for your specific datasets and doesn't exclude important edge cases. Document the limitations of synthetic approaches and verify that synthetic examples can effectively substitute for real data in representing the phenomena you care about."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-manage-dataset-access-and-versioning",
+        "title": "How will you manage dataset access and versioning?",
+        "description": "Reduce the risk of data manipulation by checking for data integrity and by providing the minimal access necessary. Implement a taxonomy (for example, classified, confidential, proprietary, and public) to classify data that interacts with your AI system. Align access rights to the classification of each data source.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Create a dataset registry",
+            "why": "Create a registry to track dataset versions, metadata, and usage across training, evaluation, and operational contexts. Store datasets with version control, including local copies of public benchmarks to assist builders with reproducibility as external datasets evolve. Document the provenance, characteristics, and intended use of each dataset version to enable others to understand appropriate usage and limitations. Link dataset versions to specific system training events and evaluation results to maintain traceability between data changes and performance outcomes."
+          },
+          {
+            "title": "Periodically evaluate and update datasets in the registry",
+            "why": "Schedule regular review cycles that assess whether existing datasets still meet your evolving requirements and quality standards. Increment version numbers and update associated documentation whenever datasets change, maintaining records of what changed and why. Assess whether dataset updates require corresponding system retraining or evaluation re-runs to maintain validity of previous results. Remove or archive outdated dataset versions while preserving the ability to reproduce historical results when needed for auditing or comparison purposes."
+          },
+          {
+            "title": "Protect data from being manipulated or accessed for unintended purposes",
+            "why": "Implement the principle of least privilege, only providing access to relevant data to those who really need it for both automated systems and human users accessing your datasets. Consider scanning datasets for unwanted content, including adversarial prompts, disinformation, malware, or other data poisoning attempts that could affect downstream system behavior. Establish access controls and audit trails that track who accesses datasets and what modifications are made. Use cryptographic verification methods where appropriate to detect unauthorized changes to critical datasets, particularly those used for evaluation or system operation."
+          },
+          {
+            "title": "Establish governance procedures for managing your datasets",
+            "why": "Maintain procedures for managing dataset access, retention, and deletion throughout the AI system lifecycle. Implement mechanisms to handle individual data requests, including the ability to remove individual data points when contributors withdraw consent. Document data lineage and retention policies that specify how long different types of data can be stored and used. Create procedures for handling governance-related dataset updates."
+          },
+          {
+            "title": "Document the characteristics of each dataset using a datasheet",
+            "why": "Create datasheets that document the intended uses, composition, and collection process for each dataset. Include information about data sources, collection methodologies, potential unwanted biases, and recommended and prohibited use cases to assist others to understand appropriate applications. Document the characteristics of data contributors and annotators, including demographic information and potential sources of unwanted bias that could affect system behavior. Maintain datasheets as living documents that are updated when datasets change or when new insights about their characteristics or limitations are discovered."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  },
+  {
+    "id": "platform-architecture",
+    "name": "Platform & Architecture",
+    "questions": [
+      {
+        "id": "agentic-ai-how-do-you-establish-tool-integration-and-management-practices",
+        "title": "How do you establish tool integration and management practices?",
+        "description": "Agents rely on external tools and services to complete work, and the way those integrations are managed determines whether agent behavior stays consistent as the tool inventory grows. Without a shared registry, standardized protocols, and common fallback behavior, every new tool adds operational burden and every tool failure risks broader agent outages.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement tool registry and catalog management",
+            "why": "Agents that can't discover tools end up with hardcoded integrations, inconsistent documentation, and a maintenance tax that grows with every new capability. A centralized registry makes the tool catalog queryable, versioned, and governable."
+          },
+          {
+            "title": "Establish standardized tool integration protocols (MCP, A2A)",
+            "why": "Point-to-point integrations between every agent and every tool produce a maintenance burden that grows with the number of integrations. Standardized protocols like MCP and A2A replace this with a shared contract, which defaults to interoperability instead of tools that are custom-made for specific integrations."
+          },
+          {
+            "title": "Develop fallback behavior and error handling for tool invocations",
+            "why": "Tools failing is a reality in modern architectures. The question is whether the agent degrades gracefully to an alternative, falls back to a manual process, or returns an error and halts. Well-designed fallback chains and automatic cutoffs keep tool failures from becoming agent failures."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-i-develop-reliable-agentic-systems",
+        "title": "How do I develop reliable agentic systems?",
+        "description": "Agents combine compute, memory, cognition, and orchestration components, and each component is a point where a workflow can fail. Organizations that run agents on resilient messaging, modular fault isolation, and adaptive provisioning spend less time repairing infrastructure and more time improving agent capabilities.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement a resilient messaging layer",
+            "why": "Direct agent-to-agent calls couple failure modes. When one agent fails, everything downstream fails with it. A messaging layer with persistence, retry, and dead-letter handling absorbs transient faults and lets workflows resume from where they stopped."
+          },
+          {
+            "title": "Establish modular, fault-isolated layers",
+            "why": "Monolithic agent architectures force every fault to become a full-system fault. Splitting compute, memory, reasoning, and orchestration into independently scalable layers with fail-fast boundaries keeps the scope of impact small. Teams keep serving requests at reduced capability instead of going unavailable."
+          },
+          {
+            "title": "Design specialized agents following actor model principles",
+            "why": "Multi-purpose agents concentrate risk. A single failure in one function affects every other function in the same process. Specialized agents that encapsulate one atomic capability, own their state, and communicate through messages keep the impact proportional to the scope of the failing component."
+          },
+          {
+            "title": "Standardize communication protocols",
+            "why": "Custom message formats between every agent pair turn new integrations into one-off engineering projects. Standardized schemas, versioned endpoints, and a canonical error format let agents compose into workflows without a translation layer at every boundary."
+          },
+          {
+            "title": "Implement adaptive provisioning",
+            "why": "Static provisioning forces a choice between over-paying for peak and failing under load. Agent workloads shift minute to minute, so capacity, model tier, and quota must respond to task complexity and current demand without operator intervention."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-support-agent-memory-and-state-remaining-reliably-accessible-through",
+        "title": "How do you support agent memory and state remaining reliably accessible throughout the agent lifecycle?",
+        "description": "Agents that classify, persist, and recover memory reliably deliver consistent behavior across sessions and maintain functionality even during component failures. Agent memory is beholden to the same reliability considerations of any data store. How do you support returning the right information, and how does the agent behave when state is unavailable.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Design an information classification model to identify short-term and long-term memories",
+            "why": "A single undifferentiated memory store blurs conversation context with durable knowledge and pulls stale or irrelevant data into active tasks. Classifying memory at ingestion time and routing each item to the right tier keeps retrieval predictable and storage costs aligned with how long each type actually needs to live."
+          },
+          {
+            "title": "Architect fault-tolerant memory stores with redundancy and failover",
+            "why": "Memory failures don't need to mean agent failures. With redundancy, fallback paths, and a discipline of testing failover under controlled conditions, an agent keeps serving reduced-capability responses until its primary stores recover instead of becoming completely unavailable."
+          },
+          {
+            "title": "Implement comprehensive state management and checkpoint-based recovery",
+            "why": "Long-running workflows without checkpoints pay the full restart cost for every failure, no matter how late it happens. Persisting state at natural boundaries and designing every step to be idempotent lets an agent resume from the last completed checkpoint rather than redo work."
+          },
+          {
+            "title": "Implement graceful degradation for memory and state operations",
+            "why": "Treating every memory failure as fatal turns recoverable issues into total outages. An explicit degradation hierarchy with documented modes and automatic recovery keeps agents partially useful and transparent about their reduced state."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-orchestrate-multi-agent-systems-to-reliably-execute-tasks",
+        "title": "How do you orchestrate multi-agent systems to reliably execute tasks?",
+        "description": "Multi-agent systems that implement centralized coordination, capability-based routing, and pre-defined fallback chains execute tasks reliably even when individual agents fail. Multi-agent workflows must be highly orchestrated and controlled to help prevent unreliable agent executions from disrupting an entire workflow.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement the arbiter agent pattern for coordinated multi-agent systems",
+            "why": "Peer-to-peer coordination among agents produces deadlocks and conflicting actions at scale. A dedicated arbiter that activates only for conflict resolution preserves agent autonomy for normal work while providing a single authoritative place to resolve contention over shared resources."
+          },
+          {
+            "title": "Classify agents with a thorough capability taxonomy",
+            "why": "Orchestrators that pick agents by hardcoded identifiers can't adapt when the preferred agent is unavailable or when a new equivalent arrives. A structured capability taxonomy gives the orchestrator a basis for routing decisions, and substitution becomes automatic rather than a redeployment."
+          },
+          {
+            "title": "Implement fallback mechanisms and graceful degradation for collaborative workflows",
+            "why": "One unavailable agent should not take down an entire workflow. Pre-defined fallback chains let orchestrators swap in alternatives, preserving forward progress with reduced quality rather than a complete stall."
+          },
+          {
+            "title": "Implement resilient control planes for agent coordination",
+            "why": "A control plane that fails takes every agent with it. Applying the same reliability principles used on agents, redundancy, durable state, and loose coupling, to the coordination infrastructure keeps workflows running during brief outages and preserves state across restarts."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-agents-integrate-effectively-with-existing-systems-without-impacting-the",
+        "title": "How do agents integrate effectively with existing systems without impacting the reliability of established processes?",
+        "description": "Agents that integrate with existing systems through adapter patterns and abstraction interfaces preserve legacy system stability while enabling automation of established workflows. These systems might not be optimized for agent interactions and might require support for protocols such as MCP or A2A. How do agents integrate effectively without impacting the reliability of established processes.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Develop agent-based integrations with existing or legacy systems",
+            "why": "Legacy systems expose interfaces built for synchronous, deterministic callers, while agents are asynchronous and probabilistic. Adapter layers translate between the two worlds so agents can use existing capabilities without the legacy side needing to change."
+          },
+          {
+            "title": "Establish fallback mechanisms for legacy system degradation",
+            "why": "Legacy systems carry lower availability SLAs than cloud-based services, and their failure modes are often unpredictable. Health-aware fallback paths, caches for reference data, queues for transactions, graceful degradation for real-time, keep agent workflows running through legacy outages."
+          },
+          {
+            "title": "Regularly test degraded system performance",
+            "why": "Resilience claims that have never been tested under real failure conditions are just aspirations. Regular chaos engineering, fault injection, and load testing under constrained resources reveal the gaps in fallback coverage while the environment is safe to break."
+          },
+          {
+            "title": "Implement idempotent task execution patterns",
+            "why": "Retry is the most common recovery mechanism, and without idempotency it can produce duplicate side effects. Deterministic idempotency keys and conditional writes let operations be retried safely without producing duplicate side effects."
+          },
+          {
+            "title": "Implement dynamic capability toggling",
+            "why": "Taking an entire agent offline to fix one misbehaving feature is disproportionate. Feature flags at the gateway boundary let operators disable the affected capability immediately, keeping the rest of the agent usable while fixes or investigations proceed."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-achieve-efficient-communication-and-protocol-usage-across-agent-inte",
+        "title": "How do you achieve efficient communication and protocol usage across agent interactions?",
+        "description": "Efficient communication between agents, tools, and services scales multi-agent systems from prototypes to production without latency growing alongside complexity. Agentic AI systems rely on communication between agents, tools, services, and users through various protocols and messaging patterns. The efficiency of these communication channels directly impacts agent performance. Every message exchange adds latency, every protocol handshake consumes time, and every serialization or deserialization operation uses compute resources. Optimizing communication requires selecting appropriate protocols for each interaction pattern, implementing efficient asynchronous messaging, and designing event-driven architectures that minimize polling and unnecessary processing.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Optimize asynchronous message handling patterns",
+            "why": "Asynchronous messaging lets agents operate independently at their optimal pace, with message queues absorbing throughput variations and leveling load across the workflow. Synchronous request-response patterns create tight coupling that makes a slow downstream agent block the entire upstream chain. Async decouples producers from consumers so fast agents are not held up by slow ones."
+          },
+          {
+            "title": "Implement efficient protocol-based agent communications",
+            "why": "Standardized protocols such as the Model Context Protocol (MCP) and agent-to-agent (A2A) give agents a consistent way to communicate with tools and each other, reducing per-interaction overhead and enabling interoperability. Different protocols have different performance profiles, connection establishment, serialization, streaming, multiplexing, which makes protocol selection a meaningful performance decision for high-frequency agent communication."
+          },
+          {
+            "title": "Design high-performing event-driven integration patterns",
+            "why": "Agents that react to events in real time, data changes, user actions, and system alerts deliver faster business outcomes than agents that poll for work. Overly broad event subscriptions trigger agents for irrelevant events, missing filtering causes agents to process and discard events they don't need. Inefficient routing adds delays that push response time past user expectations."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-optimize-workflow-orchestration-and-multi-agent-collaboration-for-pe",
+        "title": "How do you optimize workflow orchestration and multi-agent collaboration for performance?",
+        "description": "The most impactful agent use cases (complex research, multi-domain customer service, and process automation) require multiple agents working together, and well-designed orchestration is what makes the whole greater than the sum of its parts. Complex agentic AI systems often involve multiple agents collaborating to solve tasks that exceed the capability of any single agent. Workflow orchestration coordinates these multi-agent interactions through patterns like supervisor-worker hierarchies, peer-to-peer collaboration, and pipeline-based task decomposition. The performance of multi-agent systems depends on how efficiently work is distributed, how agents are selected and invoked, how intermediate results are passed between agents, and how parallel execution is used to reduce latency.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Design efficient workflow orchestration patterns",
+            "why": "Agents that coordinate specialized sub-agents can solve complex tasks faster than any single agent, and the orchestration pattern you choose determines whether that coordination adds milliseconds or seconds. Orchestration patterns range from static workflows (the execution graph is fully defined at design time) to dynamic workflows (the agent's reasoning determines the next step at runtime). Efficient orchestration means decomposing tasks for parallelism, minimizing data passed between steps, and matching the orchestration pattern to the task's dependency structure."
+          },
+          {
+            "title": "Implement optimized multi-agent collaboration models",
+            "why": "Multi-agent systems typically deliver the strongest results when each collaboration pattern is matched to the task it was designed for (for example, supervisor-worker for structured decomposition, swarm for creative exploration, and pipeline for sequential processing). Before picking any multi-agent pattern, decide whether a capability should be a sub-agent or a tool that a single agent invokes. A tool call completes in milliseconds, while a sub-agent delegation is a full LLM reasoning loop that costs time and tokens."
+          },
+          {
+            "title": "Optimize multi-stage AI pipeline execution",
+            "why": "Real-world agent tasks rarely complete in a single step. Document processing, data analysis, and customer service workflows all involve multiple sequential stages where each stage's throughput is limited by the slowest process or mechanism. Each stage transition introduces overhead (like serialization, network transfer, or cold starts), and streaming or micro-batching allows downstream stages to begin processing before upstream stages complete, overlapping execution to cut total latency."
+          },
+          {
+            "title": "Implement efficient agent delegation and handoff patterns",
+            "why": "Smooth agent-to-agent transitions make multi-agent workflows feel like a single cohesive experience, where the receiving agent picks up exactly where the delegating agent left off. Delegation and handoff both require efficient context transfer. The receiving agent needs enough context to act, but transferring too much wastes time and tokens."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-optimize-tool-integrations-and-framework-usage-for-agent-performance",
+        "title": "How do you optimize tool integrations and framework usage for agent performance?",
+        "description": "Agents extend their capabilities by invoking external tools (APIs, databases, search engines, code interpreters, and other services) and operate within frameworks that provide the scaffolding for agent behavior. The performance of tool integrations directly impacts agent responsiveness because tool invocations occur within the agent reasoning loop, adding latency to every iteration that requires external capabilities. Framework selection and configuration similarly affect performance through their impact on agent loop efficiency, memory management, and orchestration overhead. Optimizing this layer requires selecting frameworks that minimize overhead, designing tool integration strategies that reduce invocation latency, implementing efficient tool discovery and selection mechanisms, and using meta-tools that compose multiple capabilities into single efficient operations.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Design optimized tool integration strategies",
+            "why": "Agents that surface the right tools at the right time respond faster and make better decisions. LLMs make increasingly poor tool selection decisions once the candidate set grows beyond 10-15 tools, so dynamic filtering, parallel execution, and cached results keep the reasoning loop tight even as the tool catalog grows. Tool invocations happen inside the reasoning loop, which means their latency adds directly to response time."
+          },
+          {
+            "title": "Implement efficient tool invocation patterns",
+            "why": "Well-tuned tool invocation patterns help the agent's responsiveness reflect the tool's actual processing time, not infrastructure overhead. Each tool invocation involves connection establishment, serialization, network transfer, processing, and deserialization, trimming each component compounds across the many tool calls in a typical agent task."
+          },
+          {
+            "title": "Optimize meta-tool utilization and tool chaining",
+            "why": "Meta-tools let agents accomplish in one reasoning step what would otherwise take five. For tasks that require a predictable sequence of tool calls, a meta-tool combines the entire sequence into a single server-side operation and returns the final result in one reasoning iteration instead of many, cutting both latency and token cost by removing intermediate reasoning steps."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-manage-multitenant-performance-isolation-and-optimize-resource-utili",
+        "title": "How do you manage multitenant performance isolation and optimize resource utilization?",
+        "description": "A well-designed multitenant agent service lets organizations serve many teams and customers from shared infrastructure while delivering consistent, predictable performance to each. Multitenant agent deployments must isolate one tenant's workload so it can't degrade the performance experienced by other tenants, and at the same time optimize overall resource utilization to control costs. This requires designing deployment models that provide appropriate isolation boundaries, implementing throttling and quota mechanisms that enforce fair resource allocation, and right-sizing serverless compute configurations for the bursty nature of agent workloads.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Design efficient multitenant agent deployment models",
+            "why": "Organizations that serve multiple tenants from a shared agent service get better resource efficiency and faster tenant onboarding when the deployment model delivers consistent performance for every tenant. Siloed deployments provide strong isolation at higher cost. Pooled deployments maximize efficiency but need mechanisms to help prevent noisy neighbor effects. Hybrid models combine both, using pooled resources for standard tenants and dedicated resources for premium tenants."
+          },
+          {
+            "title": "Implement tenant-aware performance isolation and throttling",
+            "why": "Trust in a shared agent service is built through consistent, predictable performance for every tenant, even during demand spikes. In pooled multitenant deployments, effective isolation requires throttling at multiple layers (API, inference, memory, and tools), monitoring per-tenant resource consumption, and adaptive fairness mechanisms that distribute shared resources equitably based on current load."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-design-workloads-for-interoperability-and-portability-acros",
+        "title": "How do you design workloads for interoperability and portability across jurisdictions?",
+        "description": "This capability covers workload design patterns that enable deployment, migration, and recovery across jurisdictions with minimal rework when conditions change.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Design workloads for greater interoperability and portability",
+            "why": "Design workloads so they can be deployed, migrated, or recovered within or across jurisdictions when conditions require. Abstract Region-specific, service-specific dependencies. Use standards-based storage formats, data formats, table formats, and protocols. Plan ahead for data export and migration scenarios."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-select-the-right-sovereign-solution-for-each-workload",
+        "title": "How do you select the right sovereign solution for each workload?",
+        "description": "This capability covers the evaluation and selection of sovereign deployment options across the continuum of AWS Regions, European Sovereign Cloud, Dedicated Local Zones, and Outposts, using data-driven criteria rather than blanket policies.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Evaluate sovereign solutions using a data-driven approach",
+            "why": "Sovereign workloads require architecture decisions grounded in evidence rather than assumptions. This best practice establishes a three-stage evaluation approach (baseline your sovereignty requirements, define what you expect from your service providers, and document what you need to build on top) that can be tailored to your organization's regulatory environment, risk appetite, and operational maturity."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-maintain-reliable-communication-among-different-components-of-you",
+        "title": "How do you maintain reliable communication among different components of your generative AI architecture?",
+        "description": "Generative AI workloads often comprise several independent systems, including foundation models, databases, data processing pipelines, prompt catalogs, and APIs for agents. These systems communicate over a network and require reliable, secure, and performant connectivity.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Implement redundant network connections among model endpoints and supporting infrastructure",
+            "why": "Implement network connection redundancy among components in your generative AI application."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-distribute-inference-workloads-over-multiple-regions-of-availabil",
+        "title": "How do you distribute inference workloads over multiple regions of availability?",
+        "description": "Generative AI applications can be as simple as prompt-response workflows against a single foundation model or as advanced as multi-agent orchestration. The various components associated with a generative AI workload are required to service a region of availability. Availability could be over a well-defined zone or it could be expansive covering large geographic areas. Architecting for this variability is a complex problem.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Load-balance inference requests across all regions of availability",
+            "why": "Inference to a foundation model may be available over a local or large area of availability. Verify that you have resources available across that area to service inference requests reliably regardless of where they are coming from."
+          },
+          {
+            "title": "Replicate embedding data across all regions of availability",
+            "why": "Inference to a foundation model may be available over a local availability region, or could be a large region of availability. Make sure your data is available across all regions of availability to adequately service inference requests."
+          },
+          {
+            "title": "Verify that agent capabilities are available across all regions of availability",
+            "why": "Agents require supporting infrastructure to service requests from foundation models. Using agents across a region of availability requires the supporting infrastructure to be available in that region."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-design-high-performance-distributed-computation-tasks-to-maximize",
+        "title": "How do you design high-performance distributed computation tasks to maximize successful completion?",
+        "description": "Model customization and other high-performance distributed computation tasks for generative AI can be long-running, expensive, and brittle. It is important to deliberately architect these distributed, high-performance computation tasks for reliability so the resulting foundation model is performant and trained in a timely manner.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Design for fault-tolerance for high-performance distributed computation tasks",
+            "why": "Fault-tolerant infrastructure identifies issues in long-running, high-performance distributed computation tasks and remediates them before they can disrupt the task. Because these tasks are expensive and time-consuming, use fault-tolerant infrastructure to reliably perform model customization jobs."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-optimize-computational-resources-required-for-high-performance-di",
+        "title": "How do you optimize computational resources required for high-performance distributed computation tasks?",
+        "description": "Foundation models require high processing power to customize and deliver inference at scale. This is true whether you are training a foundation model, customizing it, or using one for inference. Optimize consumption of high-performance compute used for foundation models in order to meet performance requirements.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Use managed solutions for model hosting, customization, and data access where appropriate",
+            "why": "There are several industry-leading model providers, with new model families, sizes, and capabilities being introduced regularly. As foundation model capabilities expand, additional operational requirements are required for hosting the models, serving inference, and providing models access to data and external systems. Alleviate operational burden on your generative AI workload by using managed solutions where appropriate."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-ensure-your-ml-problem-formulation-accounts-for-reliability-re",
+        "title": "How do you ensure your ML problem formulation accounts for reliability requirements and potential failure modes?",
+        "description": "Define reliability considerations as core components of your ML problem formulation. This includes identifying potential failure modes, establishing acceptable performance degradation thresholds, and determining recovery requirements specific to your use case.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Use APIs to abstract change from model consuming applications",
+            "why": "APIs abstract changes from model-consuming applications, keeping machine learning solutions flexible and resilient. Establishing an abstraction layer between ML models and consuming applications enables model updates, replacements, or enhancements without disrupting existing workloads."
+          },
+          {
+            "title": "Adopt a machine learning microservice strategy",
+            "why": "Machine learning systems can be effectively implemented through a microservice architecture that breaks down complex business problems into smaller, loosely coupled components. This approach enables distributed development, improves scalability, and facilitates change management while reducing the impact of single failures on the overall workload."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-design-your-ml-workload-architecture-to-prevent-failures",
+        "title": "How do you design your ML workload architecture to prevent failures?",
+        "description": "A reliable workload starts with upfront design decisions for both software and infrastructure. Your architecture choices will impact your workload behavior across all five Well-Architected pillars. For reliability, there are specific patterns you must follow.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Allow automatic scaling of the model endpoint",
+            "why": "Implement capabilities that allow the automatic scaling of model endpoints. This improves the reliable processing of predictions to meet changing workload demands. Include monitoring on endpoints to identify a threshold that initiates the addition or removal of resources to support current demand."
+          },
+          {
+            "title": "Create a recoverable endpoint with a managed version control strategy",
+            "why": "Establish a fully recoverable system for model prediction endpoints by implementing proper version control and lineage tracking for components that generate these endpoints."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-optimize-deployment-architectures-and-processes-to-achieve-eff",
+        "title": "How do you optimize deployment architectures and processes to achieve efficient model serving?",
+        "description": "Implement deployment strategies that maximize performance efficiency while meeting serving requirements.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Evaluate cloud versus edge options for machine learning deployment",
+            "why": "Evaluate machine learning deployment options to determine if your application requires near-instantaneous inference results or needs to operate without network connectivity. When the lowest possible latency is essential, deploying inference directly on edge devices avoids costly roundtrips to cloud API endpoints. Edge deployments are particularly valuable for use cases like predictive maintenance in factories, where immediate local responses are critical."
+          },
+          {
+            "title": "Choose an optimal deployment option in the cloud",
+            "why": "When deploying machine learning models in the cloud, selecting the right deployment option is crucial for performance efficiency. By matching your deployment method to your use case requirements for request frequency, latency, and runtime, you can optimize both performance and cost."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  },
+  {
+    "id": "security-privacy",
+    "name": "Security & Privacy",
+    "questions": [
+      {
+        "id": "agentic-ai-how-do-you-secure-agentic-memory-and-securely-manage-state-between-agents",
+        "title": "How do you secure agentic memory and securely manage state between agents?",
+        "description": "One reason agentic AI is effective is the ability to perform long-running tasks. To achieve a goal, agents need to store context, tasks, and results. Agent memory systems can be targeted to introduce false information or influence agent decisions, so securing memory and state helps maintain agent integrity.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement memory isolation and integrity controls",
+            "why": "Shared agent memory is the shortest path for a single affected session to contaminate every other one. Partitioning memory along the boundaries that matter for the workload, and verifying what comes back out, contains the scope of memory poisoning to the partition it touched."
+          },
+          {
+            "title": "Validate and sanitize memory inputs",
+            "why": "Unvalidated writes into agent memory let adversarial content persist and influence every subsequent session that reads the same context. Layered validation at ingestion keeps the memory store free of injection payloads, policy-violating content, and context inconsistent with the current task."
+          },
+          {
+            "title": "Monitor for hallucination propagation",
+            "why": "A single hallucinated fact stored as memory becomes ground truth for every agent that reads it next. Continuous grounding checks and confidence scoring keep fabricated content from entering memory or cascading across a multi-agent workflow."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-control-and-secure-agent-tool-usage",
+        "title": "How do you control and secure agent tool usage?",
+        "description": "Agents interact with external systems through tools such as APIs, databases, file systems, and other services. Without proper controls, an agent with tool access can be directed to perform unintended actions. Authorization, input validation, and tool governance reduce the risk of tool misuse and unauthorized operations.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement tool authorization",
+            "why": "An agent with unconstrained tool access has no meaningful privilege boundary. Externally enforced authorization at the gateway, combined with identity propagation and human review for mutating operations, enforces bounded autonomy at the tool layer."
+          },
+          {
+            "title": "Validate tool inputs and outputs",
+            "why": "Agents generate tool parameters from model output, which means malformed or adversarial inputs can reach tools through ordinary reasoning, not just through unauthorized callers. Schema-driven validation on inputs and sanitization on outputs keep tools operating inside their intended parameter space and help prevent error messages from disclosing internal system details."
+          },
+          {
+            "title": "Maintain approved tool registry with security assessments",
+            "why": "Every tool an agent can reach is part of its effective privilege surface. A version-controlled registry with documented security boundaries, enforced at invocation time, keeps unvetted or deprecated tools off the agent's call path."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-manage-agent-identities-permissions-and-prevent-privilege-escalation",
+        "title": "How do you manage agent identities, permissions, and prevent privilege escalation?",
+        "description": "Identity and permission management needs to handle both. Without it, agent permissions can lead to unauthorized access to resources and data. To maintain security boundaries, apply least-privilege principles, separate agent and human permissions, and set up strong authentication for agent identities.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement strong authentication for agent identities",
+            "why": "Shared API keys and one-way TLS give agents enough network reachability to be useful and enough ambiguity to be impersonated. Cryptographic identity for both sides of every call, with automated lifecycle and immediate revocation, is the control that makes every agent communication auditable and reversible."
+          },
+          {
+            "title": "Separate agent and human user permission",
+            "why": "Identity propagation alone isn't enough when agents act on behalf of users. Distinct agent service identities, with hard trust boundaries helping prevent assumption of human-designated roles, keep audit attribution unambiguous and stop a misconfigured agent from escalating into a human identity space."
+          },
+          {
+            "title": "Implement least privilege with dynamic boundaries",
+            "why": "Broad permissions grant an affected agent access well beyond the task it was asked to do. Scoping privilege at each identity layer, backing it with temporary credentials, and layering contextual IAM conditions limits the scope of any single compromised or misprompted call."
+          },
+          {
+            "title": "Regular permission audits and access reviews",
+            "why": "Agent roles accumulate permissions over time. Scheduled automated analysis paired with periodic human-led reviews catches drift before it turns into significant over-privilege and produces the documented audit trail that compliance needs."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-secure-multi-agent-orchestration-and-coordination",
+        "title": "How do you secure multi-agent orchestration and coordination?",
+        "description": "Multi-agent systems introduce coordination challenges that don't exist in single-agent architectures. Agents need to discover peers, share capabilities, delegate tasks, and exchange context across trust boundaries. Without proper identity verification and communication security, agent impersonation and message tampering can affect entire multi-agent workflows. Standardized protocols like Agent-to-Agent (A2A) and Model Context Protocol (MCP) provide interoperability across frameworks, but organizations must layer security controls on top of these protocols to maintain trust boundaries.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Encrypt and sign inter-agent messages",
+            "why": "Transport-level encryption stops protecting the payload the moment a message lands in a queue or event bus. Message-level signing and encryption keyed per trust zone gives receiving agents cryptographic proof of sender identity and content integrity no matter how many hops the message made."
+          },
+          {
+            "title": "Implement workflow orchestration security controls",
+            "why": "The orchestration layer is where a single weak check cascades into a system-wide failure. Access controls on state machines, input validation on transitions, and circuit breakers on agent tasks keep multi-agent workflows on approved execution paths instead of unexpected ones."
+          },
+          {
+            "title": "Establish trust boundaries between agents",
+            "why": "A flat agent network gives every affected agent a direct path to every other one. Trust zones segmented at the network and IAM layers, with application-layer verification of caller identity, stop one affected agent from escalating across the whole system."
+          },
+          {
+            "title": "Monitor and detect coordination anomalies",
+            "why": "Distributed tracing tells you what happened on one request. Coordination monitoring tells you when many requests start behaving differently from the baseline. Tracking inter-agent message rates, workflow frequencies, and topology changes against established baselines catches issues through their observable impact on coordination before they escalate into security events."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-validate-and-secure-agent-inputs-and-outputs",
+        "title": "How do you validate and secure agent inputs and outputs?",
+        "description": "Agents process inputs from users, tools, and other agents, and they generate outputs for downstream systems, memory stores, and end users. Without proper validation, adversarial inputs such as prompt injection can influence agent behavior, and agent outputs can inadvertently disclose sensitive information or generate harmful content. Multi-layer validation at both the input and output boundaries helps verify that agents operate safely within their intended scope.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Multi-layer input validation and prompt injection defense",
+            "why": "Agents take input from many surfaces and only one needs to be unvalidated for adversarial content to reach the agent's reasoning process. A layered validation architecture covers every surface, and in particular catches the indirect prompt injection embedded in retrieved external content."
+          },
+          {
+            "title": "Output filtering for sensitive information",
+            "why": "Filtering user-facing responses leaves internal data paths (inter-agent messages, memory writes, audit logs) as open channels for PII and credentials to escape. Scanning every output path with a data classification policy keeps sensitive content inside the agent's authorized handling scope."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-perform-vulnerability-scanning-and-penetration-testing-for-agentic-a",
+        "title": "How do you perform vulnerability scanning and penetration testing for agentic AI systems?",
+        "description": "Agentic AI systems introduce new attack surfaces that traditional application security testing doesn't cover. Agents reason about inputs, chain multi-step actions, interact with tools and APIs, and operate with varying degrees of autonomy. These behaviors create complex vulnerability paths that rule-based scanners and periodic manual assessments can't address. Automated vulnerability scanning and penetration testing tailored to agentic workloads help you identify exploitable weaknesses across the full development lifecycle, from design documents and code through to running applications, and validate that security controls hold up under realistic attack scenarios.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Integrate AI-powered vulnerability scanning across the development lifecycle",
+            "why": "Pattern-matching scanners find common bugs but miss context-dependent flaws in agent orchestration, tool interactions, and authorization chains. AI-powered scanning that reasons about code and design documents the way a human security researcher does catches these issues at the phase when remediation is cheapest."
+          },
+          {
+            "title": "Conduct context-aware penetration testing with multi-agent attack simulation",
+            "why": "Generic scanners miss vulnerabilities that only surface in agent orchestration, tool parameter construction, and inter-agent delegation. Context-aware testing driven by specialized attacker agents that adapt to what the application reveals finds the chained exploits that static scripts can't reach."
+          },
+          {
+            "title": "Implement continuous security validation with automated remediation",
+            "why": "Periodic assessments leave newly deployed agent capabilities exposed for weeks or months. On-demand validation integrated into the development pipeline, paired with automated fix suggestions, compresses the discovery-to-resolution loop from weeks to hours."
+          },
+          {
+            "title": "Establish scoped and controlled testing environments for agent security assessments",
+            "why": "Penetration testing that runs real exploit attempts against production agents can trigger tool calls, corrupt memory, or expose sensitive data. Scoped test environments with dedicated credentials and isolated agent state let teams run thorough assessments without risking production impact."
+          },
+          {
+            "title": "Implement runtime threat detection, security event correlation, and automated remediation for agents",
+            "why": "Scanning finds latent weaknesses. Runtime detection catches the attacks happening now. Correlating events across agent interaction surfaces and triggering automated remediation compresses the gap between an active exploit and the response that contains it."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-control-access-to-data-within-sovereign-boundaries",
+        "title": "How do you control access to data within sovereign boundaries?",
+        "description": "This capability covers data perimeters that combine IAM conditions, resource-based policies, service control policies, VPC endpoint policies, and network controls to enforce jurisdictional boundaries and block unauthorized access before it occurs.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Protect data through layered access controls within sovereign boundaries",
+            "why": "Access control is one of the lens's five sovereignty design concerns: who can reach your data, from where, and under what authority. A single control layer leaves gaps, because network controls alone can't enforce identity rules and identity controls alone can't account for network paths. Layering network-centric and identity-centric controls, in proportion to data sensitivity and jurisdiction, keeps data within its sovereign boundary and blocks unauthorized access before it happens."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-detect-and-investigate-security-events-in-sovereign-workloa",
+        "title": "How do you detect and investigate security events in sovereign workloads?",
+        "description": "This capability covers threat detection, sovereignty-specific monitoring, and operator action logging that together enable timely investigation of security events in sovereign workloads.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Enhance threat detection through targeted intelligence",
+            "why": "By using region- and domain-specific threat intelligence, organizations can enhance their detection capabilities. With this targeted approach, security teams can contextualize threats within their specific regulatory and infrastructure environment."
+          },
+          {
+            "title": "Detect sovereignty-specific threats through telemetry and analysis",
+            "why": "Effective threat detection capability needs broad telemetry from multiple sources, the ability to correlate and contextualize data points, and centralized visibility of security events."
+          },
+          {
+            "title": "Establish comprehensive logging and monitoring of operator actions",
+            "why": "Enable detailed logging to track operator actions, detect unauthorized access, and retain evidence required for audits. Detailed audit trails provide visibility into change management activities and operator-led actions. This is particularly important for workloads with sovereignty requirements, where you may need to locate operational support teams within specific jurisdictions, strictly control operator actions, and produce documentary evidence of technical and operational controls."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-fulfill-specialized-data-protection-requirements",
+        "title": "How do you fulfill specialized data protection requirements?",
+        "description": "This capability covers protecting data during compute with hardware-based isolation, and managing encryption keys under jurisdictional controls over key material, access, and auditability.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Protect sensitive data during compute",
+            "why": "If you store and process sensitive datasets, you might need to apply specialized data protection capabilities. This is in addition to at-rest and in-transit encryption."
+          },
+          {
+            "title": "Control jurisdiction, access, and auditability of data-at-rest encryption keys",
+            "why": "Carefully manage keys that protect data at rest throughout their lifecycle. This includes storage, rotation, and controlling access to key material required to secure data at rest. Monitor and log key usage. Where regulatory requirements mandate specific technical or operational controls, adhere to those requirements."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-manage-access-to-generative-ai-endpoints",
+        "title": "How do you manage access to generative AI endpoints?",
+        "description": "Foundation models are available for use through managed, serverless, or self-hosted endpoints. Each paradigm comes with its own security considerations and requirements. This question seeks to understand the security considerations specific to endpoints associated with generative AI workloads.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Grant least privilege access to foundation model endpoints",
+            "why": "Granting least privilege access to foundation model endpoints helps limit unintended access and encourages a zero-trust security framework. This best practice describes how to secure foundation model endpoints associated with generative AI workloads."
+          },
+          {
+            "title": "Implement private network communication between foundation models and applications",
+            "why": "Implementing a scoped down data perimeter on foundation model endpoints helps reduce the surface-area of potential threat vectors and encourages a zero-trust security architecture. This best practice describes how to implement private network communications for your generative AI workloads."
+          },
+          {
+            "title": "Implement least privilege access permissions for foundation models accessing data stores",
+            "why": "Foundation models can aggregate and generate rich insights from data they have been trained on or interact with from the APIs providing inputs and outputs. It is important to treat generative AI systems and their foundation models just as you would treat privileged users when providing access to data. This best practice describes how to provide generative AI APIs and services with appropriate access to data."
+          },
+          {
+            "title": "Implement access monitoring to generative AI services and foundation models",
+            "why": "Generative AI services and foundation models can be resource intensive to use and can be misused. Implementing access monitoring on these services and models helps to identify, triage and resolve unintended access quickly."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-secure-system-and-user-prompts",
+        "title": "How do you secure system and user prompts?",
+        "description": "Prompts are crucial elements to a generative AI workload. They define how a user or application interacts with a foundation model. Engineering and testing prompts is an important process and requires time and effort to optimize. System and user prompt security is an important element of security for generative AI workloads.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Implement a secure prompt catalog",
+            "why": "Prompt catalogs facilitate the engineering, testing, versioning and storage of prompts. Implementing a prompt catalog improves the security of system and user prompts."
+          },
+          {
+            "title": "Sanitize and validate user inputs to foundation models",
+            "why": "Generative AI applications commonly request user input. This user input is often open, unstructured, and loosely formatted, creating a risk of prompt injection and improper content."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-avoid-excessive-agency-for-models",
+        "title": "How do you avoid excessive agency for models?",
+        "description": "Excessive agency is an Open Worldwide Application Security Project (OWASP) Top 10 security threat for LLMs and is typically introduced to systems through agentic architectures. Agents are designed to take action on behalf of a user. The risk of excessive agency is that an agent could take actions beyond their intended purpose.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Implement least privilege access and permissions boundaries for agentic workflows",
+            "why": "Implementing least privilege and permissions bounded agents limits the scope of agentic workflows and helps stop them from taking actions beyond their intended purpose on behalf of the user. This best practice describes how to reduce the risk of excessive agency."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-detect-and-remediate-data-poisoning-risks",
+        "title": "How do you detect and remediate data poisoning risks?",
+        "description": "Data poisoning is a type of exploit that can occur during model training or customization. This happens when data not meant for model training or customization is used for training or customization, resulting in potentially undesirable effects for the finished model. Data poisoning can be difficult to detect and can be challenging to remediate.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Implement data purification filters for model training workflows",
+            "why": "Data poisoning is best handled at the data layer before training or customization has taken place. Data purification filters can be introduced to data pipelines when curating a dataset for training or customization."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-incorporate-security-requirements-and-constraints-into-your-ml",
+        "title": "How do you incorporate security requirements and constraints into your ML problem formulation?",
+        "description": "Define security controls and requirements as integral components of your ML problem formulation. This includes evaluating how security considerations might impact model features, data accessibility, and inference requirements.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Design data encryption and obfuscation",
+            "why": "Consider how to protect personal data. Use field level encryption or obfuscation to protect personally identifiable data."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-protect-data",
+        "title": "How do you protect data?",
+        "description": "Before architecting any system, foundational practices that influence security should be in place. For example, data classification provides a way to categorize organizational data based on levels of sensitivity, and encryption protects data by way of rendering it unintelligible to unauthorized access. These tools and techniques are important because they support objectives such as preventing financial loss or complying with regulatory obligations.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Provide least privilege access",
+            "why": "Protect resources across various phases of the ML lifecycle using the principle of least privilege. These resources include: data, algorithms, code, hyperparameters, trained model artifacts, and infrastructure. Provide dedicated network environments with dedicated resources and services to operate individual projects."
+          },
+          {
+            "title": "Secure data and modeling environment",
+            "why": "Secure your machine learning data and development environments to protect valuable information assets throughout the ML lifecycle. By implementing proper security measures for storage, compute, and network resources, you can maintain data integrity and confidentiality while enabling data scientists to work effectively."
+          },
+          {
+            "title": "Protect sensitive data privacy",
+            "why": "Protect sensitive data used in training against unintended disclosure by implementing appropriate identification, classification, and handling strategies. This practice improves data privacy while maintaining model utility through techniques such as data removal, masking, tokenization, and principal component analysis (PCA)."
+          },
+          {
+            "title": "Enforce data lineage",
+            "why": "Data lineage tracking allows you to monitor and track data origins and transformations over time, enabling better visibility into your machine learning workflows. By enforcing data lineage, you can trace the root cause of data processing errors and and protect the integrity of your ML models."
+          },
+          {
+            "title": "Keep only relevant data",
+            "why": "Reduce data exposure risks by preserving only use-case relevant data across computing environments. Implementing data lifecycle management and privacy-preserving techniques maintains data security while enabling effective machine learning workflows."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-implement-security-controls-and-practices-throughout-the-model",
+        "title": "How do you implement security controls and practices throughout the model development process?",
+        "description": "Establish comprehensive security controls and practices during model development to protect against vulnerabilities and verify requirements are met.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Secure governed ML environment",
+            "why": "Creating a secure and governed ML environment allows you to protect valuable data and models while enabling teams to innovate efficiently. By implementing proper guardrails, monitoring, and security practices, you maintain control while providing the flexibility ML practitioners need to deliver business value."
+          },
+          {
+            "title": "Secure inter-node cluster communications",
+            "why": "Machine learning frameworks require secure communications between computational nodes to maintain data integrity and protect sensitive information during model training. By implementing encryption for inter-node communications, you safeguard coefficient exchanges and protect synchronized information across distributed environments."
+          },
+          {
+            "title": "Protect against data poisoning threats",
+            "why": "Protect your machine learning models and data by implementing security measures against data poisoning attacks, which can compromise model performance and accuracy. Data poisoning occurs through data injection (adding corrupt training data) or data manipulation (changing existing data like labels), resulting in inaccurate and weakened predictive capabilities. By identifying and addressing corrupt data using security methods and anomaly detection algorithms, you can maintain data integrity and protect against threats including ransomware and malicious code in third-party packages."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-control-access-to-your-ml-workload",
+        "title": "How do you control access to your ML workload?",
+        "description": "Identity and access management are key parts of an information security program, ensuring that only authorized and authenticated users and components are able to access your resources, and only in a manner that you intend. Infrastructure protection encompasses control methodologies, such as defense in depth, necessary to meet best practices and organizational or regulatory obligations.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Protect against adversarial and malicious activities",
+            "why": "Machine learning systems must be robust against adversarial inputs designed to manipulate their behavior. Implementing protection mechanisms both inside and outside of your deployed models can detect malicious inputs that could lead to incorrect predictions, allowing you to automatically identify unauthorized changes, repair compromised inputs, and validate data before it's used for further training."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-monitor-detect-and-protect-your-workload-from-risks-and-threat",
+        "title": "How do you monitor, detect and protect your workload from risks and threats?",
+        "description": "You can use detective controls to identify a potential security threat or incident. They are an essential part of governance frameworks and can be used to support a quality process, a legal or compliance obligation, and for threat identification and response efforts. There are different types of detective controls.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Restrict access to intended legitimate consumers",
+            "why": "Use least privilege permissions to invoke the deployed model endpoint. For consumers who are external to the workload environment, provide access using a secure API."
+          },
+          {
+            "title": "Monitor human interactions with data for anomalous activity",
+            "why": "Implement comprehensive monitoring of data access events to detect unauthorized or suspicious activities. By auditing user interactions with data, you can identify potential security threats such as unusual access patterns, abnormal locations, or activity that exceeds normal baselines. Use specialized AWS services for anomaly detection alongside data classification to assess risks and protect your machine learning assets."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  },
+  {
+    "id": "governance-risk-responsible-ai",
+    "name": "Governance, Risk & Responsible AI",
+    "questions": [
+      {
+        "id": "agentic-ai-how-do-you-implement-cost-attribution",
+        "title": "How do you implement cost attribution?",
+        "description": "Organizations that instrument agent costs at the reasoning-cycle level make data-driven optimization decisions that compound savings across their entire agent fleet. Traditional cost tracking fails with agentic systems because costs span reasoning cycles, multi-agent workflows, tool invocations, and tenant boundaries that standard billing can't capture.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Establish agent-level reasoning cost tracking and attribution",
+            "why": "Account-level billing shows what an agent fleet costs, but it doesn't show where the specific costs come from. Granular tracking by agent, workflow, and reasoning phase provides trackable detail about your spending, which makes opaque costs into the input for targeted optimization."
+          },
+          {
+            "title": "Implement distributed cost tracing for multi-agent workflows",
+            "why": "In multi-agent workflows, aggregate cost tells you how much you spent but not where those specific costs came from. Tracing with workflow IDs propagating across agent boundaries makes workflow costs more clear, as it is broken down into worker execution, tool invocations, and memory operations, which helps you make data-driven architectural optimization decisions."
+          },
+          {
+            "title": "Design tenant-aware cost allocation for agent as a service (AaaS) pricing models",
+            "why": "Agent as a service (AaaS) offerings without per-tenant cost attribution can bill only by capacity estimates, can't detect noisy neighbors until infrastructure has already scaled, and can't decide when a tenant should move to dedicated infrastructure. Propagating tenant context through every operation and tracking cost at the tenant level fixes all three problems at once."
+          },
+          {
+            "title": "Create chargeback and ROI reporting",
+            "why": "Raw token counts and execution durations are the wrong unit of measure for business stakeholders deciding whether to fund agent capabilities. Translating technical cost into business metrics like cost-per-customer-interaction and comparing against the manual processes agents replace turns agent economics into something non-technical leaders can evaluate against familiar frameworks."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-establish-agent-cost-governance-and-continuous-optimization",
+        "title": "How do you establish agent cost governance and continuous optimization?",
+        "description": "Organizations that implement layered cost controls (including budget enforcement, anomaly detection, and systematic optimization reviews) can deploy autonomous agents with spending bounded at multiple layers. Autonomous agents can generate unpredictable cost patterns that traditional budget controls don't address well.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Implement automated cost controls with intelligent cutoffs",
+            "why": "Autonomous agents that invoke tools and accumulate memory without caps are a primary cost risk of agentic systems. Hierarchical budget limits, automatic cutoffs on runaway sessions, and graduated throttling help keep your costs bounded without forcing the agent to stop working at the first sign of pressure."
+          },
+          {
+            "title": "Establish proactive anomaly detection for agent cost patterns",
+            "why": "Generic billing alerts help you find cost escalation more quickly after it starts. Agent-specific anomaly detection catches reasoning loop token spikes, tool invocation storms, and memory growth quickly, and routing those alerts correctly means that you can alert the team that owns the agent instead of the operations team."
+          },
+          {
+            "title": "Create systematic optimization feedback loops for continuous improvement",
+            "why": "One-time optimization projects can miss compounding gains, as cost-performance characteristics of agent systems shift as prompts change, tools evolve, and traffic patterns drift. A monthly review cadence, A/B-tested changes, and cost gates in the deployment pipeline turn optimization into a continual practice that can keep pace with the system."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-baseline-and-automate-sovereignty-compliance",
+        "title": "How do you baseline and automate sovereignty compliance?",
+        "description": "This capability covers building a compliance catalog that maps requirements to technical controls, and codifying those controls as policy as code with automated validation embedded in deployment pipelines.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Baseline your compliance requirements",
+            "why": "Compliance requirements accumulate from multiple sources: cybersecurity directives, data privacy legislation, industry regulations, and internal policies. These requirements can overlap or diverge, whether you operate in one jurisdiction or many. A compliance baseline maps each requirement to specific technical controls so that teams can implement, test, and audit them consistently."
+          },
+          {
+            "title": "Establish an automated path to compliance",
+            "why": "Automation reduces the risk of human error, speeds up the compliance process, and enables continuous monitoring across jurisdictions. When compliance requirements are codified and integrated into your development pipelines, every change is validated before deployment rather than discovered during audits."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-design-your-workload-for-continuous-auditability",
+        "title": "How do you design your workload for continuous auditability?",
+        "description": "This capability covers identifying audit requirements across jurisdictions, automating evidence collection from existing controls, and generating compliance reports scoped by jurisdiction and regulatory framework.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Plan and prepare for audits",
+            "why": "Organizations face audits from multiple regulatory authorities with different evidence requirements, timelines, and scoping criteria, whether within a single jurisdiction or across several. Proactive audit planning and consistent tooling reduce disruption and provide confidence that evidence is complete, accessible, and stored within approved jurisdictions."
+          },
+          {
+            "title": "Automate evidence collection and reporting",
+            "why": "Manual evidence collection is time-consuming, error-prone, and doesn't scale across jurisdictions. Automating evidence collection and reporting improves accuracy, reduces audit preparation effort, and provides continuous visibility into compliance status."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-monitor-your-current-compliance-status",
+        "title": "How do you monitor your current compliance status?",
+        "description": "This capability covers the aggregation, scoring, alerting, and visualization of compliance status across jurisdictions to maintain continuous visibility into sovereignty posture.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Maintain continuous visibility of your compliance status",
+            "why": "Point-in-time audits and periodic assessments don't reflect the real state of compliance. A workload that meets regulatory requirements today may fall out of compliance the next day. Continuous visibility into compliance status across jurisdictions helps teams detect drift early, prioritize remediation by regulatory impact, and demonstrate ongoing adherence to auditors."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-are-you-set-up-to-address-regulatory-changes",
+        "title": "How are you set up to address regulatory changes?",
+        "description": "This capability covers the detection, assessment, and implementation of regulatory changes that affect sovereignty compliance across operating jurisdictions.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Track regulatory changes across jurisdictions",
+            "why": "Regulations change at different times across jurisdictions, and a change in one can diverge from requirements in another. Without a structured approach to tracking these changes, organizations risk falling out of compliance or discovering divergences too late to address them cost-effectively."
+          },
+          {
+            "title": "Manage regulatory changes",
+            "why": "Regulatory changes directly impact cloud operations, security controls, and compliance status. A regulatory change in one jurisdiction might require updates to the common baseline that affect other jurisdictions. A structured change management process helps you assess impact, implement updates, and verify compliance across jurisdictions."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "digital-sovereignty-how-do-you-manage-third-party-sovereignty-risks",
+        "title": "How do you manage third-party sovereignty risks?",
+        "description": "This capability covers continuous third-party risk management that assesses vendor data residency, operator location, cross-border data flows, and contractual safeguards throughout the vendor lifecycle.",
+        "lens": "Digital Sovereignty",
+        "practices": [
+          {
+            "title": "Implement continuous third-party risk management (TPRM) processes",
+            "why": "In highly regulated industries, a structured third-party risk management (TPRM) process is essential to mitigate risks associated with third-party vendors and service providers. Vendors can introduce sovereignty risks through data processed in non-approved jurisdictions, operators accessing systems from foreign locations, or sub-processors that don't adhere to data residency requirements."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-stop-generative-ai-applications-from-generating-harmful-biased-or",
+        "title": "How do you stop generative AI applications from generating harmful, biased, or factually incorrect responses?",
+        "description": "It is possible for foundation models to generate harmful, biased, or factually incorrect responses, particularly when guardrails are not implemented appropriately or at all. This risk creates additional considerations for generative AI applications before they are put into a production environment. This question addresses the best practices associated with mitigating risk of harmful, biased or factually incorrect responses.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Implement guardrails to mitigate harmful or incorrect model responses",
+            "why": "Guardrails are powerful, expansive techniques associated with reducing the risk of harmful, biased or incorrect model responses. This best practice discusses why and how to implement guardrails in generative AI workloads, as well as other complementary techniques."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-identify-applicable-organizational-requirements-and-approvals",
+        "title": "How will you identify applicable organizational requirements and approvals?",
+        "description": "AI systems may involve data processing, contributors, and users that span multiple geographic locations and legal jurisdictions. This may result in the AI system needing to meet multiple differing, overlapping, and organizational obligations. Consult organizational experts to identify and clarify requirements.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Engage your organization in approving your use case",
+            "why": "Identify the geographic locations in which the proposed AI system will operate. Consult with your legal team to identify applicable regulatory requirements. Check your organization's policies and processes for the approval of AI use cases. They may establish governance procedures that outline approval requirements and designate responsible oversight bodies to evaluate and authorize AI initiatives."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-identify-and-categorize-potential-harmful-events",
+        "title": "How will you identify and categorize potential harmful events?",
+        "description": "Use a structured approach to identify harmful events that could potentially occur when solving this use case with the proposed AI system.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Identify potential harmful events impacting fairness",
+            "why": "Examine how the proposed AI system might affect different stakeholder groups and subgroups throughout the entire system lifecycle. A fairness assessment may consider harms to individuals (for example, wrongful denials) and to groups (for example, performance variations across demographic groups)."
+          },
+          {
+            "title": "Identify potential harmful events impacting veracity",
+            "why": "Veracity harms arise when AI systems produce factual errors, as measured against an established base set of facts. Errors include hallucinations, omissions, and misemphases. These errors can propagate through AI systems, affecting downstream decision-making processes. Hallucinations and other veracity-related issues can compound across other responsible AI dimensions to create complex patterns of harm."
+          },
+          {
+            "title": "Identify potential harmful events impacting robustness",
+            "why": "Mishandling foreseeable variations in inputs can create harmful events. Input variations come in two kinds. Intrinsic variations are differences in input data to which an AI system must attend to succeed. Confounding variations are differences in input data that an AI system must ignore to succeed. You should also consider whether slight changes in input data can produce dramatically different outputs and how input instabilities can cascade across system components."
+          },
+          {
+            "title": "Identify potential harmful events impacting privacy",
+            "why": "Harmful events can result from using data that is confidential or personal in ways that do not align with the rules for correctly handling such data."
+          },
+          {
+            "title": "Identify potential harmful events impacting safety",
+            "why": "System outputs (content or actions) might create unintended impacts on the health or well-being of individuals, groups, society or the environment and can be misused in ways that could cause harm. Unsafe inputs can create harmful system responses. Understanding safety harms requires examining both immediate harms and downstream effects across different stakeholder groups, while considering how safety violations might cascade through system operations and user interactions."
+          },
+          {
+            "title": "Identify potential harmful events impacting system and data security",
+            "why": "Because AI systems process inputs and generate responses based on patterns learned from data, they have the potential for issues that traditional security measures may not address. Specifically, security harms can occur when AI systems are subjected to adversarial inputs by authorized users. These inputs may manipulate your system to behave in unintended ways, disclose confidential data, or extract information about your model's design and capabilities. Security threats to AI systems include: Vulnerabilities in system interfaces and interaction surfaces, Prompt injections where users try to override your system's instructions, Jailbreaking attempts that bypass safety guardrails, Adversarial inputs designed to exploit gaps in robustness, Model extraction approaches that try to reverse engineer your AI system, Data poisoning where your training or operational data sources can be contaminated, Collusions between adversarial agents, Infrastructure security vulnerabilities in access controls and system configuration."
+          },
+          {
+            "title": "Identify potential harmful events impacting explainability",
+            "why": "Users may want or need to understand why their input produced the system output that it did. Consider, for example, what harm might result from rejecting a loan application if an explanation would have assisted the user to fix an incorrect input. A lack of understanding of system outputs can compound AI harmful events and errors, making troubleshooting difficult."
+          },
+          {
+            "title": "Identify potential harmful events impacting transparency",
+            "why": "Transparency is the degree to which stakeholders can make informed choices in their engagement with an AI system. Consider situations in which users do not understand the probabilistic nature of an AI system, are unaware of AI system presence, or may not realize that an output is AI-generated."
+          },
+          {
+            "title": "Choose multiple strategies to identify potential harmful events",
+            "why": "In addition to assessing potential harmful events for each responsible AI dimension independently, employ complementary strategies to identify potentially harmful events and negative stakeholder impact within the context of different use environments. Check for these events at different steps of using the AI system and under different failure modes, which includes both technical failures and misuse or abuse of the AI system. Additional strategies include scenario-based analyses, system limitation assessments that surface operational constraints, choosing a risk team with diverse backgrounds, consulting with external stakeholders, and reviewing historical incidents or risk assessment results from similar systems."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-assess-the-risks-posed-by-the-potential-harmful-events",
+        "title": "How will you assess the risks posed by the potential harmful events?",
+        "description": "Assess the risk level of potential harms based on their likelihood and severity. Risk rankings assist to prioritize investments in mitigations and to incorporate proper controls in the design phase. Establish your methodology for assigning risk before performing the assessment. If your organization has already developed a methodology, use it so that your organization can make equal risk comparisons across use cases. Register risk for tracking and informed decision-making across AI use cases.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Identify the likelihood of each potential harm",
+            "why": "Establish a risk rating methodology that considers the likelihood of the event occurring. The risk likelihood indicates the probability of a harmful event occurring when the system is deployed for the use case."
+          },
+          {
+            "title": "Identify the severity of each potential harm",
+            "why": "Risk severity estimates the magnitude of the negative on affected stakeholder groups if it were to occur. Severity also considers the reversibility of harm, recognizing that some types of harm may be permanent or difficult to remedy."
+          },
+          {
+            "title": "Assign an overall risk level to each potential harm",
+            "why": "Risk ratings are typically determined by using a risk matrix that combines the likelihood (probability of occurrence) and severity (degree of consequences) of the potential harmful events."
+          },
+          {
+            "title": "Use a risk registry to track and calibrate potential harms and risks",
+            "why": "Establish a risk registry to track and calibrate categories of risks across your ML lifecycle and other use cases your team or organization may be tackling. The registry includes information about each identified risk, including the associated use case, examples of harmful input and output pairs, affected stakeholders, likelihood, severity, risk level, and high-level mitigation approaches. Risk registry maintenance includes processes for keeping risk information current and accurate as use cases and systems evolve, new threats emerge, and responsible AI understanding deepens."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-mitigate-the-risks-you-have-identified",
+        "title": "How will you mitigate the risks you have identified?",
+        "description": "Narrowing the use case may limit the exposure to risks. You can mitigate some by exploring trade-offs with either benefits or other risks.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Narrow the use case",
+            "why": "Identify the minimum viable use case that still delivers meaningful business value while reducing complexity and associated risks. Narrow the use case to a specific domain, industry vertical, geography, or user segment rather than attempting to solve broad, general problems. Restrict the types of inputs your system accepts and the formats of outputs it generates."
+          },
+          {
+            "title": "Weigh trade-offs across competing use case objectives",
+            "why": "Evaluate and balance trade-offs between benefits and risks. If not already available from your organization, develop explicit trade-off criteria (like tenets) that reflect organizational policies and stakeholder needs."
+          },
+          {
+            "title": "Assign your potential harm mitigations to implementation strategies",
+            "why": "As input to your system design, consider whether potential harms can be addressed through technical features or stakeholder guidance."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-downstream-stakeholders-learn-how-to-responsibly-use-the-ai-system",
+        "title": "How will downstream stakeholders learn how to responsibly use the AI system (guiding)?",
+        "description": "Provide downstream stakeholders with tailored documentation that outlines potential benefits and risks of an AI system by discussing its intended uses, limitations, and failure modes, distributed via appropriate channels for each stakeholder group.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Develop a transparency strategy",
+            "why": "For each identified stakeholder group, choose a transparency strategy (for example, blog post, user guide, FAQs, system documentation, service card) and identify appropriate distribution channels to provide downstream stakeholders information to make informed decisions about the AI system."
+          },
+          {
+            "title": "Create a system card that communicates intended usage and limitations",
+            "why": "AI system cards are a form of responsible AI documentation that provide stakeholders with a single place to find information on the intended use cases and limitations, responsible AI design choices, and deployment and performance optimization best practices. System cards do not provide guidance on expected performance of the AI system on the specific inputs the deployer may provide; that testing is the responsibility of the deployer."
+          },
+          {
+            "title": "Create a plan for publishing and updating documentation",
+            "why": "Identify which documents require updates based on stakeholder feedback, new use-cases, new system releases, and industry best practice developments. Dedicate an owner to facilitate the change management process which supports plans for review cycles, document and system versioning and approval chains."
+          },
+          {
+            "title": "Guide users on how to understand system outputs",
+            "why": "Provide accessible guidance on how a user should interpret system outputs. Provide guidance on features the user can use to better understand why a particular input might have produced a specific output. This includes features such as confidence scores, feature importance indicators, decision paths, or chains of thought. Tailor the complexity and format of the guidance to match user expertise levels, providing both high-level summaries and detailed technical information as appropriate. Assist users to identify when to trust system outputs, when to seek additional verification, and when to override or ignore system recommendations based on their domain knowledge."
+          },
+          {
+            "title": "Guide users on how to responsibly change system behavior",
+            "why": "Provide guidance that informs users how to effectively alter system behaviors and interpret results. Include user interface elements that guide users toward productive interactions while steering them away from approaches likely to produce poor or harmful results. Explain response mechanisms that provide real-time feedback on input quality and suggest improvements when user inputs are unclear, inappropriate, or likely to produce unsatisfactory results. Direct users to available education resources that assists users to understand system capabilities and limitations, enabling them to leverage the system effectively while maintaining realistic expectations about its performance."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  },
+  {
+    "id": "operations-mlops-llmops",
+    "name": "Operations (MLOps/LLMOps)",
+    "questions": [
+      {
+        "id": "agentic-ai-how-do-you-manage-prompt-and-configuration-lifecycle",
+        "title": "How do you manage prompt and configuration lifecycle?",
+        "description": "Agent prompts, configurations, and tool permissions define agent behavior and evolve continually as business needs change. Managing these artifacts requires balancing rapid iteration with stability so that changes are tracked, tested, and reversible.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Evolve agent prompts, tool calls, and configurations to reflect evolving business needs",
+            "why": "A prompt shapes agent behavior more directly than almost any other configuration artifact. Create a prompt lifecycle that applies code-grade discipline, versioning, review, evaluation, and rollback to prompts, which helps avoid unnoticed prompt drift and degraded decisions in agent interactions."
+          },
+          {
+            "title": "Implement configuration drift detection and remediation",
+            "why": "Configurations can drift, creating outdated or unstable versions over time. For example, a manual tweak in one environment, a guardrail flag changed during an incident, or an experimental override never reverted can produce agents that behave differently in production than in testing. Automated drift detection catches these events before they turn into incidents."
+          },
+          {
+            "title": "Implement agent behavior versioning and rollback capabilities",
+            "why": "Teams with versioned behavior and tested rollback can recover in minutes when an agent behaves unexpectedly, while teams without spend hours debugging under pressure. Rapid reversibility improves your organization's ability to confidently iterate on an agentic system."
+          },
+          {
+            "title": "Maintain feedback control loops for continuous improvement",
+            "why": "Agents that improve in step with real-world usage outperform agents frozen at deployment. A working feedback loop connects quality signals, user feedback, behavioral cues, and business outcomes to prioritized improvement actions."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-manage-agent-lifecycle-and-deployment-processes",
+        "title": "How do you manage agent lifecycle and deployment processes?",
+        "description": "Agent lifecycle management extends beyond traditional software deployment to include behavioral evolution, capability updates, and operational governance. Agents require ongoing management as they adapt to changing business requirements, integrate new tools, and scale across different environments.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Define an agent lifecycle with clear SME ownership, testing, and governance",
+            "why": "An agent portfolio without lifecycle discipline becomes a graveyard of undocumented services with forgotten owners. Explicit lifecycle stages, named SME ownership, and clean decommissioning keep the portfolio tractable as it grows from a handful of agents to dozens or hundreds."
+          },
+          {
+            "title": "Implement CI/CD pipelines tailored to agentic system deployment (AgentOps)",
+            "why": "Manual agent deployments and informal testing can keep a project stuck in the pilot phase. An agent-aware pipeline, with behavioral evaluation gates, staged rollout, and automated rollback can help your organization realize the goal of daily deployment of behavioral improvements."
+          },
+          {
+            "title": "Implement agent-specific scaling policies and capacity planning",
+            "why": "Scaling policies designed for typical web workloads don't fit agents. Model inference latency, tool dependency availability, and downstream service capacity all shape the right response to load, and a policy that ignores them either over-provisions during quiet hours or under-provisions during peaks."
+          },
+          {
+            "title": "Implement organizational agent portfolio management and governance at scale",
+            "why": "A handful of agents built by one team is a project. Dozens of agents built by multiple teams is a portfolio, and portfolios need different operational mechanisms. Without cross-organizational visibility, teams build redundant agents, break each other's integrations, and lose track of which agents still earn their keep."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-implement-comprehensive-observability-and-monitoring-for-agentic-sys",
+        "title": "How do you implement comprehensive observability and monitoring for agentic systems?",
+        "description": "Observability in agentic systems requires capturing not just infrastructure metrics, but also agent reasoning steps, decision paths, and workflow execution patterns. Traditional monitoring approaches must be extended to provide visibility into agent behavior, tool invocations, and multi-agent interactions.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Establish end-to-end tracing and telemetry for agent operations",
+            "why": "When an agent produces an unexpected output, the investigation is only as good as the telemetry. Distributed tracing that captures the full execution path (reasoning, tool calls, memory operations, and model invocations) enables precise reconstruction of every decision and action."
+          },
+          {
+            "title": "Monitor agent behavior patterns and detect anomalies",
+            "why": "Static threshold alerts catch obvious breakages. Anomaly detection over behavioral baselines extends coverage to gradual shifts like a slowly rising escalation rate, a quietly increasing hallucination frequency, or tool-selection patterns that drift toward less capable options, providing early visibility into behavioral trends."
+          },
+          {
+            "title": "Implement structured logging and comprehensive audit trails",
+            "why": "Free-text logs look useful until someone tries to query them at scale. Structured logs, immutable audit trails, and defined retention policies make your logs an active operational tool that provides evidence for compliance."
+          },
+          {
+            "title": "Define and track KPIs for agent workflows",
+            "why": "Infrastructure metrics like CPU, memory, and invocation count explain whether an agent is running. However, these metrics don't determine whether an agent is actually working. Key performance indicators (KPIs) tied to business outcomes give teams and stakeholders a shared language for discussing and improving agent performance."
+          },
+          {
+            "title": "Create workflow-specific dashboards for operational health",
+            "why": "Generic infrastructure dashboards can hide important metrics to agentic workflows. A dashboard designed around a specific workflow's critical path, step-level latencies, and characteristic failure modes provides detail that operators need to quickly see issues and understand the root cause."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-implement-testing-evaluation-and-validation-frameworks",
+        "title": "How do you implement testing, evaluation, and validation frameworks?",
+        "description": "Systematic testing and evaluation processes confirm agent quality, reliability, and alignment with business objectives through both traditional software testing and AI-specific quality assessment. Without a framework that covers every stage of the agent lifecycle, quality regressions from prompt changes, tool updates, or model updates reach users before anyone notices.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Design multi-layered testing frameworks",
+            "why": "Traditional software testing, like exact-match assertions and green-or-red unit tests, can miss important failure modes in agentic systems. A testing pyramid that covers unit, integration, end-to-end tests, and shadow layers helps teams catch behavioral regressions before they reach users."
+          },
+          {
+            "title": "Evaluate and track ongoing agent performance",
+            "why": "Pre-deployment evaluation validates that an agent is ready to ship. Post-deployment evaluation validates that it still works. Without continuous assessment, gradual quality degradation from data drift, model updates, and shifting user patterns goes unnoticed until it is expensive to fix."
+          },
+          {
+            "title": "Establish SME-driven validation and business approval workflows",
+            "why": "Heavy approval processes slow routine work and get bypassed in emergencies. On the other hand, a lack of approval processes can produce unforeseen incidents. To keep your teams moving while protecting against the changes that actually warrant scrutiny, implement risk-tiered validation (light for minor changes, thorough for autonomy increases)."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "agentic-ai-how-do-you-plan-strategically-for-agent-performance-and-establish-measurement-p",
+        "title": "How do you plan strategically for agent performance and establish measurement practices?",
+        "description": "For agent maturity models and lifecycle governance, see AGENTOPS03-BP01. For business metrics feedback loops, see AGENTOPS02-BP04. For agent evaluation frameworks, see AGENTOPS06-BP02.",
+        "lens": "Agentic AI",
+        "practices": [
+          {
+            "title": "Define performance-aligned success criteria for agent workloads",
+            "why": "Agent workloads are harder to measure than traditional applications because a single user request fans out into multiple inference calls, tool invocations, and memory retrievals, each with its own latency, quality, and cost signature. Without explicit performance targets, teams optimize against a moving reference and can't tell when an agent is ready for production."
+          },
+          {
+            "title": "Implement comprehensive performance telemetry",
+            "why": "A single agent request fans out into chains of inference calls, parallel tool invocations, memory lookups, and inter-agent communications. Infrastructure-only monitoring can't determine by itself which of those contributes to a slow or expensive response. Agent-aware telemetry decomposes execution into observable, attributable operations so that performance decisions are grounded in measured behavior."
+          },
+          {
+            "title": "Profile end-to-end agent latency and identify optimization targets",
+            "why": "The dominant contributor to agent latency varies by task type: a simple question-and-answer request can be inference-bound, a retrieval-heavy request can be retrieval-bound, and a multi-agent workflow can be coordination-bound. Without decomposing total latency into per-phase contributions, teams optimize assumed bottlenecks rather than measured ones, and engineering effort lands on work that doesn't move performance for users."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-achieve-and-verify-consistent-model-output-quality",
+        "title": "How do you achieve and verify consistent model output quality?",
+        "description": "Achieving consistent model output quality involves periodic evaluations using user feedback, ground truth data, and sampling techniques.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Periodically evaluate functional performance",
+            "why": "Implement periodic evaluations using stratified sampling and custom metrics to maintain the performance and reliability of large language models. This practice verifies that models remain accurate and relevant over time by regularly assessing their performance against ground truth data and specific evaluation criteria. By employing stratified sampling, organizations can obtain a representative subset of data that reflects the diversity of real-world inputs, leading to more reliable performance metrics. Custom metrics allow for tailored assessments that align with specific business goals and user expectations. This practice helps customers achieve consistent model performance, detect and address model drift promptly, and integrate evaluation results into continuous improvement processes."
+          },
+          {
+            "title": "Collect and monitor user feedback",
+            "why": "Supplement model performance evaluation with direct feedback from users. Implement continuous feedback loops to optimize application performance and enhance user satisfaction. Systematically collect, analyze, and act on user feedback to drive continuous improvement. By integrating this approach, you can achieve higher operational excellence and reliability, which keeps applications performant and aligned with user expectations. This proactive strategy helps to improve user satisfaction and foster a culture of ongoing enhancement and innovation."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-monitor-and-manage-the-operational-health-of-your-applications",
+        "title": "How do you monitor and manage the operational health of your applications?",
+        "description": "This question focuses on the strategies and tools you use to track key metrics, set up alerts, and respond to issues. To maintain the operational health and performance of your generative AI applications, it's crucial to implement comprehensive monitoring and management strategies across all layers the application. While traditional best practices apply, foundation models interact with software and data differently than traditional systems.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Monitor all application layers",
+            "why": "Implement comprehensive monitoring and logging across all layers of your generative AI application to maintain operational health, provide reliability, and optimize performance. This best practice aims to provide clear visibility into the application's behavior, from user interactions to core model performance. By tracking key metrics, organizations can quickly identify and address issues, enhance user experiences, and make data-driven decisions to improve their AI systems."
+          },
+          {
+            "title": "Monitor foundation model metrics",
+            "why": "It's critical to set up continuous monitoring and alerting for foundation models for performance, security, and cost-efficiency. This best practice offers a structured approach to monitor models that fosters rapid identification and resolution of issues like data drift, model degradation, and security threats. Adopting this practice enhances reliability, efficiency, and trust in your applications, driving better business outcomes and user satisfaction. It can also help you with regulatory compliance and optimizes resource utilization."
+          },
+          {
+            "title": "Implement solutions to mitigate the risk of system overload",
+            "why": "There are two primary ways to mitigate the risk of system overload for generative AI workloads. The first is to scale the inference serving architecture using advanced auto-scaling technologies. This is possible using Amazon SageMaker AI Inference Components, which you can use to host and scale model independent of the underlying infrastructure. For self-hosted language models, this is the ideal approach. The second approach is to rate limit and throttle managed inference to maintain application stability and performance. This approach is more applicable to managed inference on Amazon Bedrock. This practice controls request processing rates to avoid system overload, which provides consistent application health and a better user experience. You can increase system throughput by opting for cross-Region inference or in some cases by purchasing provisioned model throughput."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-automate-the-lifecycle-management-of-your-generative-ai-workloads",
+        "title": "How do you automate the lifecycle management of your generative AI workloads?",
+        "description": "Explore the strategies for automating the lifecycle management of generative AI workloads using infrastructure as code (IaC) principles. Include aspects such as tool selection, CI/CD implementation, environment management, version control, and governance practices. The focus is on creating reproducible, scalable, and maintainable infrastructure for AI applications across different stages of development and deployment, while maintaining consistency and security and helping you address regulatory compliance.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Automate generative AI application lifecycle with infrastructure as code (IaC)",
+            "why": "Implementing and managing IaC is crucial for consistent, version-controlled, and automated infrastructure deployment across environments. This practice streamlines deployment, reduces errors, and enhances team collaboration. IaC helps customers achieve efficiency, reliability, and scalability in infrastructure management, which allows for rapid iteration, straightforward rollback, and improved governance and results in secure deployments."
+          },
+          {
+            "title": "Implement GenAIOps to optimize the application lifecycle",
+            "why": "To optimize generative AI workloads, organizations should implement GenAIOps, a best practice that automates the development, deployment, and management of models. This approach establishes CI/CD pipelines for training, tuning, and deploying foundation models. GenAIOps enhances operational efficiency, reduces time-to-market, and enables consistent, high-quality model performance. It creates a robust, automated framework that supports the entire generative AI project lifecycle from development to production deployment. Through GenAIOps, customers can achieve greater agility, improved model reliability, and quick adaptation to changing business requirements, driving innovation and competitive advantage."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-maintain-versions-for-prompts-model-parameters-and-foundation-mod",
+        "title": "How do you maintain versions for prompts, model parameters, and foundation models?",
+        "description": "Prompts differentiate model performance from one workload to another. Curating prompts can be a time-consuming process, and it is important to have a reliable store for prompts. Foundation model performance differs from version to version, as does the impact of inference hyperparameters on model performance. Standardize and version these variations to create a more reliable experience.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Implement a prompt catalog",
+            "why": "Prompt catalogs store and manage prompts and prompt versions. They act as a reliable store for prompts for generative AI workloads."
+          },
+          {
+            "title": "Implement a model catalog",
+            "why": "Model catalogs store and manage model versions. They act as a reliable store for models which may need to be deployed or rolled back at any time. They also facilitate decoupled deployment automation."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "generative-ai-how-do-you-capture-and-improve-the-performance-of-your-generative-ai-models",
+        "title": "How do you capture and improve the performance of your generative AI models in production?",
+        "description": "Foundation models are built to perform sufficiently well on a wide variety of tasks. Their task-specific performance is tracked using leaderboards and other public metric tracking solutions. Strong performance in one task (for example, summarization) does not indicate strong performance in another task (such as question answering). Task performance is evaluated using benchmarks built from ground truth data, and model performance against these test suites help when selecting a model for a workload. These new performance metrics expand classic performance considerations such as latency and throughput. Efficient model selection and customization requires careful consideration of the various performance requirements of a generative AI workload, which is informed by the business case.",
+        "lens": "Generative AI",
+        "practices": [
+          {
+            "title": "Define a ground truth data set of prompts and responses",
+            "why": "Ground truth data facilitates model testing for use case specific scenarios and should be developed and curated for generative AI workloads. Ground truth data is a curated set of prompts and responses that describe the ideal workflow with a model."
+          },
+          {
+            "title": "Collect performance metrics from generative AI workloads",
+            "why": "Foundation model performance on specific tasks is measured and quantified in different ways depending on the desired outcome. It is important to discern the performance of a model over time when selecting foundation models for generative AI workloads by identifying performance metrics and evaluating model performance. This is true not just for model inference, but model training and customization workloads as well."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-implement-operational-practices-that-ensure-reproducible-and-m",
+        "title": "How do you implement operational practices that ensure reproducible and maintainable model development?",
+        "description": "Establish operational controls and processes that enable consistent, traceable, and maintainable model development practices.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Automate operations through MLOps and CI/CD",
+            "why": "Automate ML workload operations using infrastructure as code (IaC) and configuration as code (CaC). Select appropriate MLOps mechanisms to orchestrate your ML workflows and integrate with CI/CD pipelines for automated deployments. This approach creates consistency across your staging and production deployment environments. Enable model observability and version control across your hosting infrastructure."
+          },
+          {
+            "title": "Establish reliable packaging patterns to access approved public libraries",
+            "why": "Establishing reliable packaging patterns enables data scientists to access approved public libraries efficiently and consistently. By implementing structured access to public libraries and creating separate kernels for common ML frameworks, organizations can have both flexibility and security in their machine learning development environments."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-manage-scalable-development-and-deployment",
+        "title": "How do you manage scalable development and deployment?",
+        "description": "Adopt approaches that improve the flow of changes into production, that enable refactoring, fast feedback on quality, and bug fixing. These accelerate beneficial changes entering production, limit issues deployed, and enable rapid identification and remediation of issues introduced through deployment activities.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Establish deployment environment metrics",
+            "why": "Establish comprehensive monitoring of machine learning operations to gain visibility into your deployed ML environments. By measuring metrics such as memory, CPU/GPU usage, disk utilization, endpoint invocations, and latency, you can provide optimal performance and improve the reliability of your ML systems."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-understand-the-operational-health-of-your-ml-workload",
+        "title": "How do you understand the operational health of your ML workload?",
+        "description": "Define, capture, and analyze operations metrics to gain visibility to workload and operations events so that you can take appropriate action.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Synchronize architecture and configuration, and check for skew across environments",
+            "why": "Synchronize your systems and configurations across development and deployment phases for consistent machine learning model inference results. By maintaining identical environments, you can avoid discrepancies that arise from architectural differences, leading to more reliable and predictable model performance."
+          },
+          {
+            "title": "Enable model observability and tracking",
+            "why": "Establish model monitoring mechanisms to identify and proactively avoid inference issues. ML models can degrade in performance over time due to drifts. Monitor metrics that are attributed to your model's performance. For real time inference endpoints, measure the operational health of the underlying compute resources hosting the endpoint and the health of endpoint responses. Establish lineage to trace hosted models back to versioned inputs and model artifacts for analysis."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-prepare-your-ml-workload-to-manage-and-withstand-failures",
+        "title": "How do you prepare your ML workload to manage and withstand failures?",
+        "description": "In any system of reasonable complexity, it is expected that failures will occur. Reliability requires that your workload be aware of failures as they occur and take action to avoid impact on availability. Workloads must be able to both withstand failures and automatically repair issues.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Automate endpoint changes through a pipeline",
+            "why": "Manual change management can be error prone and potentially incur a high effort cost. Use automated pipelines (that integrate with a change management tracking system) to deploy changes to your model endpoints. Versioned pipeline inputs and artifacts allow you to track the changes and automatically rollback after a failed change."
+          },
+          {
+            "title": "Use an appropriate deployment and testing strategy",
+            "why": "Select the right deployment and testing strategy for your machine learning models to create smoother transitions to production, minimize disruption, and allow for careful evaluation of model performance before full implementation."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "machine-learning-how-do-you-monitor-review-and-improve-ml-performance",
+        "title": "How do you monitor, review and improve ML Performance?",
+        "description": "After you implement your workload, you must monitor its performance so that you can remediate any issues before they impact your customers. Monitoring metrics should be used to raise alarms when thresholds are breached.",
+        "lens": "Machine Learning",
+        "practices": [
+          {
+            "title": "Include human-in-the-loop monitoring",
+            "why": "Including human-in-the-loop monitoring is an effective method for efficiently tracking and maintaining model performance. By incorporating human review into automated decision processes, organizations can establish a reliable quality assurance mechanism that validates model inferences and detects performance degradation over time."
+          },
+          {
+            "title": "Evaluate model explainability",
+            "why": "Model explainability allows you to understand and interpret how your machine learning models arrive at their decisions. By evaluating model explainability, you gain insights into the factors that influence predictions to build trustworthy AI systems that meet business requirements and regulatory standards."
+          },
+          {
+            "title": "Evaluate data drift",
+            "why": "Data drift can impact the performance of your machine learning models, leading to inaccurate predictions and diminished business value. By implementing effective monitoring and detection strategies, you can identify when your models are no longer performing optimally due to changes in the underlying data patterns."
+          },
+          {
+            "title": "Monitor, detect, and handle model performance degradation",
+            "why": "Model performance could degrade over time for reasons such as data quality, model quality, model bias, and model explainability. Continuously monitor the quality of the ML model in real time. Identify the right time and frequency to retrain and update the model. Configure alerts to notify and initiate actions if a drift in model performance is observed."
+          },
+          {
+            "title": "Establish an automated re-training framework",
+            "why": "Monitor data and model predictions to identify errors due to data and concept drift. By implementing automated model re-training at scheduled intervals or when performance metrics reach defined thresholds, you can maintain model accuracy and effectiveness over time. This approach keeps your machine learning models relevant as data patterns evolve."
+          },
+          {
+            "title": "Review for updated data and features for retraining",
+            "why": "Establishing a framework to regularly review and update your machine learning model's data and features is essential for maintaining model accuracy. As business environments evolve, new data patterns emerge that can impact your model's performance. By systematically reviewing your data and features at appropriate intervals, you can keep your models accurate and reliable."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-evaluate-the-ai-system-against-your-release-criteria",
+        "title": "How will you evaluate the AI system against your release criteria?",
+        "description": "Test system performance against the release criteria to determine if benefits and risks are addressed. Consider double checking your evaluations with evaluations by experts outside your team. Identify steps to address each criterion that is not met, modifying transparency solutions as appropriate. To reach a release decision, establish a methodology for combining the results for each release criterion.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Validate that release criteria still align with current industry standards",
+            "why": "At the start of a release evaluation, check that the release criteria and associated evaluation tests are still aligned with the current version of the AI system. Research and confirm that there are no new and relevant benchmarks or expectations that need to be included in the evaluation."
+          },
+          {
+            "title": "Independently corroborate more critical and subjective evaluations",
+            "why": "Consider getting second opinions on release criteria that are highly critical or more subjective. Such opinions can come from internal or external parties. To maximize independence, consider asking the independent party to build or acquire their own evaluation datasets, using the same information about the intended use case(s) of the AI solution that you intend to communicate to downstream users."
+          },
+          {
+            "title": "For each system update, re-run the evaluation and update the system registry",
+            "why": "Record evaluation activities in logs that capture test conditions, system configurations, data inputs, raw results, and methodological notes with sufficient detail to make the entire process reproducible. Establish version control for evaluation artifacts to assist builders to trace unique system builds and their corresponding evaluation results."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-monitor-for-unexpected-deviations-from-release-criteria-in-ope",
+        "title": "How will you monitor for unexpected deviations from release criteria in operation?",
+        "description": "Establish a strategy for monitoring release criteria after release, including baselines for drift monitoring.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Obtain consent for monitoring production data",
+            "why": "As appropriate, implement consent mechanisms that inform users about what data will be collected for monitoring purposes and obtain appropriate permissions before beginning data collection activities. This includes considering opt-in and opt-out data collection strategies while adhering to guidance from your legal counsel. When appropriate, design transparent consent processes that explain monitoring objectives, data usage, retention periods, and user rights regarding their monitored data for opting in or opt out. Establish procedures for managing consent changes over time, including mechanisms for users to withdraw consent and processes for handling data from users who have opted out."
+          },
+          {
+            "title": "Set operational performance baselines and apply methods for drift detection",
+            "why": "Set performance trend baselines by collecting initial production data over a representative time period to capture your system's actual operating performance, which may vary from your release criteria thresholds. Use statistical methods to characterize normal performance variation patterns, seasonal trends, and expected behavioral ranges for each monitored metric based on observed system behavior. Implement drift detection techniques such as statistical process control charts, change point detection algorithms, and trend analysis that can identify when current performance deviates significantly from established baseline trends, indicating the system is not performing as expected."
+          },
+          {
+            "title": "Preserve data privacy and set access controls on monitored data",
+            "why": "Apply data governance processes that specify what monitoring data can be collected, processed, stored, and accessed throughout the monitoring lifecycle. Consider implementing privacy-preserving techniques including anonymization, differential privacy, and secure computation methods that enable system oversight without exposing individual user information. Using the principle of least privilege, create role-based access controls that limit monitoring data access to authorized personnel based on job function, with detailed audit trails tracking data access activities. Establish data retention policies that specify how long different types of monitoring data should be stored, with automated deletion processes and procedures for handling individual data requests."
+          },
+          {
+            "title": "Create monitoring dashboards for operational visibility",
+            "why": "Design role-based monitoring dashboards that present relevant system health, performance, and risk indicators tailored to each stakeholder group's responsibilities and expertise levels. Create technical dashboards for engineering teams that show detailed performance metrics, error rates, and component-level health indicators with capabilities for deep-dive analysis. Develop executive dashboards that present summary-level information about benefit realization, risk mitigation effectiveness, and overall system performance against business objectives. Implement governance dashboards for teams that track adherence to release criteria and incident response metrics with historical trending capabilities."
+          },
+          {
+            "title": "Design protocols that trigger human oversight of automated monitoring alerts",
+            "why": "Set protocols for when human reviewers should be involved in system oversight decisions. Create sampling-based human review processes that validate the accuracy and effectiveness of automated monitoring systems, including procedures for evaluating edge cases and challenging scenarios. Implement feedback mechanisms that enable human reviewers to improve automated monitoring through labeling ambiguous cases, refining alert criteria, and identifying new monitoring requirements. Design human oversight workflows that provide escalation paths, decision-making authority, and documentation requirements for monitoring decisions that affect system operation."
+          }
+        ],
+        "hasNone": true
+      },
+      {
+        "id": "responsible-ai-how-will-you-respond-to-feedback-from-monitoring",
+        "title": "How will you respond to feedback from monitoring?",
+        "description": "Improve your AI system by applying feedback from monitoring and reported incidents.",
+        "lens": "Responsible AI",
+        "practices": [
+          {
+            "title": "Create feedback loops to apply monitoring results to system improvement",
+            "why": "Translate monitoring results, incident patterns, and performance trends into actionable system improvements and risk mitigation enhancements. Implement regular review cycles that analyze monitoring data across multiple time horizons, identifying both immediate optimization opportunities and longer-term improvement strategies based on usage patterns and performance drift. Update system components based on monitoring insights, including refining guardrails, adjusting model parameters, updating training data, and modifying deployment strategies. Track the effectiveness of monitoring-driven improvements by validating that changes address identified issues without introducing new problems or degrading system performance in other areas."
+          }
+        ],
+        "hasNone": true
+      }
+    ]
+  }
+]

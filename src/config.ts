@@ -13,10 +13,29 @@ export const SITE = {
   github: 'https://github.com/toby-gardner-ai',
 };
 
-export const NAV = [
+type NavItem = { href: string; label: string; children?: { href: string; label: string; text: string }[] };
+
+export const NAV: NavItem[] = [
   { href: '/services', label: 'Services' },
   { href: '/work', label: 'Work' },
-  { href: '/resources', label: 'Resources' },
+  {
+    href: '/resources',
+    label: 'AI Enablement',
+    children: [
+      { href: '/resources', label: 'Free resources', text: 'Checklists, templates and guides' },
+      { href: '/readiness', label: 'Readiness Checklist', text: 'Score how ready you are to run AI in production' },
+      { href: '/glossary', label: 'Glossary', text: 'AI governance terms in plain English' },
+      { href: '/subjects', label: 'Subjects', text: 'What AI governance covers, subject by subject' },
+    ],
+  },
+  {
+    href: '/controls',
+    label: 'AI Controls',
+    children: [
+      { href: '/controls', label: 'Control Lifecycle', text: 'Where each control acts, from first commit to retirement' },
+      { href: '/controls/library', label: 'Control Library', text: 'Every control, searchable, with what it protects' },
+    ],
+  },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
 ];
