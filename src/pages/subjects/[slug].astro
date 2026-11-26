@@ -1,0 +1,304 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import {
+  considerations,
+  glossaryTerm,
+  inDepthSubjects,
+  readingMinutes,
+  related,
+  section,
+  subjectHref,
+  summary,
+  withTerms,
+  type Subject,
+} from '../../lib/subjects';
+import { plain } from '../../lib/inline';
+
+export function getStaticPaths() {
+  return inDepthSubjects.map((subject) => ({ params: { slug: subject.slug }, props: { subject } }));
+}
+
+const { subject } = Astro.props as { subject: Subject };
+const index = inDepthSubjects.indexOf(subject);
+const prev = inDepthSubjects[index - 1];
+const next = inDepthSubjects[index + 1];
+
+// One set for the page, so each glossary term is linked on its first mention only.
+const seen = new Set<string>();
+const description = section(subject, 'Description')!.items.map((i) => withTerms(i.text, seen));
+const cards = considerations(subject).map((c) => ({ ...c, html: withTerms(c.text, seen) }));
+const why = section(subject, 'Why it matters')!.items.map((i) => i.text).join(' ');
+// The first sentence of Why it matters becomes the pull quote.
+const split = why.search(/\.\s/);
+const quote = split > 0 ? why.slice(0, split + 1) : why;
+const whyRest = split > 0 ? withTerms(why.slice(split + 2), seen) : '';
+const words = [...seen].map(glossaryTerm);
+const relatedSubjects = related(subject);
+const preview = (s: Subject) => {
+  const text = plain(s.sections[0].items[0]?.text ?? '');
+  return text.length > 110 ? text.slice(0, text.lastIndexOf(' ', 110)) + '…' : text;
+};
+---
+<Base title={`${subject.subject} · AI Governance Subjects`} description={summary(subject)}>
+  <article>
+    <section class="hero">
+      <div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/resources">AI Enablement</a><span aria-hidden="true">/</span>
+          <a href="/subjects">Subjects</a><span aria-hidden="true">/</span>
+          <span aria-current="page">{subject.subject}</span>
+        </nav>
+        <p class="meta">
+          <span class="tag depth">In depth</span>
+          <span>Governance subject</span>
+          <span aria-hidden="true">·</span>
+          <span>{readingMinutes(subject)} min read</span>
+        </p>
+        <h1>{subject.subject}</h1>
+        <div class="summary">
+          <p>{summary(subject)}</p>
+          <ul class="jump">
+            <li><a href="#what-it-is">What it is</a></li>
+            <li><a href="#consider">{cards.length} things to consider</a></li>
+            <li><a href="#why">Why it matters</a></li>
+          </ul>
+        </div>
+        <nav class="pager" aria-label="Other in-depth subjects">
+          {prev ? <a href={`/subjects/${prev.slug}`} class="prev"><span>← Previous</span>{prev.subject}</a> : <span />}
+          {next && <a href={`/subjects/${next.slug}`} class="next"><span>Next →</span>{next.subject}</a>}
+        </nav>
+      </div>
+    </section>
+
+    <section id="what-it-is" class="block">
+      <div class="container two-col">
+        <h2>What it is.</h2>
+        <div class="text">
+          {description.map((html) => <p class="big" set:html={html} />)}
+        </div>
+      </div>
+    </section>
+
+    <section id="consider" class="block soft">
+      <div class="container">
+        <div class="consider-head">
+          <div>
+            <h2>What to consider.</h2>
+            <p class="muted">Use these as a checklist when you review an agent. Tick each one you have covered.</p>
+          </div>
+          <div class="progress" aria-live="polite">
+            <span id="progress-label">0 of {cards.length} covered</span>
+            <div class="bar"><div id="progress-fill"></div></div>
+          </div>
+        </div>
+        <ol class="cards" data-key={subject.slug}>
+          {cards.map((c, i) => (
+            <li class="card consider">
+              <label class="check">
+                <input type="checkbox" />
+                <span aria-hidden="true">✓</span>
+                <span class="visually-hidden">Mark {c.label || `consideration ${i + 1}`} as covered</span>
+              </label>
+              <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {c.label && <h3>{c.label}</h3>}
+              <p set:html={c.html} />
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section id="why" class="block">
+      <div class="container two-col">
+        <h2>Why it matters.</h2>
+        <div class="text">
+          <blockquote>{quote}</blockquote>
+          {whyRest && <p class="big" set:html={whyRest} />}
+        </div>
+      </div>
+    </section>
+
+    {words.length > 0 && (
+      <section class="block tight">
+        <div class="container two-col">
+          <h2 class="small-h">Words that go with it.</h2>
+          <div class="chips">
+            {words.map((t) => <a class="chip" href={`/glossary#${t.slug}`} title={t.meaning}>{t.term}</a>)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {relatedSubjects.length > 0 && (
+      <section class="block tight">
+        <div class="container two-col">
+          <h2 class="small-h">Related subjects.</h2>
+          <div class="related">
+            {relatedSubjects.map((s) => (
+              <a href={subjectHref(s)} class="rel">
+                <strong>{s.subject}{s.sections.length > 1 && <span class="tag depth">In depth</span>}</strong>
+                <span>{preview(s)}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class="block tight">
+      <div class="container">
+        <div class="card stuck">
+          <div>
+            <h2>Stuck on another word?</h2>
+            <p class="muted">Every AI governance term, explained in plain English.</p>
+          </div>
+          <div class="btn-row">
+            <a href="/glossary" class="btn btn-primary">Look it up →</a>
+            <a href="/subjects" class="btn btn-ghost">All subjects</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <CtaBand />
+</Base>
+
+<script>
+  // Remember ticked considerations in this browser only.
+  const list = document.querySelector<HTMLElement>('.cards');
+  const boxes = [...(list?.querySelectorAll<HTMLInputElement>('input[type=checkbox]') ?? [])];
+  const key = `considered:${list?.dataset.key}`;
+  const label = document.getElementById('progress-label');
+  const fill = document.getElementById('progress-fill');
+
+  function render() {
+    const done = boxes.filter((b) => b.checked).length;
+    if (label) label.textContent = `${done} of ${boxes.length} covered`;
+    if (fill) fill.style.width = `${(done / boxes.length) * 100}%`;
+    boxes.forEach((b) => b.closest('li')?.classList.toggle('done', b.checked));
+  }
+  try {
+    const saved: number[] = JSON.parse(localStorage.getItem(key) ?? '[]');
+    saved.forEach((i) => boxes[i] && (boxes[i].checked = true));
+  } catch {}
+  boxes.forEach((b) =>
+    b.addEventListener('change', () => {
+      try {
+        localStorage.setItem(key, JSON.stringify(boxes.flatMap((x, i) => (x.checked ? [i] : []))));
+      } catch {}
+      render();
+    }),
+  );
+  render();
+</script>
+
+<style>
+  .hero { padding-bottom: 2.5rem; }
+  .crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.88rem; color: var(--muted); margin-bottom: 1.8rem; }
+  .crumbs a { color: var(--muted) !important; text-decoration: none; }
+  .crumbs a:hover { color: var(--text) !important; }
+  .crumbs [aria-current] { color: var(--text); }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; color: var(--muted); font-size: 0.88rem; margin-bottom: 0.6rem; }
+  .meta .tag { margin: 0; }
+  .depth { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+  :root[data-theme='dark'] .depth { color: var(--accent); }
+
+  .summary {
+    margin-top: 1.4rem; padding: 1.5rem 1.7rem; max-width: 52rem;
+    border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius);
+    background: var(--bg-soft);
+  }
+  .summary p { font-size: 1.3rem; line-height: 1.5; margin-bottom: 1rem; }
+  .jump { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; list-style: none; padding: 0; margin: 0; font-size: 0.92rem; }
+  .jump a { text-decoration: none; font-weight: 600; }
+  .jump a::before { content: '↓ '; }
+
+  .pager { display: flex; justify-content: space-between; gap: 1rem; max-width: 52rem; margin-top: 1.2rem; }
+  .pager a { display: grid; font-weight: 600; text-decoration: none; color: var(--text) !important; font-size: 0.95rem; }
+  .pager a span { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+  .pager a:hover { color: var(--accent-strong) !important; }
+  .pager .next { text-align: right; }
+
+  .block { padding: clamp(2.5rem, 6vw, 4rem) 0; scroll-margin-top: 4rem; }
+  .block.tight { padding-top: 0; }
+  .two-col { display: grid; grid-template-columns: 15rem 1fr; gap: 1rem 3rem; align-items: start; }
+  .two-col h2 { font-size: 1.6rem; }
+  .small-h { font-size: 1.15rem !important; padding-top: 0.3rem; }
+  .text { max-width: 44rem; }
+  .big { font-size: 1.15rem; line-height: 1.75; }
+  .big:last-child { margin-bottom: 0; }
+  .text :global(code), .consider :global(code) { font-size: 0.86em; background: var(--bg-soft); padding: 0.05rem 0.35rem; border-radius: 5px; }
+
+  /* Glossary terms with a hover definition */
+  .text :global(.gloss), .consider :global(.gloss) {
+    position: relative; color: inherit !important;
+    text-decoration: underline dotted var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px;
+  }
+  :global(.gloss-tip) {
+    display: none; position: absolute; left: 0; bottom: calc(100% + 0.5rem); z-index: 3;
+    width: 19rem; padding: 0.8rem 0.9rem; border-radius: 10px;
+    background: var(--text); color: var(--bg); font-size: 0.85rem; line-height: 1.5; font-weight: 400;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.2);
+  }
+  :global(.gloss-tip strong) { display: block; margin-bottom: 0.2rem; }
+  @media (hover: hover) {
+    :global(.gloss:hover .gloss-tip), :global(.gloss:focus-visible .gloss-tip) { display: block; }
+  }
+
+  .consider-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; margin-bottom: 1.6rem; }
+  .consider-head p { margin: 0; }
+  .progress { min-width: 14rem; font-size: 0.88rem; color: var(--muted); }
+  .bar { height: 6px; border-radius: 99px; background: var(--border); margin-top: 0.4rem; overflow: hidden; }
+  #progress-fill { height: 100%; width: 0; background: var(--accent); transition: width 0.3s; }
+
+  .cards { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .consider { position: relative; transition: border-color 0.15s, box-shadow 0.15s; }
+  .consider:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--border)); }
+  .consider input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .num { display: block; font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--accent); line-height: 1; margin-bottom: 0.8rem; }
+  .check {
+    position: absolute; top: 1.3rem; right: 1.3rem; width: 1.7rem; height: 1.7rem;
+    display: grid; place-items: center; border-radius: 50%;
+    border: 2px solid var(--border); color: transparent; font-weight: 700; font-size: 0.85rem;
+    transition: all 0.15s; cursor: pointer;
+  }
+  .check:hover { border-color: var(--accent); }
+  .check:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .consider h3 { font-size: 1.1rem; padding-right: 2rem; }
+  .consider p { color: var(--muted); font-size: 0.97rem; margin: 0; }
+  .consider.done { border-color: var(--accent); }
+  .consider.done .check { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+
+  blockquote {
+    margin: 0 0 1.4rem; padding: 0 0 0 1.4rem; border-left: 4px solid var(--accent);
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.015em;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    padding: 0.4rem 0.95rem; border-radius: 999px; border: 1px solid var(--border);
+    font-size: 0.9rem; text-decoration: none; color: var(--text) !important;
+  }
+  .chip:hover { border-color: var(--accent); }
+
+  .related { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.8rem; }
+  .rel { display: grid; gap: 0.3rem; padding: 1rem 1.1rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+  .rel:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .rel strong { color: var(--text); font-size: 0.98rem; }
+  .rel strong .tag { margin: 0 0 0 0.4rem; font-size: 0.68rem; vertical-align: 0.1em; }
+  .rel span:not(.tag) { color: var(--muted); font-size: 0.86rem; line-height: 1.45; }
+
+  .stuck { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 2rem; padding: 2rem; background: var(--bg-soft); }
+  .stuck h2 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .stuck p { margin: 0; }
+  .stuck .btn-row { margin-top: 0; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+  @media (max-width: 760px) {
+    .two-col { grid-template-columns: 1fr; }
+    .summary { padding: 1.2rem; }
+    .summary p { font-size: 1.15rem; }
+  }
+</style>

@@ -18,12 +18,34 @@ npm run build    # outputs static site to dist/
 | Home page | `src/pages/index.astro` |
 | Services | `src/pages/services.astro` |
 | Free resources | `src/pages/resources.astro` (put PDFs in `public/resources/`) |
+| AI Enablement dropdown | `NAV` in `src/config.ts` |
+| Readiness Checklist | `src/pages/readiness.astro` (content: see below) |
+| Glossary and Subjects pages | `src/pages/glossary.astro`, `src/pages/subjects.astro`, in-depth subject pages in `src/pages/subjects/[slug].astro` (content: see below) |
 | About / bio | `src/pages/about.astro` |
 | Blog posts | add a `.md` file to `src/content/blog/` |
 | Case studies | add a `.md` file to `src/content/work/` |
 | Colours, fonts | `src/styles/global.css` |
 
 Anything in `[square brackets]` or marked `TODO` / "Placeholder" is waiting for real content.
+
+### Updating the Glossary, Subjects and Readiness Checklist
+
+Their content comes from the `ai-governance` repo, which this script expects next to `personal-ws`:
+
+| Page | Source | Generated file |
+| --- | --- | --- |
+| Glossary, Subjects | `admin/governance_subject.md` | `src/data/glossary.json`, `src/data/subjects.json` |
+| Readiness Checklist | `research/ai_readiness_qs.json` | `src/data/readiness.json` |
+
+```sh
+npm run extract                                  # regenerate everything
+npm run extract:governance -- path/to/governance_subject.md
+npm run extract:readiness -- path/to/ai_readiness_qs.json
+```
+
+Readiness answers are saved in each visitor's browser under the key `readiness:v1`. If the questions change a lot, bump that key in `src/pages/readiness.astro` so old answers don't attach to the wrong questions.
+
+Don't edit the JSON by hand; it is overwritten on each run. A subject that has Considerations and Why it matters sections gets its own page at `/subjects/<name>` automatically.
 
 ### Writing a blog post
 
