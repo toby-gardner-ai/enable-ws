@@ -1,0 +1,37 @@
+---
+// A dark band with a short heading and the control graph focused on one layer.
+import ControlGraph from './ControlGraph.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  text: string;
+  layers?: string[];
+  focus: string[];
+  focusLinks?: string[];
+}
+const { eyebrow, title, text, layers, focus, focusLinks } = Astro.props;
+---
+<section class="band">
+  <div class="container band-head">
+    <div>
+      <span class="eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+    </div>
+    <p>{text}</p>
+  </div>
+  <ControlGraph layers={layers} focus={focus} focusLinks={focusLinks} class="band-graph" />
+</section>
+
+<style>
+  .band { padding: 3rem 0 0; }
+  .band-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem 3rem; align-items: end; margin-bottom: 0.5rem; }
+  .band-head h2 { margin: 0; }
+  .band-head p { margin: 0; color: var(--muted); }
+  .band :global(.band-graph) { height: min(78vh, 760px); }
+  .band :global(.band-graph .cg-legend) { justify-content: center; }
+  @media (max-width: 760px) {
+    .band-head { grid-template-columns: 1fr; }
+    .band :global(.band-graph) { height: 70vh; }
+  }
+</style>

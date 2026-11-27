@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import GraphBand from '../../components/GraphBand.astro';
 import {
   ENFORCEMENT_LABEL,
   KIND_ICON,
@@ -127,6 +128,14 @@ const busiest = stops.reduce((a, b) => (atStop(b.id).length > atStop(a.id).lengt
       })}
     </div>
   </section>
+
+  <GraphBand
+    eyebrow="The control wall"
+    title="How the controls fit together"
+    text="The controls form a wall between the assets at the centre and the risks outside. Each one enforces governance subjects and protects assets; hover any control to see which, and click to open it."
+    focus={['control']}
+    focusLinks={['enforced_by', 'protected_by']}
+  />
 
   <section>
     <div class="container">

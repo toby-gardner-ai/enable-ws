@@ -11,6 +11,14 @@
   --enf-blocking: #0d9488;
   --enf-reporting: #d97706;
   --enf-attested: #7c3aed;
+  /* Home page control graph: node types (validated as a colour-blind-safe set; policies use --text) */
+  --g-subject: #2a78d6;
+  --g-control: #0d9488;
+  --g-asset: #eb6834;
+  /* Risk levels: the fixed status palette, always shown with a label */
+  --risk-low: #0ca30c;
+  --risk-medium: #fab219;
+  --risk-high: #d03b3b;
   --radius: 14px;
   --max: 1080px;
   --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -29,8 +37,30 @@
   --enf-blocking: #0fa595;
   --enf-reporting: #c27c0e;
   --enf-attested: #8b5cf6;
+  --g-subject: #3987e5;
+  --g-control: #0fa595;
+  --g-asset: #d95926;
   color-scheme: dark;
 }
+
+/* A dark stage for the control graph, in both themes, so its glow reads. */
+.stage-dark {
+  --bg: #060a14;
+  --bg-soft: #0c1322;
+  --text: #e8edf4;
+  --muted: #8d9bb0;
+  --border: #1b2640;
+  --accent: #5eead4;
+  --accent-strong: #99f6e4;
+  --accent-contrast: #062925;
+  --g-subject: #3987e5;
+  --g-control: #0fa595;
+  --g-asset: #d95926;
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: dark;
+}
+.stage-dark a { color: var(--accent); }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -133,6 +163,17 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
   padding: 0.1rem 0.45rem; border-radius: 6px; background: var(--bg-soft); border: 1px solid var(--border);
   color: var(--text); white-space: nowrap;
 }
+.lvl {
+  display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
+  font-size: 0.78rem; font-weight: 600; color: var(--text);
+  padding: 0.1rem 0.55rem 0.1rem 0.45rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--lvl) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lvl) 45%, transparent);
+}
+.lvl::before { content: ''; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--lvl); }
+.lvl-low { --lvl: var(--risk-low); }
+.lvl-medium { --lvl: var(--risk-medium); }
+.lvl-high { --lvl: var(--risk-high); }
 .placeholder-note {
   font-size: 0.85rem;
   border: 1px dashed var(--accent);

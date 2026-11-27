@@ -10,12 +10,17 @@
     "astro": "astro",
     "extract:governance": "node scripts/extract-governance.mjs",
     "extract:readiness": "node scripts/extract-readiness.mjs",
-    "extract": "npm run extract:governance && npm run extract:readiness && npm run extract:controls",
-    "extract:controls": "node scripts/extract-controls.mjs"
+    "extract": "npm run extract:governance && npm run extract:readiness && npm run extract:controls && npm run extract:graph && npm run extract:risks",
+    "extract:controls": "node scripts/extract-controls.mjs",
+    "extract:graph": "node scripts/extract-graph.mjs",
+    "extract:risks": "node scripts/extract-risks.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.6",
-    "astro": "^7.4.13"
+    "3d-force-graph": "1.80.2",
+    "astro": "^7.4.13",
+    "three": "0.187.0",
+    "three-spritetext": "1.10.0"
   }
 }

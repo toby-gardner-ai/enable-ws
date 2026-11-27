@@ -252,6 +252,7 @@
         "8.2",
         "8.3",
         "8.6",
+        "19.15",
         "23.1",
         "23.6"
       ]
@@ -303,7 +304,8 @@
         "13.5",
         "22.2",
         "31.4",
-        "31.6"
+        "31.6",
+        "31.15"
       ]
     },
     {
@@ -326,6 +328,7 @@
       ],
       "risks": 1,
       "requirements": [
+        "1.13",
         "4.2",
         "4.3",
         "4.4",
@@ -481,8 +484,8 @@
         }
       ],
       "tier": {
-        "minimum": "A case for every shared skill whose tools carry a `write` or `irreversible` effect",
-        "recommended": "A case for every shared skill, which an installation may require",
+        "minimum": "A case for every shared skill whose tools carry a `write` or `irreversible` effect; evasion cases only for a `confidential` installation and for `prompt_attack`, `harmful` and `topic`",
+        "recommended": "A case for every shared skill, which an installation may require; evasion cases for every guardrail on every installation",
         "trigger": null
       },
       "protects": [
@@ -490,9 +493,10 @@
         "End user",
         "Model",
         "Prompt",
-        "Skill"
+        "Skill",
+        "Workload"
       ],
-      "risks": 16,
+      "risks": 18,
       "requirements": [
         "14.1",
         "14.2",
@@ -504,7 +508,8 @@
         "14.9",
         "14.11",
         "14.12",
-        "15.12"
+        "15.12",
+        "32.7"
       ]
     },
     {
@@ -676,7 +681,7 @@
       "requirements": [
         "20.5",
         "20.8",
-        "20.11"
+        "30.11"
       ]
     },
     {
@@ -693,13 +698,14 @@
       "protects": [
         "Workload"
       ],
-      "risks": 1,
+      "risks": 2,
       "requirements": [
         "21.1",
         "21.2",
         "21.3",
         "21.9",
-        "21.15"
+        "21.15",
+        "32.1"
       ]
     },
     {
@@ -824,7 +830,7 @@
         "6.8",
         "16.1",
         "16.8",
-        "20.10"
+        "30.10"
       ]
     },
     {
@@ -848,6 +854,8 @@
       "requirements": [
         "17.3",
         "19.10",
+        "19.14",
+        "19.16",
         "21.12",
         "21.13",
         "23.6"
@@ -1499,12 +1507,12 @@
       ],
       "risks": 4,
       "requirements": [
-        "20.9",
-        "20.11",
-        "20.14",
         "20.15",
         "23.7",
-        "30.8"
+        "30.8",
+        "30.9",
+        "30.11",
+        "30.12"
       ]
     },
     {
@@ -1522,13 +1530,14 @@
         "Agent",
         "Document",
         "Egress",
+        "Installation",
         "Policy rule",
         "Prompt",
         "Signing identity",
         "Skill",
         "Tenant"
       ],
-      "risks": 9,
+      "risks": 10,
       "requirements": [
         "2.3",
         "2.4",
@@ -1551,17 +1560,17 @@
       "protects": [
         "Agent",
         "Egress",
+        "Installation",
         "Person",
         "Policy rule",
         "Prompt",
         "Tenant"
       ],
-      "risks": 6,
+      "risks": 7,
       "requirements": [
         "2.7",
         "13.1",
         "13.3",
-        "13.10",
         "20.1",
         "29.3"
       ]
@@ -2104,9 +2113,10 @@
       "protects": [
         "Agent",
         "Dataset",
-        "Ingress"
+        "Ingress",
+        "Secret"
       ],
-      "risks": 6,
+      "risks": 8,
       "requirements": [
         "8.21",
         "15.4",
@@ -2115,7 +2125,11 @@
         "15.8",
         "15.9",
         "15.11",
-        "15.13"
+        "15.13",
+        "15.16",
+        "32.2",
+        "32.10",
+        "32.12"
       ]
     },
     {
@@ -2322,7 +2336,9 @@
         "31.1",
         "31.2",
         "31.8",
-        "31.12"
+        "31.12",
+        "31.14",
+        "31.16"
       ]
     },
     {
@@ -2592,10 +2608,10 @@
       ],
       "risks": 2,
       "requirements": [
-        "13.8",
-        "13.9",
         "16.5",
-        "17.2"
+        "17.2",
+        "20.19",
+        "20.20"
       ]
     },
     {
@@ -2670,7 +2686,7 @@
       "protects": [
         "Dataset"
       ],
-      "risks": 1,
+      "risks": 2,
       "requirements": [
         "11.8",
         "11.9",
@@ -2758,7 +2774,7 @@
       "protects": [
         "Dataset"
       ],
-      "risks": 1,
+      "risks": 2,
       "requirements": [
         "12.10"
       ]
@@ -2819,7 +2835,7 @@
         }
       ],
       "tier": {
-        "minimum": "The storage provider manages the key, with the encryption it applies to everything it stores (requirement 17.8; the Standard)",
+        "minimum": "The storage provider manages the key, with the encryption it applies to everything it stores (requirement 17.8; requirement 19.16; the Standard)",
         "recommended": "The organisation manages the key, which it holds and can withdraw",
         "trigger": "The first `confidential` tenant"
       },
@@ -2828,7 +2844,9 @@
       ],
       "risks": 1,
       "requirements": [
-        "17.8"
+        "17.8",
+        "19.14",
+        "19.16"
       ]
     },
     {
@@ -2869,12 +2887,24 @@
         "Dataset",
         "End user",
         "Installation",
-        "Model"
+        "Model",
+        "Secret",
+        "Workload"
       ],
-      "risks": 7,
+      "risks": 11,
       "requirements": [
-        "12.15",
-        "28.7"
+        "32.1",
+        "32.3",
+        "32.4",
+        "32.5",
+        "32.6",
+        "32.8",
+        "32.9",
+        "32.11",
+        "32.12",
+        "32.13",
+        "32.14",
+        "32.15"
       ]
     },
     {
@@ -3221,7 +3251,7 @@
       "risks": 2,
       "requirements": [
         "2.9",
-        "13.10",
+        "20.1",
         "20.6"
       ]
     },
@@ -3557,10 +3587,12 @@
         "Principal",
         "Tenant"
       ],
-      "risks": 5,
+      "risks": 7,
       "requirements": [
         "10.5",
-        "10.10"
+        "10.10",
+        "31.13",
+        "32.6"
       ]
     },
     {
@@ -3579,7 +3611,7 @@
         "Signing identity",
         "Supplier"
       ],
-      "risks": 3,
+      "risks": 4,
       "requirements": [
         "16.9",
         "22.8"
@@ -3608,7 +3640,6 @@
       "risks": 5,
       "requirements": [
         "10.12",
-        "13.11",
         "17.16",
         "20.13",
         "20.16",

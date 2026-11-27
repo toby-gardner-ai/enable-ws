@@ -5,11 +5,6 @@
 // owners, in five high-growth sectors, 4–15 Sept 2026.
 const SOURCE_URL = 'https://www.imperial.ac.uk/news/articles/lifelong-learning/2026/news-ai-report/';
 const REPORT_URL = 'https://www.imperial.ac.uk/lifelong-learning/closing-the-ai-capacity-gap/';
-
-const bars = [
-  { value: 75, label: 'Business owners & senior leaders', hero: true },
-  { value: 59, label: 'All employees' },
-];
 ---
 <section class="skills-gap">
   <div class="container">
@@ -26,27 +21,12 @@ const bars = [
 
     <p class="punch">You know AI matters. You just don't have the in-house expertise to implement it. <strong>That's exactly why I'm here.</strong></p>
 
-    <figure class="chart" aria-labelledby="sg-title">
-      <figcaption id="sg-title">
-        <strong>See a significant skills gap in their industry</strong>
-        <span class="muted">% who agree</span>
-      </figcaption>
-      <ul class="bars">
-        {bars.map((b) => (
-          <li class={`bar-row ${b.hero ? 'is-hero' : ''}`} title={`${b.value}% of ${b.label.toLowerCase()}`}>
-            <span class="bar-label">{b.label}</span>
-            <div class="track" aria-hidden="true"><div class="fill" style={`width:${b.value}%`}></div></div>
-            <span class="val">{b.value}%</span>
-          </li>
-        ))}
-      </ul>
-      <p class="aside">And 85% of employees want AI-related training in the next two years.</p>
-      <p class="source">
-        Source: <a href={SOURCE_URL} rel="noopener">Imperial College London</a>,{' '}
-        <a href={REPORT_URL} rel="noopener"><em>Everyone but me: What UK employees told us about AI and skills</em></a> (2026).
-        Censuswide survey of 2,000 UK employees, including business owners, in five high-growth sectors, September 2026.
-      </p>
-    </figure>
+    <p class="source">
+      Source: <a href={SOURCE_URL} rel="noopener">Imperial College London</a>,{' '}
+      <a href={REPORT_URL} rel="noopener"><em>Everyone but me: What UK employees told us about AI and skills</em></a> (2026).
+      Censuswide survey of 2,000 UK employees, including business owners, in five high-growth sectors, September 2026.
+    </p>
+
 
     <div class="btn-row">
       <a href="/contact" class="btn btn-primary">Close the gap: book a call</a>
@@ -56,7 +36,6 @@ const bars = [
 </section>
 
 <style>
-  .skills-gap { --bar: #0d9488; --bar-2: color-mix(in srgb, #0d9488 40%, var(--bg)); }
   .hero-stat { display: grid; grid-template-columns: auto 1fr; gap: 0 2rem; align-items: center; margin-top: 0.5rem; }
   .big {
     margin: 0;
@@ -72,28 +51,7 @@ const bars = [
   .hl { color: var(--accent-strong); }
   .denial { font-size: clamp(1.3rem, 2.6vw, 1.75rem); font-weight: 700; font-style: italic; color: var(--muted); margin: 1.5rem 0 0; }
   .punch { font-size: clamp(1.2rem, 2.2vw, 1.45rem); max-width: 40rem; margin: 2rem 0 0; }
-  .chart {
-    margin: 2.5rem 0 0;
-    padding: clamp(1.25rem, 3vw, 2rem);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg);
-    max-width: 760px;
-  }
-  figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; margin-bottom: 1.4rem; }
-  figcaption .muted { font-size: 0.85rem; }
-  .bars { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.1rem; }
-  .bar-row { display: grid; grid-template-columns: minmax(0, 1fr) 3.5rem; grid-template-areas: 'label label' 'track val'; gap: 0.35rem 0.9rem; align-items: center; }
-  .bar-label { grid-area: label; font-size: 0.95rem; color: var(--muted); }
-  .is-hero .bar-label { color: var(--text); font-weight: 600; }
-  .track { grid-area: track; height: 14px; background: var(--bg-soft); border-radius: 0 4px 4px 0; overflow: hidden; }
-  .fill { height: 100%; background: var(--bar-2); border-radius: 0 4px 4px 0; transition: filter 0.15s; }
-  .is-hero .fill { background: var(--bar); }
-  .bar-row:hover .fill { filter: brightness(1.15); }
-  .val { grid-area: val; font-weight: 700; font-size: 1.1rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
-  .is-hero .val { color: var(--text); font-size: 1.3rem; }
-  .aside { margin: 1.4rem 0 0; font-size: 0.95rem; }
-  .source { margin: 1rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .source { margin: 1rem 0 0; max-width: 40rem; font-size: 0.82rem; color: var(--muted); }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   @media (max-width: 640px) { .hero-stat { grid-template-columns: 1fr; gap: 0.5rem; } }
 </style>

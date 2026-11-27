@@ -20,7 +20,8 @@ npm run build    # outputs static site to dist/
 | Free resources | `src/pages/resources.astro` (put PDFs in `public/resources/`) |
 | AI Enablement dropdown | `NAV` in `src/config.ts` |
 | Readiness Checklist | `src/pages/readiness.astro` (content: see below) |
-| AI Controls dropdown | `NAV` in `src/config.ts`; pages in `src/pages/controls/` (lifecycle map, library, one page per control) |
+| Control graph (home page story, bands on Risk Map and Control Lifecycle) | `src/components/ControlGraph.astro` (reusable; `focus` picks the layer), `src/lib/graph-view.ts`, story steps in `src/components/Governance.astro` |
+| AI Controls dropdown | `NAV` in `src/config.ts`; pages in `src/pages/controls/` (lifecycle map, library, one page per control) and `src/pages/risks/` (risk map, one page per risk) |
 | Glossary and Subjects pages | `src/pages/glossary.astro`, `src/pages/subjects.astro`, in-depth subject pages in `src/pages/subjects/[slug].astro` (content: see below) |
 | About / bio | `src/pages/about.astro` |
 | Blog posts | add a `.md` file to `src/content/blog/` |
@@ -38,12 +39,16 @@ Their content comes from the `ai-governance` repo, which this script expects nex
 | Glossary, Subjects | `admin/governance_subject.md` | `src/data/glossary.json`, `src/data/subjects.json` |
 | Readiness Checklist | `research/ai_readiness_qs.json` | `src/data/readiness.json` |
 | AI Controls | `admin/control_register.md`, `standard/agent_standard.md` (gates), `admin/policy.md` (definitions) | `src/data/controls.json` |
+| Risk Map | `assets/risk_register.md`, `assets/risk_method.md` (scales, catalogues), plus each risk's explanation from the newer `graph.json` | `src/data/risks.json` |
+| Control graph | `graph/out/graph.json` or `graph/build/graph.json`, whichever is newer (run `graph/extract.py` there first) | `src/data/graph.json` |
 
 ```sh
 npm run extract                                  # regenerate everything
 npm run extract:governance -- path/to/governance_subject.md
 npm run extract:readiness -- path/to/ai_readiness_qs.json
 npm run extract:controls -- path/to/ai-governance
+npm run extract:graph -- path/to/graph.json
+npm run extract:risks -- path/to/ai-governance
 ```
 
 Run these from the `enable-ws` folder. Controls link to Governance Subjects through the requirement numbers both registers cite, so regenerate both together (`npm run extract`).

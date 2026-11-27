@@ -1,5 +1,103 @@
 [
   {
+    "subject": "Action confirmation",
+    "slug": "action-confirmation",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "An optional pause before an agent's `write` tool call, set per installation: none, the default, lets the call proceed; soft shows the caller the pending call with a cancel option and proceeds after a set timeout; choosing soft is recorded with a reason, the setting shows on each such call's trace, and a confirmation never counts as an approval or as human review"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.6",
+      "31.9"
+    ]
+  },
+  {
+    "subject": "Action decision basis",
+    "slug": "action-decision-basis",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "What the tool guard decides each call on: the agent, installation and run, the caller (the model, or code the agent wrote), the server, tool, effect and arguments, and any extra policy rules that apply; a denial by a rule names the rule, and code reaches only tools marked callable from code, whatever a provider says"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.2",
+      "31.12",
+      "31.14"
+    ]
+  },
+  {
+    "subject": "Action decision point",
+    "slug": "action-decision-point",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The single policy enforcement point (the tool guard) that decides every tool call in every runtime before it runs: no runtime has a second path to a tool; an MCP gateway, if deployed, calls the same guard rather than repeating its rules; a call the guard cannot decide is denied (fail closed); and every denial is audit logged with its reason"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.1",
+      "31.3",
+      "31.8",
+      "31.16"
+    ]
+  },
+  {
+    "subject": "Action human review",
+    "slug": "action-human-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Human-in-the-loop review: an agent that can reach a tool with an irreversible effect either has a person approve each such call before it runs (the call is blocked until approved, a rejection or a timeout ends the run, and the reviewer is recorded) or holds a recorded approval to automate it; either way a record of the action is kept, holding at least a hash of its content"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.4",
+      "31.5",
+      "31.15"
+    ]
+  },
+  {
+    "subject": "Agent authority review",
+    "slug": "agent-authority-review",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Least-privilege recertification of what each agent may do: at least quarterly, with its installation's risk review, the tools on its allowlist it never called, its approvals to automate irreversible actions and any soft confirmation of its write calls are reviewed; a change removing what is unused or no longer justified is opened within one business day, and the review is recorded"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "31.13"
+    ]
+  },
+  {
     "subject": "Agent code execution",
     "slug": "agent-code-execution",
     "sections": [
@@ -8,7 +106,7 @@
         "items": [
           {
             "type": "p",
-            "text": "The single route by which code an agent writes or is given may run: a tool marked as a code executor with an effect of `write` or higher, and no other evaluation, compilation or shell-out; the executor service behind it, on a pinned, hardened image, with its own principal able only to create and destroy sandboxes; and a trace record of each run (sandbox profile, image, resources, exit status, attempted egress), an attempt outside the allowlist being alertable"
+            "text": "The single route by which code an agent writes or is given may run: a tool marked as a code executor with an effect of `write` or higher, and no other evaluation, compilation or shell-out; the executor service behind it, on a pinned, hardened image, with its own Principal able only to create and destroy sandboxes; and a trace record of each run (sandbox profile, image, resources, exit status, attempted egress), an attempt outside the allowlist being alertable"
           }
         ]
       }
@@ -84,7 +182,37 @@
         "items": [
           {
             "type": "p",
-            "text": "The permanent unique id (`agent_id`) each agent has, minted once by a person when its definition is first committed, never changed and never reused; a sub-agent packaged inside another agent's Bundle has no id of its own and is known by that bundle's identity plus its name, until a second bundle uses it and it must become an agent in its own right"
+            "text": "Agent Identifier (agent_id) is the single, permanent ID for an agent across its whole life. A person mints it when the agent is first committed, and it is never changed or reused. Every record about the agent, across all its versions and installations, therefore traces back to one agent."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Minted by a person at first commit: someone deliberately creates the ID when the agent first enters the Repository. It is not generated automatically at runtime."
+          },
+          {
+            "type": "li",
+            "text": "Permanent and never reused: the ID stays the same through renames, new versions and new installations. It is never given to another agent, even after the original is retired."
+          },
+          {
+            "type": "li",
+            "text": "No ID for embedded sub-agents: a sub-agent packaged inside another agent's Bundle is known by that Bundle's ID plus its own name. It gets an agent_id only once a second Bundle uses it, at which point it is a shared agent in its own right."
+          },
+          {
+            "type": "li",
+            "text": "Lifetime traceability: because the ID never changes, the agent's full history can be pulled together and compared using one value."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "A stable agent ID anchors accountability. Names, versions and owners change, but the agent_id doesn't, so audit, evaluation and incident history all build up against one identity. Not giving IDs to internal sub-agents keeps the register free of components that aren't independent agents. Any component that becomes shared still gets its own ID."
           }
         ]
       }
@@ -279,7 +407,7 @@
           },
           {
             "type": "li",
-            "text": "Policy and quality rules: content standards such as style guides, accessibility, security constraints (no secrets or personal data), or domain regulations."
+            "text": "Policy and quality rules: content standards such as style guides, accessibility, or domain regulations."
           },
           {
             "type": "li",
@@ -292,7 +420,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Agents generate output that can vary from run to run, so conformance checks are the guardrail that keeps that output reliable. Automated validation at handoff points catches malformed or non-compliant artifacts early. That stops errors from cascading through multi-agent pipelines, enables self-correction loops in which the agent retries until it conforms, and gives an auditable record that outputs met the required standards."
+            "text": "Agents generate output that can vary from run to run, so conformance checks are what keep that output reliable. Automated validation at handoff points catches malformed or non-compliant artifacts early. That stops errors from cascading through multi-agent pipelines, enables self-correction loops in which the agent retries until it conforms, and gives an auditable record that outputs met the required standards."
           }
         ]
       }
@@ -580,7 +708,7 @@
         "items": [
           {
             "type": "p",
-            "text": "How the automated build (CI) turns a merged commit into the one Bundle each agent runs for each installation, so an agent never reads the repository, a registry or any changeable source at runtime: references and shared artifacts resolved in, reproducible byte for byte, identified by its hash (`bundle_sha`) with each file's hash listed, signed by the CI identity, failing on any registry entry not `approved`, and recording the Standard version, commit, registry entries and pinned dependency versions used"
+            "text": "How the automated build (CI) turns a merged commit into the one Bundle each agent runs for each installation, so an agent never reads the repository, a registry or any changeable source at runtime: references and shared artifacts resolved in, reproducible byte for byte, each file's hash listed in a build manifest, signed by the CI identity, failing on any registry entry not `approved`, and recording the Standard version, commit, registry entries and pinned dependency versions used"
           }
         ]
       }
@@ -593,6 +721,54 @@
       "4.5",
       "4.6",
       "4.7"
+    ]
+  },
+  {
+    "subject": "Bundle identifier",
+    "slug": "bundle-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Bundle Identifier (bundle_sha) is a Bundle's ID: the hash of its canonical form. Because the ID is derived from the content itself, a record can name exactly which built version of an agent it came from, and identical content always carries the same ID."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Derived from content: the ID is computed from what is in the Bundle, not assigned by a person or a tool."
+          },
+          {
+            "type": "li",
+            "text": "Canonical form: the Bundle is normalised before hashing, so equivalent content always produces the same hash and any real change produces a different one."
+          },
+          {
+            "type": "li",
+            "text": "Exact version reference: records name the precise build, not a loose version label."
+          },
+          {
+            "type": "li",
+            "text": "Tamper evidence: checking a retrieved Bundle against its ID confirms it is the same one the records name."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Version labels can be reused or misapplied, but a content hash can't. bundle_sha gives a trustworthy link between records and an exact configuration. That link is the basis for reconstructing past behaviour and for confirming that what is running is what was approved."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.13"
     ]
   },
   {
@@ -713,6 +889,24 @@
     ]
   },
   {
+    "subject": "Classification handling",
+    "slug": "classification-handling",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The handling rules (data handling requirements) for each classification level, stated once in one table: where data may be stored, how it is encrypted and who manages the key, who may read it, which regions it may occupy, how long it is kept and how it is backed up, so that every other per-level default is derived from that table rather than restated"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.4"
+    ]
+  },
+  {
     "subject": "Classification scheme",
     "slug": "classification-scheme",
     "sections": [
@@ -721,14 +915,13 @@
         "items": [
           {
             "type": "p",
-            "text": "The data classification scheme: exactly three levels (`public`, `internal`, `confidential`), each with a one-sentence test and no other value allowed, and one table of handling rules per level (where it may be stored, whether a customer-managed key encrypts it, who may read it, which regions it may occupy, how long it is kept, how it is backed up) from which every other per-level default is derived"
+            "text": "The data classification scheme: exactly three levels (`public`, `internal`, `confidential`), each with a one-sentence test and no other value allowed, so that every datum, component and store is labelled on one scale that every other rule can compare against"
           }
         ]
       }
     ],
     "requirements": [
-      "19.1",
-      "19.4"
+      "19.1"
     ]
   },
   {
@@ -787,7 +980,7 @@
       }
     ],
     "requirements": [
-      "20.11"
+      "30.11"
     ]
   },
   {
@@ -862,15 +1055,7 @@
         "items": [
           {
             "type": "li",
-            "text": "Encryption at rest: confidential records are always encrypted in storage."
-          },
-          {
-            "type": "li",
-            "text": "Regional residency: records stay in the installation's region, which meets data-residency obligations."
-          },
-          {
-            "type": "li",
-            "text": "Role-restricted reading: only roles approved for confidential data can read these records."
+            "text": "Confidential handling: records are stored under the `confidential` handling of CP19, which sets their encryption, region and who may read them."
           },
           {
             "type": "li",
@@ -911,7 +1096,7 @@
         "items": [
           {
             "type": "li",
-            "text": "Load-time snapshot: each time an agent starts, a record of exactly what it loaded. That means the bundle hash, the model, the prompt and skill hashes, the tools and tool-server versions, the principal it runs as, and the host."
+            "text": "Load-time snapshot: each time an agent starts, a record of exactly what it loaded. That means the bundle hash, the model, the prompt and skill hashes, the tools and tool-server versions, the Principal it runs as, and the host."
           },
           {
             "type": "li",
@@ -1140,6 +1325,25 @@
     ]
   },
   {
+    "subject": "Data encryption",
+    "slug": "data-encryption",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Encrypting data at rest and in transit: every store holding organisation or tenant data is encrypted at rest, and every connection carrying it off the host or instance it starts on uses TLS 1.2 or higher with the server's certificate verified, so that data read from a disk, a backup or the network without authorisation cannot be understood"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.14",
+      "19.15"
+    ]
+  },
+  {
     "subject": "Dataset backup",
     "slug": "dataset-backup",
     "sections": [
@@ -1168,7 +1372,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Classifying stored conversation content (completions, user messages, attachments, retrieval results) at the higher of its installation's classification and what detection finds in it, a detected secret or higher-classified item raising its handling unless a reviewed record dismisses it; any store pooling conversations across installations or tenants is `confidential`, has its own access review as often as role membership is reviewed, and is unreadable by any agent's principal"
+            "text": "Classifying stored conversation content (completions, user messages, attachments, retrieval results) at the higher of its installation's classification and what detection finds in it, a detected secret or higher-classified item raising its handling unless a reviewed record dismisses it; any store pooling conversations across installations or tenants is `confidential`, has its own access review as often as role membership is reviewed, and is unreadable by any agent's Principal"
           }
         ]
       }
@@ -1187,7 +1391,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Graceful degradation: what each installation does when a dependency fails (model provider, tool server, tool-call guard, telemetry collector, release record, secret store, control record store, retrieval source, code executor): stop, the default; carry on with stated, approved losses, never for the model provider or guard; or fall back to its previous release or a refuse-only version; with an event on every failure, a production mismatch treated as an incident, and a yearly test"
+            "text": "Graceful degradation: what each installation does when a dependency fails (model provider, tool server, tool-call guard, telemetry collector, release record, secret store, control record store, retrieval source, code executor, guardrail detection service): stop, the default; carry on with stated, approved losses, never for the model provider or guard; or fall back to its previous release or a refuse-only version; with an event on every failure, a production mismatch treated as an incident, and a yearly test"
           }
         ]
       }
@@ -1400,7 +1604,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Outbound network allowlisting: the hosts an agent may reach, directly, through a fetching tool or through a server acting for it, listed per installation and denied by default; each entry has an owner, purpose, classification ceiling and status and is approved before use; enforced both on each tool call's target and by the network rule on the installation's principal, so bypassing one still cannot reach an unlisted host"
+            "text": "Outbound network allowlisting: the hosts an agent may reach, directly, through a fetching tool or through a server acting for it, listed per installation and denied by default; each entry has an owner, purpose, classification ceiling and status and is approved before use; enforced both on each tool call's target and by the network rule on the installation's Principal, so bypassing one still cannot reach an unlisted host"
           }
         ]
       }
@@ -1412,6 +1616,24 @@
     ]
   },
   {
+    "subject": "Encryption key management",
+    "slug": "encryption-key-management",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "The keys that encrypt `confidential` data (cryptographic key management): who manages each key (the storage provider at the minimum, the organisation as a customer-managed key from the first `confidential` tenant), the region it is held in, who may use it, how often it is rotated and when it is destroyed, so that the organisation can show control over who can decrypt a tenant's data and can make that data unreadable at tenant exit"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "19.16"
+    ]
+  },
+  {
     "subject": "End-user authority",
     "slug": "end-user-authority",
     "sections": [
@@ -1420,7 +1642,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Acting on behalf of a user (delegated authority) on an installation serving more than one person: the user's identity is carried on every tool call, retrieval and audit record, taken only from the authenticated session, never from a request body, model output or retrieved content; the agent may read or change only what that user could; until the identity is carried, the installation stays at `internal` classification or below"
+            "text": "Acting on behalf of an end user (delegated authority) on an installation serving more than one end user: the end user's identity is carried on every tool call, retrieval and audit record, taken only from the authenticated session, never from a request body, model output or retrieved content; the agent may read or change only what that end user could; until the identity is carried, the installation stays at `internal` classification or below"
           }
         ]
       }
@@ -1458,7 +1680,37 @@
         "items": [
           {
             "type": "p",
-            "text": "The id (`end_user_id`) reserved for the person at a Tenant on whose behalf a run acts: issued by the Tenant, meaningless to the organisation itself, present as a column on every record that carries a run id, and left empty until per-end-user identity is implemented for that installation"
+            "text": "End-User Identifier (end_user_id) is the ID of the End User on whose behalf a run acts. It is issued by the Tenant and is meaningless to the Organisation. It is a column on every record of a run, left empty until the installation is built to identify its end users."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Issued by the Tenant: the Tenant decides and controls the value."
+          },
+          {
+            "type": "li",
+            "text": "Opaque to the Organisation: the ID reveals nothing to the Organisation about who the person is. Only the Tenant can map it back to an individual."
+          },
+          {
+            "type": "li",
+            "text": "On every run record: the column exists from the start, even while empty."
+          },
+          {
+            "type": "li",
+            "text": "Empty until ready: it is filled in only once the installation is built to identify its end users."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "When an agent acts for someone, accountability eventually needs to reach that person. Having the column in place from the start means attribution can be switched on later without reworking records. Because the values are tenant-issued and opaque, the Organisation can attribute what a run did without holding the end user's personal details."
           }
         ]
       }
@@ -1620,6 +1872,66 @@
     ]
   },
   {
+    "subject": "Guardrail action",
+    "slug": "guardrail-action",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "What a guardrail does with a match: one action per guardrail, log, mask (redact) or block, with every match recorded whatever the action, so that logging is the least a guardrail can do; the action, and the score at which a detection counts as a match, recorded for each Installation and reviewed each quarter with the Installation's risk profile, where a stricter setting than the default is free and a less strict one needs a recorded approval that each review renews or removes; and a pre-release behaviour test (eval) for each guardrail an Installation enables, showing that it matches and takes its action, and for a confidential Installation that the harmful content, prompt attack and denied topic guardrails still match when the content is disguised by known evasion techniques"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "32.5",
+      "32.6",
+      "32.7"
+    ]
+  },
+  {
+    "subject": "Guardrail coverage",
+    "slug": "guardrail-coverage",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Where the guardrails (safeguards, content filters) sit: every response an agent returns, and any model output another service returns, passes them before it reaches its caller, and every message a person sends passes them before the model reads it, with no route around them, and a part of a response they cannot screen (an image they do not read, a file or a document) is not returned; they act on the content outside the model, so they apply whichever model the agent runs on; and a guardrail that cannot give a result withholds the content it was screening"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "32.1",
+      "32.2",
+      "32.3",
+      "32.4"
+    ]
+  },
+  {
+    "subject": "Harmful content filtering",
+    "slug": "harmful-content-filtering",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Detection of harmful content in an agent's responses: hateful, insulting, sexual and violent content, and content that helps towards serious harm or crime, each as its own guardrail so that each can have its own action; and the same screening of images as of text wherever an Installation returns images"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "32.8",
+      "32.9"
+    ]
+  },
+  {
     "subject": "Identifier integrity",
     "slug": "identifier-integrity",
     "sections": [
@@ -1628,7 +1940,41 @@
         "items": [
           {
             "type": "p",
-            "text": "Keeping ids authoritative and stable: only the definition in the repository may mint an `agent_id` or `installation_id`, a duplicate fails the automated checks, and databases, stores and runtimes hold only copies; no id encodes changeable context (environment, tenant name, owner, version, date or host); every id is unique across all tenants, environments and clouds, so control record joins without qualification; and the human-readable name (`slug`) may be renamed, each rename recorded with its commit"
+            "text": "Identifier Integrity is the set of rules every ID shares, so that IDs stay authoritative, stable and unambiguous. The rules cover a single source of truth, no duplicates, no changeable context built into an ID, global uniqueness, and a clear split between permanent IDs and human-readable names."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "One source of truth: only the Repository creates an agent_id or installation_id. Databases, stores and runtimes hold only copies."
+          },
+          {
+            "type": "li",
+            "text": "No duplicates: a duplicate ID fails the automated checks."
+          },
+          {
+            "type": "li",
+            "text": "No changeable context: no ID encodes environment, tenant name, owner, version, date or host."
+          },
+          {
+            "type": "li",
+            "text": "Globally unique: every ID is unique across all tenants, environments and clouds, so records join without extra qualifiers."
+          },
+          {
+            "type": "li",
+            "text": "Renameable slugs: the human-readable name (slug) can change, and each rename is recorded with its commit. The underlying ID is unaffected."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "An ID is only useful if it can be trusted to mean one thing forever. Building context such as environment or owner into an ID means it will eventually go stale or mislead, and having more than one source of IDs invites conflicts. These rules keep IDs a dependable base for joins, audits and reconstruction, while the names people use can change freely with a recorded history."
           }
         ]
       }
@@ -1649,7 +1995,45 @@
         "items": [
           {
             "type": "p",
-            "text": "Carrying an agent's identity on everything it produces or touches, so any trace of it leads back to one agent: the storage keys of its bundles, database rows, log lines and traces, tool-call metadata, cloud access-control (IAM) tags and labels, and the metadata of its requests to model providers"
+            "text": "Identifier Propagation is carrying an agent's IDs on everything it produces or touches, so that any trace of it, wherever it turns up, leads back to one agent."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Bundle storage keys: stored Bundles are keyed by the agent's IDs."
+          },
+          {
+            "type": "li",
+            "text": "Database rows: every row the agent writes carries its IDs."
+          },
+          {
+            "type": "li",
+            "text": "Log lines and traces: all observability output is tagged with the IDs."
+          },
+          {
+            "type": "li",
+            "text": "Tool-call metadata: each tool call carries the IDs, so activity in other systems can be tied back to the agent."
+          },
+          {
+            "type": "li",
+            "text": "Cloud IAM tags and labels: resources and permissions are tagged, so access and cost can be attributed to the right agent and installation."
+          },
+          {
+            "type": "li",
+            "text": "Model provider request metadata: requests to model providers include the IDs, so provider-side logs and usage can be matched."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Agents leave traces in many systems the governance platform doesn't own, such as cloud consoles, provider dashboards and external tools. When IDs travel with every output and request, any of those traces can be followed back to the agent and installation responsible. That supports investigations, cost attribution and access reviews, and leaves no activity that can't be attributed."
           }
         ]
       }
@@ -1782,7 +2166,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Prompt-injection defence at input: one screening point every piece of external context passes before the model reads it, with no bypass, using fixed patterns rather than a model; injection attempts stripped, quarantined or the run refused, as each installation declares (refuse by default for confidential); secret-shaped values redacted; and evaluations that test injection through every accepted route and a malformed attachment of each accepted type"
+            "text": "Defence against indirect prompt injection: one screening point every piece of external context passes before the model reads it, with no bypass, using fixed patterns rather than a model; injection attempts in attachments, retrieved documents, tool results, web pages and messages from other systems stripped, quarantined or the run refused, as each installation declares (refuse by default for confidential); secret-shaped values redacted; and evaluations that test injection through every accepted route other than a person's own message, and a malformed attachment of each accepted type"
           }
         ]
       }
@@ -1791,7 +2175,8 @@
       "15.4",
       "15.5",
       "15.6",
-      "15.12"
+      "15.12",
+      "15.16"
     ]
   },
   {
@@ -1822,7 +2207,37 @@
         "items": [
           {
             "type": "p",
-            "text": "The one id (`installation_id`) each Installation, a deployment of an agent for one Tenant, has, minted once in the version-controlled repository; its Release Pointer, its Principal and its Control Records are all keyed by that id, so everything about one deployment can be found by one value"
+            "text": "Installation Identifier (installation_id) is the single ID for an Installation, minted once in the Repository. It is the key for everything about that installation: its Release Pointer, its Principal and its Control Records. One value finds them all."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Minted once in the Repository: the ID is created a single time at the source of truth, never by deployment tooling or runtimes."
+          },
+          {
+            "type": "li",
+            "text": "Key of the Release Pointer: identifies which Bundle the installation is currently set to run."
+          },
+          {
+            "type": "li",
+            "text": "Key of the Principal: links the installation to the identity it acts as when it reaches systems and data."
+          },
+          {
+            "type": "li",
+            "text": "Key of the Control Records: every audit row for the installation carries this ID."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "The same agent may be installed many times, for different tenants, environments or purposes. A single installation key answers \"what is this installation running, what can it access, and what has it done?\" in one lookup. Without it, you would have to piece the answer together from names, hosts or environment labels that can change."
           }
         ]
       }
@@ -1859,7 +2274,7 @@
         "items": [
           {
             "type": "p",
-            "text": "The review, at least quarterly, of each installation's risk profile (its data classification, the effects it can reach, the data it touches, and whether it shares a principal), where a change in profile leads to a dedicated principal or narrower cloud permissions, made without changing the agent's bundle"
+            "text": "The review, at least quarterly, of each installation's risk profile (its data classification, the effects it can reach, the data it touches, and whether it shares a Principal), where a change in profile leads to a dedicated Principal or narrower cloud permissions, made without changing the agent's bundle"
           }
         ]
       }
@@ -2177,24 +2592,6 @@
     ]
   },
   {
-    "subject": "Output harm",
-    "slug": "output-harm",
-    "sections": [
-      {
-        "title": "Description",
-        "items": [
-          {
-            "type": "p",
-            "text": "How strictly the output guardrails (content filters) act on harmful content in what reaches an end user, whether a match is logged, masked or blocked, recorded for each Installation so the level chosen is explicit; how harmful content is detected is not covered here"
-          }
-        ]
-      }
-    ],
-    "requirements": [
-      "28.7"
-    ]
-  },
-  {
     "subject": "Output provenance",
     "slug": "output-provenance",
     "sections": [
@@ -2222,7 +2619,7 @@
         "items": [
           {
             "type": "p",
-            "text": "A quarterly user access review, held with the role-membership review, of each person's access rights, the list of privileged accounts, the registry of connected third-party apps and tools, and workstation compliance attestations, with unused accounts, grants and integrations disabled within one business day and the review recorded"
+            "text": "A quarterly user access review of each person's access rights, the list of privileged accounts, who holds each role and the segregation-of-duties rules, and the registry of connected third-party apps and tools, with unused accounts, grants and integrations disabled within one business day and the review recorded"
           }
         ]
       }
@@ -2259,7 +2656,7 @@
         "items": [
           {
             "type": "p",
-            "text": "The inventory of privileged human accounts (any that can merge, approve, release, administer a cloud project, write the registry database or publish a package), each listed in the repository's code-ownership file with the person's id, systems and roles, unlisted ones disabled; and the mover and leaver process: within one business day accounts, grants and sessions disabled or re-scoped, OAuth grants revoked, readable secrets rotated, each action audit-logged"
+            "text": "The inventory of privileged human accounts (any that can merge, approve, release, administer a cloud project, write the registry database or publish a package), each listed in the repository's code-ownership file with the person's id, systems and roles, unlisted ones disabled; who holds each role, declared in the ownership file and reviewer groups so that changing a role's members is itself a reviewed change; and the mover and leaver process: within one business day accounts, grants and sessions disabled or re-scoped, OAuth grants revoked, readable secrets rotated, each action audit-logged"
           }
         ]
       }
@@ -2296,7 +2693,37 @@
         "items": [
           {
             "type": "p",
-            "text": "The one id (`person_id`) each human who authors, approves, releases, reviews or administers has, minted once in the repository and kept across every repository governed; any field in a governed record that names a person holds this id and nothing else, not an email or a name, so every human action can be attributed to one person"
+            "text": "Person Identifier (person_id) is the single ID for each person who authors, approves, releases, reviews or administers agents. It is minted once in the Repository and kept across every repository that is governed. It is the only way a governed record names a person, never by email address or name."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Who gets one: anyone in a governed role, whether authoring, approving, releasing, reviewing or administering."
+          },
+          {
+            "type": "li",
+            "text": "Minted once, used everywhere: the same person_id follows the person across all governed repositories."
+          },
+          {
+            "type": "li",
+            "text": "The only identifier in records: emails and names never appear in governed records."
+          },
+          {
+            "type": "li",
+            "text": "Stable through change: a new name, email address or team doesn't break attribution."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "Emails and names change, get reused, and are personal data that would otherwise be scattered through every record. A single person_id attributes every action to exactly one person and keeps that history intact when personal details change."
           }
         ]
       }
@@ -2354,7 +2781,7 @@
         "items": [
           {
             "type": "p",
-            "text": "The principal each installation runs as, from creation to deletion: named from the installation and its tenant, created only from its registry entry, recorded at every start-up and on every log, trace and metric so the cloud's own audit log traces each action to an installation, checked before each run (a mismatch refuses the run), and disabled with its permissions removed at retirement, then deleted"
+            "text": "The Principal each installation runs as, from creation to deletion: named from the installation and its tenant, created only from its registry entry, recorded at every start-up and on every log, trace and metric so the cloud's own audit log traces each action to an installation, checked before each run (a mismatch refuses the run), and disabled with its permissions removed at retirement, then deleted"
           }
         ]
       }
@@ -2375,7 +2802,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Least privilege for the principal an installation runs as: every cloud permission derived from the installation's registry entry (its tool servers, secrets and storage) and labelled with agent and installation; a network egress rule blocking every host not on its allowlist, even by a route around the harness; and no runtime identity able to write the stores serving releases, registry entries or prompts, so a compromised run cannot change what any installation runs"
+            "text": "Least privilege for the Principal an installation runs as: every cloud permission derived from the installation's registry entry (its tool servers, secrets and storage) and labelled with agent and installation; a network egress rule blocking every host not on its allowlist, even by a route around the harness; and no runtime Principal able to write the stores serving releases, registry entries or prompts, so a compromised run cannot change what any installation runs"
           }
         ]
       }
@@ -2395,7 +2822,7 @@
         "items": [
           {
             "type": "p",
-            "text": "When installations may share one principal: only at the same data classification, never for a `confidential` installation (which always has its own), across tenants only below `confidential`, declared on each sharing installation's entry and approved; and how installations sharing a container stay distinguishable in every log and audit record, by binding agent, installation, run and principal to each request rather than each process"
+            "text": "When installations may share one Principal: only at the same data classification, never for a `confidential` installation (which always has its own), across tenants only below `confidential`, declared on each sharing installation's entry and approved; and how installations sharing a container stay distinguishable in every log and audit record, by binding agent, installation, run and Principal to each request rather than each process"
           }
         ]
       }
@@ -2404,6 +2831,24 @@
       "10.3",
       "10.4",
       "10.5"
+    ]
+  },
+  {
+    "subject": "Prompt attack detection",
+    "slug": "prompt-attack-detection",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Detection of attacks a person makes in their own message: attempts to override the agent's instructions or its safety behaviour (jailbreak, direct prompt injection) and attempts to make it reveal its prompt or configuration (prompt leakage), detected before the model reads the message"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "32.10"
     ]
   },
   {
@@ -2753,21 +3198,42 @@
     ]
   },
   {
-    "subject": "Response screening",
-    "slug": "response-screening",
+    "subject": "Response grounding",
+    "slug": "response-grounding",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "Output guardrails: the screen every response from an agent passes before it reaches its caller, with one action for each kind of content detected (log, mask or block; for example personal data masked, hateful text logged, harmful content blocked) and a record of every match, whatever the action"
+            "text": "Detection of fabricated answers (hallucinations): where an agent answers end users from retrieved sources, each answer is scored for whether those sources support it (grounding) and whether it answers the question asked (relevance), each against a declared threshold; and, recommended rather than required, a check of answers against the organisation's own written rules stated as formal logic (automated reasoning)"
           }
         ]
       }
     ],
     "requirements": [
-      "12.15"
+      "32.15",
+      "15.11",
+      "32.16"
+    ]
+  },
+  {
+    "subject": "Restricted topic filtering",
+    "slug": "restricted-topic-filtering",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Subjects and words an agent's owner has ruled out: the denied topics each Installation declares (for example legal, medical or investment advice), each with a name, a definition and sample phrases, detected in responses; and a word list (profanity, and custom words and phrases such as a competitor's name) matched exactly in what a person sends and in responses"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "32.11",
+      "32.12"
     ]
   },
   {
@@ -2817,33 +3283,14 @@
         "items": [
           {
             "type": "p",
-            "text": "Break-glass (emergency) elevation of a person's role: limited in time (four hours by default), never granted to oneself, logged as an audit event when granted and when it expires, and reviewed by the information security (InfoSec) team within one business day, with the review recorded against the incident it served"
+            "text": "Break-glass (emergency) elevation of a person's role: limited in time (four hours by default), never granted to oneself, logged as an audit event when granted and when it expires, and reviewed by the information security (InfoSec) team within one business day, with the review recorded against the incident it served, so that emergency power stays short-lived and accountable"
           }
         ]
       }
     ],
     "requirements": [
-      "13.8",
-      "13.9"
-    ]
-  },
-  {
-    "subject": "Role membership",
-    "slug": "role-membership",
-    "sections": [
-      {
-        "title": "Description",
-        "items": [
-          {
-            "type": "p",
-            "text": "Who holds each person role, declared in the repository's code-ownership file and reviewer groups so that changing a role's members is itself a reviewed change, and a recorded review, at least quarterly, of role membership and of the segregation-of-duties rules"
-          }
-        ]
-      }
-    ],
-    "requirements": [
-      "13.10",
-      "13.11"
+      "20.19",
+      "20.20"
     ]
   },
   {
@@ -2867,22 +3314,51 @@
     ]
   },
   {
-    "subject": "Run identifier",
-    "slug": "run-identifier",
+    "subject": "Run identifiers",
+    "slug": "run-identifiers",
     "sections": [
       {
         "title": "Description",
         "items": [
           {
             "type": "p",
-            "text": "The correlation ids every run of an agent records together, so any record of a run can be traced: the agent (`agent_id`), the installation (`installation_id`), the exact built version (`bundle_sha`, the hash of its Bundle) and the run (`run_id`), a record with fewer being non-conformant; a run in a multi-turn conversation also records a `session_id`, taking a runtime's own session id unchanged"
+            "text": "Run Identifiers are the set of IDs that every record of a run carries together, known in common terms as correlation IDs. They are the agent, installation, bundle and run IDs, plus the session and end-user IDs where those apply. With them, any single record can be traced to its run and everything behind it."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Core set, always present: agent_id, installation_id, bundle_sha and the run ID."
+          },
+          {
+            "type": "li",
+            "text": "Added where they apply: session_id for multi-turn conversations, and end_user_id once the installation identifies its end users."
+          },
+          {
+            "type": "li",
+            "text": "On every record: every row, log line and trace from the run carries the full set, so any one of them is enough to recover the whole context."
+          },
+          {
+            "type": "li",
+            "text": "Correlation across systems: records in different tables, stores and services can be joined on the same values."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "One run can generate records in many places. Because each record carries the full set, any fragment (a log line, a tool-call row, a model request) leads straight to the agent, installation, exact build and run behind it, and to the conversation and end user where those apply. This is what makes investigation and reconstruction practical."
           }
         ]
       }
     ],
     "requirements": [
-      "1.3",
-      "1.4"
+      "1.3"
     ]
   },
   {
@@ -2915,7 +3391,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Who reads secret values and the trail it leaves: a person only through break-glass (emergency) access that is time-boxed, logged and reviewed within one business day; and every read logged with the reading principal, installation and time, queryable beside the records of each harness start-up, so it can be shown which secrets an installation could reach at any moment"
+            "text": "Who reads secret values and the trail it leaves: a person only through break-glass (emergency) access that is time-boxed, logged and reviewed within one business day; and every read logged with the reading Principal, installation and time, queryable beside the records of each harness start-up, so it can be shown which secrets an installation could reach at any moment"
           }
         ]
       }
@@ -2934,7 +3410,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Keeping credentials out of reach: no secret (API key, token, password, private key, connection string, service-account key file) in any repository or its history, bundle, manifest, registry entry, prompt, skill, log, trace, metric label, evaluation file or CI output; and agents holding none, authenticating by the installation's workload identity instead, with tool servers holding their own downstream credentials"
+            "text": "Keeping credentials out of reach: no secret (API key, token, password, private key, connection string, service-account key file) in any repository or its history, bundle, manifest, registry entry, prompt, skill, log, trace, metric label, evaluation file or CI output; and agents holding none, authenticating by the installation's Workload Identity instead, with tool servers holding their own downstream credentials"
           }
         ]
       }
@@ -3026,7 +3502,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Where an unavoidable secret is kept: in the one designated secret store (vault), named by installation and purpose, referenced by name from the installation's registry entry but never written into it, fetched at runtime through one library, and readable only by that installation's principal, so each secret is scoped to one installation unless sharing is justified and approved"
+            "text": "Where an unavoidable secret is kept: in the one designated secret store (vault), named by installation and purpose, referenced by name from the installation's registry entry but never written into it, fetched at runtime through one library, and readable only by that installation's Principal, so each secret is scoped to one installation unless sharing is justified and approved"
           }
         ]
       }
@@ -3052,6 +3528,73 @@
     ],
     "requirements": [
       "13.13"
+    ]
+  },
+  {
+    "subject": "Sensitive information redaction",
+    "slug": "sensitive-information-redaction",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Keeping sensitive data out of what an agent returns: secret-shaped values such as keys and passwords, data smuggled out in encoded text or in a web address (exfiltration), personal data (PII) of a kind the Installation has not said a response may carry, and the custom patterns an Installation declares (an account or case number format, for example), each masked or blocked in the response before it reaches the caller"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "32.13",
+      "32.14"
+    ]
+  },
+  {
+    "subject": "Session identifier",
+    "slug": "session-identifier",
+    "sections": [
+      {
+        "title": "Description",
+        "items": [
+          {
+            "type": "p",
+            "text": "Session Identifier (session_id) is the ID that every run in a multi-turn conversation records, which ties the separate runs of one conversation together. Where the runtime assigns its own session ID, that value is used unchanged."
+          }
+        ]
+      },
+      {
+        "title": "Considerations",
+        "items": [
+          {
+            "type": "li",
+            "text": "Groups runs into conversations: all the runs belonging to one conversation share the same session_id."
+          },
+          {
+            "type": "li",
+            "text": "Runtime value used as-is: no reformatting, prefixing or replacing, so the value matches the runtime's own logs and tools exactly."
+          },
+          {
+            "type": "li",
+            "text": "Recorded where it applies: multi-turn conversations carry it. Single, standalone runs may not."
+          },
+          {
+            "type": "li",
+            "text": "Matching across systems: the runtime's view of a conversation can be joined directly with the governed records of it."
+          }
+        ]
+      },
+      {
+        "title": "Why it matters",
+        "items": [
+          {
+            "type": "p",
+            "text": "A conversation often spans many runs, and the runtime and the governance system each keep their own records. Using the runtime's ID unchanged lines the two views up exactly. Investigators can follow a whole conversation end to end without translation tables or guesswork."
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      "1.4"
     ]
   },
   {
@@ -3233,7 +3776,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Approving a supplier that offers only a static credential (a long-lived key or password instead of workload identity): an explicit decision on its entry, and a `confidential` ceiling only if that decision records that the credential lives only in the secret store and is never typed or shown, is read only by a purpose-made non-human identity, is encrypted at rest and in transit, travels over certificate-verified connections and is rotated at least every 90 days"
+            "text": "Approving a supplier that offers only a static credential (a long-lived key or password instead of Workload Identity): an explicit decision on its entry, and a `confidential` ceiling only if that decision records that the credential lives only in the secret store and is never typed or shown, is read only by a purpose-made non-human identity, is encrypted at rest and in transit, travels over certificate-verified connections and is rotated at least every 90 days"
           }
         ]
       }
@@ -3446,7 +3989,7 @@
         "items": [
           {
             "type": "p",
-            "text": "Tenant isolation: one tenant's data is unreadable by any principal, installation, retrieval source or store serving another tenant, and every release runs an acceptance test that tries cross-tenant access through each tool and source the installation has, failing the release if the attempt succeeds"
+            "text": "Tenant isolation: one tenant's data is unreadable by any Principal, installation, retrieval source or store serving another tenant, and every release runs an acceptance test that tries cross-tenant access through each tool and source the installation has, failing the release if the attempt succeeds"
           }
         ]
       }
@@ -3490,66 +4033,6 @@
     "requirements": [
       "8.5",
       "8.15"
-    ]
-  },
-  {
-    "subject": "Tool call confirmation",
-    "slug": "tool-call-confirmation",
-    "sections": [
-      {
-        "title": "Description",
-        "items": [
-          {
-            "type": "p",
-            "text": "An optional pause before an agent's `write` tool call, set per installation: none, the default, lets the call proceed; soft shows the caller the pending call with a cancel option and proceeds after a set timeout; choosing soft is recorded with a reason, the setting shows on each such call's trace, and a confirmation never counts as an approval or as human review"
-          }
-        ]
-      }
-    ],
-    "requirements": [
-      "31.6",
-      "31.9"
-    ]
-  },
-  {
-    "subject": "Tool call mediation",
-    "slug": "tool-call-mediation",
-    "sections": [
-      {
-        "title": "Description",
-        "items": [
-          {
-            "type": "p",
-            "text": "A single policy enforcement point (the tool guard) that every tool call passes in every runtime: it receives the agent, installation, run, caller (the model, or agent-written code), server, tool, effect and arguments, applies any extra policy rules, and allows or denies with a reason; every denial is audit logged; an MCP gateway, if deployed, calls the same guard; code reaches only tools marked callable from code, whatever a provider says"
-          }
-        ]
-      }
-    ],
-    "requirements": [
-      "31.1",
-      "31.2",
-      "31.3",
-      "31.8",
-      "31.12"
-    ]
-  },
-  {
-    "subject": "Tool call review",
-    "slug": "tool-call-review",
-    "sections": [
-      {
-        "title": "Description",
-        "items": [
-          {
-            "type": "p",
-            "text": "Human-in-the-loop review: an agent that can reach a tool with an irreversible effect either has a person approve each such call before it runs (the call is blocked until approved, a rejection or a timeout ends the run, and the reviewer is recorded) or holds a recorded approval to automate it; either way a record of the action is kept, holding at least a hash of its content"
-          }
-        ]
-      }
-    ],
-    "requirements": [
-      "31.4",
-      "31.5"
     ]
   },
   {
@@ -3700,7 +4183,7 @@
         "items": [
           {
             "type": "p",
-            "text": "The registry of every workload the organisation builds and runs (a workload: an agent harness, internal tool server, gateway, dashboard or API), each entry recording its category, image digest, principal, token audience and each endpoint's path, method, purpose and authentication mode; an unregistered workload is not deployed and an undeclared endpoint is unreachable, and a workstation tool server that signs in to a remote service is covered by its integration record"
+            "text": "The registry of every workload the organisation builds and runs (a workload: an agent harness, internal tool server, gateway, dashboard or API), each entry recording its category, image digest, Principal, token audience and each endpoint's path, method, purpose and authentication mode; an unregistered workload is not deployed and an undeclared endpoint is unreachable, and a workstation tool server that signs in to a remote service is covered by its integration record"
           }
         ]
       }
@@ -3783,9 +4266,9 @@
       }
     ],
     "requirements": [
-      "20.9",
-      "20.10",
-      "20.14"
+      "30.9",
+      "30.10",
+      "30.12"
     ]
   }
 ]
