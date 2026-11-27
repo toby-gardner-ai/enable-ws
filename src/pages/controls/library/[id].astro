@@ -23,6 +23,7 @@ import {
   type Control,
 } from '../../../lib/controls';
 import { inline, plain } from '../../../lib/inline';
+import { LEVEL_LABEL, riskHref, risksFor } from '../../../lib/risks';
 
 export function getStaticPaths() {
   return controls.map((control) => ({ params: { id: control.id.toLowerCase() }, props: { control } }));
@@ -52,6 +53,7 @@ const summary = `${KIND_NOUN[control.kind]} that ${list(clauses)}.`;
 
 const subjects = subjectsFor(control);
 const related = relatedControls(control);
+const reduces = risksFor(control.id);
 const preview = (text: string, n = 120) => (text.length > n ? text.slice(0, text.lastIndexOf(' ', n)) + '…' : text);
 const stopFor = (gate: string) => (gate === 'standing' ? STANDING : gates.find((g) => g.id === gate)!);
 ---
@@ -172,6 +174,28 @@ const stopFor = (gate: string) => (gate === 'standing' ? STANDING : gates.find((
               })}
             </div>
           </div>
+        </div>
+      </section>
+    )}
+
+    {reduces.length > 0 && (
+      <section class="block tight">
+        <div class="container two-col">
+          <h2>Risks it reduces.</h2>
+          <ul class="risks">
+            {reduces.map((r) => (
+              <li>
+                <a href={riskHref(r)}>
+                  <span>{r.title}</span>
+                  <span class="change">
+                    <span class={`lvl lvl-${r.inherent.level}`}>{LEVEL_LABEL[r.inherent.level]}</span>
+                    <span aria-hidden="true">→</span><span class="visually-hidden">with controls</span>
+                    <span class={`lvl lvl-${r.residual.level}`}>{LEVEL_LABEL[r.residual.level]}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     )}
@@ -308,6 +332,12 @@ const stopFor = (gate: string) => (gate === 'standing' ? STANDING : gates.find((
   .depth { margin: 0 0 0 0.4rem; font-size: 0.68rem; vertical-align: 0.1em; border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
   :root[data-theme='dark'] .depth { color: var(--accent); }
 
+  .risks { list-style: none; padding: 0; margin: 0; }
+  .risks li + li { border-top: 1px solid var(--border); }
+  .risks a { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.65rem 0.3rem; text-decoration: none; color: var(--text) !important; border-radius: 8px; }
+  .risks a:hover { background: var(--bg-soft); }
+  .risks .change { display: flex; align-items: center; gap: 0.35rem; color: var(--muted); flex: none; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .related { list-style: none; padding: 0; margin: 0; }
   .related li + li { border-top: 1px solid var(--border); }
   .related a { display: grid; grid-template-columns: 5rem 1fr; gap: 1rem; align-items: baseline; padding: 0.7rem 0.3rem; text-decoration: none; color: var(--text) !important; border-radius: 8px; }

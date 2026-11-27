@@ -1,5 +1,5 @@
 // Helpers shared by the extract scripts for reading the ai-governance repo's Markdown.
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,6 +7,13 @@ import { fileURLToPath } from 'node:url';
 export const governanceRoot = fileURLToPath(new URL('../../../ai-governance/', import.meta.url));
 export const sourcePath = (arg, fallback) => (arg ? resolve(arg) : resolve(governanceRoot, fallback));
 export const readLines = (path) => readFileSync(path, 'utf8').split('\n');
+
+// graph/extract.py writes graph.json to graph/out (committed) or graph/build (local); the newer, or null.
+export const latestGraph = () =>
+  ['graph/out/graph.json', 'graph/build/graph.json']
+    .map((p) => resolve(governanceRoot, p))
+    .filter(existsSync)
+    .sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs)[0] ?? null;
 
 // Split a Markdown table row on unescaped pipes.
 export const cells = (row) =>

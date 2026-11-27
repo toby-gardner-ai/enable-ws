@@ -97,6 +97,14 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     apply();
     input.focus();
   });
+  // Other parts of the page can filter by any tag: dispatch `lookup:filter` with the tag
+  // (or '' for all) as its detail.
+  document.addEventListener('lookup:filter', (e) => {
+    filter = (e as CustomEvent<string>).detail ?? '';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String((c.dataset.filter ?? '') === filter)));
+    apply();
+  });
+
   // A link like /controls/library#kind-check opens with that filter on.
   chips.find((c) => c.dataset.filter && location.hash === `#${c.dataset.filter}`)?.click();
   apply();

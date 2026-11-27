@@ -39,10 +39,24 @@ const offers = [
 ];
 ---
 <Base title="Services" description="AI enablement services: opportunity workshops, build sprints and ongoing partnership.">
+  <!-- What you get, why it matters, one obvious next step -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">AI Enablement</span>
+      <h1 class="hero-title">Turn AI from a buzzword<br />into real results for your business.</h1>
+      <p class="lead">{SITE.oneLiner}</p>
+      <div class="btn-row">
+        <a href={SITE.bookingUrl} class="btn btn-primary">Book a free discovery call</a>
+        <a href="/work" class="btn btn-ghost">See what I've built</a>
+      </div>
+      <p class="muted small">30 minutes · no preparation needed · you keep the notes</p>
+    </div>
+  </section>
+
   <section>
     <div class="container">
       <span class="eyebrow">Services</span>
-      <h1>Pick the starting point that fits</h1>
+      <h2>Pick the starting point that fits</h2>
       <p class="lead">Every engagement has the same goal: AI that solves a real problem and a team that can keep it running. Not sure which one fits? Start with a call and I'll tell you honestly.</p>
     </div>
   </section>
@@ -80,6 +94,9 @@ const offers = [
 </Base>
 
 <style>
+  .hero { padding-top: clamp(4rem, 10vw, 7rem); }
+  .hero-title { font-size: clamp(2.1rem, 5vw, 3.4rem); }
+  .small { font-size: 0.9rem; margin-top: 0.9rem; }
   .offer { display: flex; flex-direction: column; gap: 0.4rem; position: relative; }
   .offer .btn { margin-top: auto; align-self: flex-start; }
   .offer ul { margin: 0.6rem 0 1.2rem; }

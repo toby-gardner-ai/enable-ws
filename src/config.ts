@@ -34,6 +34,7 @@ export const NAV: NavItem[] = [
     children: [
       { href: '/controls', label: 'Control Lifecycle', text: 'Where each control acts, from first commit to retirement' },
       { href: '/controls/library', label: 'Control Library', text: 'Every control, searchable, with what it protects' },
+      { href: '/risks', label: 'Risk Map', text: 'What could go wrong, before and after controls' },
     ],
   },
   { href: '/blog', label: 'Blog' },

@@ -87,7 +87,7 @@
   {
     "term": "Guardrail",
     "slug": "guardrail",
-    "meaning": "A named class of content the response screen detects in what an agent returns to its caller — personal data, hateful text, harmful content — with one action: log, mask or block. Every match is logged, whatever the action."
+    "meaning": "A safeguard outside the model that detects one named class of content — harmful content, a prompt attack, a denied topic or word, sensitive information, an unsupported answer — in what a person sends an agent or in what the agent returns, with one action: log, mask or block. Every match is logged, whatever the action."
   },
   {
     "term": "Harness",
@@ -97,7 +97,7 @@
   {
     "term": "Installation",
     "slug": "installation",
-    "meaning": "One deployment of an agent for one tenant, with its own principal, region, classification ceiling and release pointer."
+    "meaning": "One agent set up for one tenant, kept as a lasting record in the repository that names the tenant, region and classification ceiling, the Principal it runs as and the version it runs (its release pointer). It is released through each Deployment Environment in turn and does many runs over its life."
   },
   {
     "term": "Model",
@@ -117,7 +117,7 @@
   {
     "term": "Principal",
     "slug": "principal",
-    "meaning": "The workload identity (service account) an installation runs as."
+    "meaning": "The identity a cloud platform recognises when a workload asks for something, also known as its Workload Identity. Permissions are attached to it, and they decide which other resources and services the workload can reach."
   },
   {
     "term": "Production",
@@ -148,6 +148,11 @@
     "term": "Risk Owner",
     "slug": "risk-owner",
     "meaning": "The person with the accountability and authority to manage a risk: they choose its treatment and accept the residual risk (ISO/IEC 27001 6.1.2 c) 2), 6.1.3 f))."
+  },
+  {
+    "term": "Run Identifiers",
+    "slug": "run-identifiers",
+    "meaning": "The Identifiers that every record of a run carries together, so the record can be traced to the agent, installation, bundle, conversation and end user it belongs to. Which identifiers they are is marked in STD-IDENT."
   },
   {
     "term": "Runtime Environment",
@@ -183,5 +188,10 @@
     "term": "Workload",
     "slug": "workload",
     "meaning": "A program the organisation builds and runs, such as a harness, internal MCP server, gateway, executor, dashboard or collector, each with its own image and principal."
+  },
+  {
+    "term": "Workload Identity",
+    "slug": "workload-identity",
+    "meaning": "The name Google Cloud, Azure, AWS and the identity standards SPIFFE and WIMSE use for a Principal: a program signing in as itself, with no password or key. Using the standard name means outsiders understand these policies without a translation."
   }
 ]

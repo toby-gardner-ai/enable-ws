@@ -1,0 +1,5415 @@
+{
+  "scales": {
+    "likelihood": [
+      {
+        "score": 1,
+        "text": "Unlikely without a new failure",
+        "short": "Unlikely without a new failure"
+      },
+      {
+        "score": 2,
+        "text": "Could happen",
+        "short": "Could happen"
+      },
+      {
+        "score": 3,
+        "text": "Expected",
+        "short": "Expected"
+      }
+    ],
+    "impact": [
+      {
+        "score": 1,
+        "text": "Limited harm — the `internal` test of the Standard",
+        "short": "Limited harm"
+      },
+      {
+        "score": 2,
+        "text": "Material harm to one tenant, a person or the organisation — the `confidential` test",
+        "short": "Material harm to one tenant"
+      },
+      {
+        "score": 3,
+        "text": "Material harm to several tenants, a regulatory breach, or the loss of a tenant agreement",
+        "short": "Material harm to several tenants"
+      }
+    ]
+  },
+  "catalogues": [
+    {
+      "name": "OWASP Top 10 for LLM Applications 2025",
+      "form": "LLMnn:2025",
+      "example": "LLM01:2025 Prompt Injection"
+    },
+    {
+      "name": "OWASP Top 10 for Agentic Applications 2026",
+      "form": "ASInn",
+      "example": "ASI03 Identity and Privilege Abuse"
+    },
+    {
+      "name": "MITRE ATLAS technique, with sub-technique",
+      "form": "AML.Tnnnn[.nnn]",
+      "example": "AML.T0051.001 Indirect prompt injection"
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent",
+      "title": "Agent",
+      "family": "Governed content"
+    },
+    {
+      "id": "dataset",
+      "title": "Dataset",
+      "family": "Information"
+    },
+    {
+      "id": "device",
+      "title": "Device",
+      "family": "Infrastructure"
+    },
+    {
+      "id": "document",
+      "title": "Governing document",
+      "family": "Governing document"
+    },
+    {
+      "id": "egress",
+      "title": "Egress host",
+      "family": "Connection"
+    },
+    {
+      "id": "end_user",
+      "title": "End user",
+      "family": "Principal"
+    },
+    {
+      "id": "environment",
+      "title": "Environment",
+      "family": "Deployment"
+    },
+    {
+      "id": "ingress",
+      "title": "Ingress channel",
+      "family": "Connection"
+    },
+    {
+      "id": "installation",
+      "title": "Installation",
+      "family": "Deployment"
+    },
+    {
+      "id": "integration",
+      "title": "Integration",
+      "family": "Connection"
+    },
+    {
+      "id": "model",
+      "title": "Model",
+      "family": "Governed content"
+    },
+    {
+      "id": "person",
+      "title": "Person",
+      "family": "Principal"
+    },
+    {
+      "id": "policy_rule",
+      "title": "Policy rule",
+      "family": "Governed content"
+    },
+    {
+      "id": "principal",
+      "title": "Principal",
+      "family": "Principal"
+    },
+    {
+      "id": "prompt",
+      "title": "Prompt",
+      "family": "Governed content"
+    },
+    {
+      "id": "resource",
+      "title": "Cloud resource",
+      "family": "Infrastructure"
+    },
+    {
+      "id": "secret",
+      "title": "Secret",
+      "family": "Secret"
+    },
+    {
+      "id": "service",
+      "title": "Service",
+      "family": "Supply"
+    },
+    {
+      "id": "signing_identity",
+      "title": "Signing identity",
+      "family": "Secret"
+    },
+    {
+      "id": "skill",
+      "title": "Skill",
+      "family": "Governed content"
+    },
+    {
+      "id": "source",
+      "title": "Retrieval source",
+      "family": "Connection"
+    },
+    {
+      "id": "supplier",
+      "title": "Supplier",
+      "family": "Supply"
+    },
+    {
+      "id": "tenant",
+      "title": "Tenant",
+      "family": "Deployment"
+    },
+    {
+      "id": "vocab",
+      "title": "Vocabulary",
+      "family": "Governed content"
+    },
+    {
+      "id": "workload",
+      "title": "Workload",
+      "family": "Workload"
+    }
+  ],
+  "risks": [
+    {
+      "id": "agent.K1",
+      "asset": "agent",
+      "title": "Agent goal hijacked by injected instructions",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "ingress",
+        "source",
+        "end_user"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 3,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-32",
+        "CHK-20",
+        "CFG-40",
+        "CHK-12",
+        "PRC-11",
+        "CFG-74",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Instructions redirect the agent from its owner's goal, by one of the routes below. Screening reduces the chance and the tool guard limits what a hijacked agent can do; neither makes injection impossible, so the residual stays medium. Adversarial testing runs for confidential installations before production and yearly (PRC-11); nothing re-tests an agent against techniques published between those runs.",
+      "refs": [
+        "LLM01:2025",
+        "ASI01",
+        "AML.T0051.001",
+        "AML.T0054"
+      ],
+      "scenarios": [
+        {
+          "id": "agent.K1.S1",
+          "title": "A user types instructions or talks the model out of its rules",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-32",
+            "CHK-20",
+            "PRC-11"
+          ],
+          "text": "A person's own message tells the agent to ignore its instructions, or argues it out of its safety behaviour with no tool or data involved (a jailbreak). The `prompt_attack` guardrail looks for override and role-marker patterns in every user message before the model reads it, blocking by default for `confidential` (CFG-32); a limit written only in the prompt does nothing against it."
+        },
+        {
+          "id": "agent.K1.S2",
+          "title": "Instructions hidden in content the agent reads",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-32",
+            "CHK-20",
+            "CFG-40"
+          ],
+          "text": "The instructions are hidden in a document, web page, email, attachment, tool result or the text of an image, and are screened at the single point before the model sees them (CFG-32)."
+        },
+        {
+          "id": "agent.K1.S3",
+          "title": "Injected text reaches the model through code the agent wrote",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-32"
+          ],
+          "text": "Injected text in tool results that the agent's code processes reaches the model as the code's output, which the harness never sees when a provider hosts the code. Every result returned to code is screened as a result returned to the model is (CFG-32)."
+        },
+        {
+          "id": "agent.K1.S4",
+          "title": "An instruction split across records is put back together by code",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-40"
+          ],
+          "text": "Each record passes screening alone, and the agent's code joins them into one instruction. Nothing screens the joined text; the tool guard limits what follows (CFG-40)."
+        },
+        {
+          "id": "agent.K1.S5",
+          "title": "Compaction strips the mark that a passage came from outside",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-74"
+          ],
+          "text": "Summarising a long context drops the mark that says a passage is external, and the model then reads it as instruction. Compaction keeps the mark (CFG-74)."
+        },
+        {
+          "id": "agent.K1.S6",
+          "title": "A jailbreak disguised so the patterns miss it",
+          "origin": "AWS Agentic AI Lens AGENTSEC01-BP02",
+          "observed": null,
+          "controls": [
+            "CFG-32",
+            "CHK-15",
+            "CFG-40"
+          ],
+          "text": "A person writes the override in base64, look-alike or invisible characters, another language, or a technique newer than the patterns, and the model still understands it. Input is screened by fixed pattern only, because no model may sit in the ingress path; the text is normalised first, so look-alike and invisible characters and base64 runs are matched as plain text (CFG-32), and another language or a newer technique still passes. A refusal names the guardrail that matched, so someone probing with variants learns which wording gets through. For a `confidential` installation the evaluation set has a `prompt_attack` case for each evasion technique the Standard lists, kept current by the threat-intelligence review, and a technique that gets through fails the release (CHK-15); the tool guard limits what follows (CFG-40)."
+        },
+        {
+          "id": "agent.K1.S7",
+          "title": "A jailbreak built across several messages",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CHK-15",
+            "CFG-40"
+          ],
+          "text": "A person spreads the override over several turns, or builds it up through role play, and each message passes the guardrail alone; the model puts the attack together from the conversation. Nothing screens a conversation as a whole. For a `confidential` installation the `multi_turn` evasion case tests it at each release (CHK-15), and the tool guard limits what follows (CFG-40)."
+        }
+      ]
+    },
+    {
+      "id": "agent.K2",
+      "asset": "agent",
+      "title": "Agent acts beyond its task, tools or authority",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-40",
+        "CHK-11",
+        "CHK-08",
+        "CHK-12",
+        "CFG-42",
+        "CFG-18",
+        "CHK-50",
+        "CFG-38"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent calls a tool it was not given, a write or irreversible tool without its safeguards, or a tool with parameters outside its policy — or, given a routine task and with no attacker involved, takes a high-impact action nobody asked for. The soft write-confirmation channel exists in one runtime adapter only. A tool that runs agent code against another system turns one allowlisted name into the whole interface behind it, and an effect declared as `write` hides its irreversible operations from human review; a loop in that code can make many writes with no model turn between them. Such a tool declares the highest effect its code can reach (CHK-50); the guard denies a call from code to a tool not declared callable from code, and every call from code to an irreversible tool (CFG-40); and write calls are capped per run (CFG-38).",
+      "refs": [
+        "LLM06:2025",
+        "ASI02",
+        "ASI03",
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K3",
+      "asset": "agent",
+      "title": "Unreviewed or tampered bundle runs",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "signing_identity"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-17",
+        "CFG-30",
+        "CFG-16",
+        "CFG-54",
+        "CFG-27",
+        "CHK-02"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A bundle that did not pass review, or was altered after signing, is loaded by an installation — or it passed its checks only because they report rather than fail during build-out, and nothing yet checks the move out of build-out.",
+      "refs": [
+        "ASI04",
+        "AML.T0010"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K4",
+      "asset": "agent",
+      "title": "Agent behaviour regresses at release",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "model",
+        "prompt"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-15",
+        "PRC-09"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A prompt, model or skill change makes the agent worse at its task or less safe, and the release goes out because the evaluation set is thin or its threshold was lowered — or a masking or capture rule strips what the agent needs, its answers degrade, and people route around the control.",
+      "refs": [
+        "LLM09:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K5",
+      "asset": "agent",
+      "title": "Agent runs without a registered identity",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-04",
+        "CFG-30",
+        "CHK-10",
+        "CHK-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent runs outside the registry, under another agent's id, or with a named owner who has left, so its actions cannot be attributed, reviewed or stopped by id.",
+      "refs": [
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K6",
+      "asset": "agent",
+      "title": "Agent misled or recruited by another agent",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-35",
+        "CFG-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "One agent passes another a crafted or spoofed message — through a workload endpoint or a shared tool — and the receiver treats it as trusted, or a low-privilege agent hands work to a higher-privilege one that carries it out as its own.",
+      "refs": [
+        "ASI07",
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K7",
+      "asset": "agent",
+      "title": "Agent reports actions or state that did not happen",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-10",
+        "CHK-11",
+        "PRC-17"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "After a failure the agent says a change was made, a record exists or a recovery is impossible when the system says otherwise, and people act on its account. The guard and the telemetry record what the agent did independently of what it says; nothing compares the two.",
+      "refs": [
+        "ASI09",
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K8",
+      "asset": "agent",
+      "title": "Agent weakens or disables the oversight applied to it",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-08",
+        "CFG-09",
+        "PRC-05",
+        "CFG-52"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent with access to checks, policy rules, monitors or control records changes them in its own favour, or under-reports what it should raise — the `incident-monitor` declares incidents and the `compliance-reviewer` maintains this register. Changes to checks and rules need a review by someone other than the author, and control records are append-only; whether every staff agent's principal is in fact unable to write its own oversight has not been tested, and the rule changes once agents may approve.",
+      "refs": [
+        "ASI10",
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K9",
+      "asset": "agent",
+      "title": "One agent's error propagates through dependent agents and automations",
+      "cia": [
+        "I",
+        "A"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "accept",
+      "controls": [],
+      "decision": {
+        "by": "CEO",
+        "reason": "Bundles hold one agent and nothing composes agents in production, so an error has no dependent agent to spread through; a control for propagation would be designed against a topology that does not exist yet",
+        "trigger": "The first agent-to-agent composition or agent-triggered automation in production",
+        "reviewBy": "2027-05-14"
+      },
+      "owner": "CEO",
+      "text": "A wrong belief or action in one agent is taken as input by others and multiplied. Accepted while bundles hold one agent and nothing composes them in production.",
+      "refs": [
+        "ASI08"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K10",
+      "asset": "agent",
+      "title": "Governance agents unavailable when the platform they govern is down",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [
+        "model",
+        "service"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-18"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The InfoSec staff roles are agents that run on the platform. When the platform, its model provider or a service it depends on fails, the agents that declare incidents, grant access and run recovery cannot run either. PRC-18 Clause.5 has a person carry out those tasks from the runbooks, with the agents stopped, once a year; the path a person follows is not yet written, so the residual is unchanged.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K11",
+      "asset": "agent",
+      "title": "Agent converses or advises outside its declared purpose",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-19",
+        "CHK-15",
+        "CFG-66",
+        "PRC-21"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Without calling any tool, the agent answers questions it was not built for or gives advice it has no authority to give — medical, legal, financial — and a person acts on it. The agent file's required sections state its scope and its `Never` list, and every `Never` bullet has an evaluation case; each installation also declares the topics its agent must not answer, and the `topic` guardrail looks for them in every response (CFG-66). That guardrail only logs by default, and how it detects a topic is still open.",
+      "refs": [
+        "LLM09:2025",
+        "regulatory"
+      ],
+      "scenarios": [
+        {
+          "id": "agent.K11.S1",
+          "title": "Advice on a subject nobody ruled out",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CHK-19",
+            "CHK-15",
+            "PRC-21"
+          ],
+          "text": "The agent advises on a subject that is neither in its `Never` list nor among its installation's denied topics, because nobody expected it to be asked; an installation may declare an empty list. A subject nobody named has no case and no guardrail. Each quarter the installation's denied topics are compared with its use, and a missing one is added by pull request (PRC-21); a subject the review does not foresee stays uncovered."
+        },
+        {
+          "id": "agent.K11.S2",
+          "title": "Advice on a denied topic in words the guardrail does not match",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CHK-15"
+          ],
+          "text": "The agent gives the advice indirectly (\"people in your situation often…\") or in another language, unlike the topic's definition and sample phrases, and the guardrail does not match. Each enabled guardrail has one evaluation case that should match, and for a `confidential` installation the `topic` guardrail also has a case for each evasion technique the Standard lists, indirect wording and another language among them (CHK-15); on other installations, wording far from the samples is not tested."
+        }
+      ]
+    },
+    {
+      "id": "agent.K12",
+      "asset": "agent",
+      "title": "Agent output carries words, names or subjects its owner has ruled out",
+      "cia": [],
+      "arisesFrom": [
+        "end_user",
+        "model"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-19",
+        "CHK-15",
+        "CFG-66",
+        "CFG-32"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent uses profanity or slurs, names or disparages a competitor, or discusses a subject the organisation or the tenant has restricted, and the harm is to their reputation rather than to the person reading. A restriction written as a `Never` bullet is tested at release. At run time the `word` guardrail matches the profanity list and the installation's own words in user messages and responses, and the `topic` guardrail matches its denied topics in responses (CFG-66); both only log by default.",
+      "refs": [
+        "contractual"
+      ],
+      "scenarios": [
+        {
+          "id": "agent.K12.S1",
+          "title": "A listed word or ruled-out subject appears in a response",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CHK-19",
+            "CHK-15",
+            "CFG-66"
+          ],
+          "text": "The response carries a word on the list or a subject the installation denies, and the match is recorded; it reaches the reader unless the installation sets the guardrail stricter."
+        },
+        {
+          "id": "agent.K12.S2",
+          "title": "A listed word written so that exact matching misses it",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CFG-32"
+          ],
+          "text": "The list is matched by whole word, ignoring case, so spacing, punctuation, look-alike characters, a misspelling or an inflection carries profanity or a competitor's name past it. The text is normalised before matching, so look-alike and invisible characters are folded away, in responses (CFG-66) and in user messages (CFG-32); spacing or punctuation between letters, a misspelling or an inflection still passes. Exact matching is what allows the list to run on user messages, where no model may sit."
+        }
+      ]
+    },
+    {
+      "id": "agent.K13",
+      "asset": "agent",
+      "title": "Agent behaviour drifts in production between releases",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "model",
+        "source"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-19",
+        "PRC-21"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "With no release on our side, the agent's behaviour changes: the provider adjusts the model behind a pinned version, the content of a source shifts, or the questions people ask move away from what the evaluation set covers. Evaluations run at pull request and at promotion only; the model is pinned and each installation's profile is reviewed each quarter, and nothing samples production behaviour against the evaluation set in between.",
+      "refs": [
+        "LLM09:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K14",
+      "asset": "agent",
+      "title": "Agent reasoning degrades as its context fills",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "service",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 3,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-49",
+        "CFG-72",
+        "CFG-73",
+        "CFG-74",
+        "CFG-75",
+        "CFG-38",
+        "CHK-15",
+        "CFG-33"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Tool definitions, accumulated tool results and a long history fill the context window, and the agent follows its prompt less reliably: it loses an instruction stated early — a `Never` bullet, the rule that external content is data — picks a near-miss tool or misreads a parameter, or loses the thread of a long task. Every model tested degrades as its input grows, and information in the middle of the context is used worst. An attacker can bring it on deliberately by returning oversized content; admission limits cap single items (CFG-33). The harness presents no more tool definitions than the bundle's cap and context budget allow and defers the rest behind a search of the allowlist (CHK-49, CFG-72); a run is compacted or ended at its installation's context ceiling (CFG-75), with external content still marked as external after compaction (CFG-74); each model call records how full its window is (CFG-73); and evaluations run at the load the agent meets in production (CHK-15). These limits are proxies: they keep an agent inside the range its evaluations cover, not inside a range shown to be safe. The ceiling and the call quotas are judgements, to be calibrated once telemetry and the first production-load evaluation runs exist.",
+      "refs": [
+        "LLM10:2025",
+        "LLM01:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K15",
+      "asset": "agent",
+      "title": "Wrong tool chosen from many similar tools",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "service"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-49",
+        "CFG-72",
+        "CHK-51",
+        "CHK-15",
+        "CFG-32"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Two allowlisted tools have overlapping names or descriptions — `archive_record` and `delete_record`, a staging and a production server with the same tool names — and the agent calls the wrong one; or a server's descriptions are written to win selection or search ranking for requests meant for another server's tools, so the call and its arguments go to the server that asked loudest. Every tool is allowlisted, so the guard allows the call. The definition hash stops a description changing after approval and the screening point catches instructions hidden in one (CFG-32). Pairs of tools whose names collide or whose descriptions are alike are reported at review, and each needs an evaluation case that tells them apart (CHK-51); how alike counts as too alike is still open.",
+      "refs": [
+        "ASI02",
+        "LLM06:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K16",
+      "asset": "agent",
+      "title": "Agent creates its own tool where none exists",
+      "cia": [
+        "I",
+        "C"
+      ],
+      "arisesFrom": [
+        "agent",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 3,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-39",
+        "CFG-36",
+        "CFG-41",
+        "CFG-40",
+        "CFG-24",
+        "CFG-30",
+        "CHK-50",
+        "CHK-52",
+        "CFG-76",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Asked to do something no allowlisted tool does — or told to by injected content — the agent builds the capability itself: it writes code that calls a system's API directly instead of through a declared tool, installs a package that does the job, writes a script or a local server and runs it, or saves helper code to reuse in later runs. A self-made tool sits outside the allowlist, the effect classes, the guard and the definition hash, so nothing reviewed what it does; unlike K2, where the guard refuses a tool the agent was not given, a self-made tool never reaches the guard at all. Such code can compute but not act: the signed bundle is the only thing that loads (CFG-30); the allowlist is the only grant (CFG-40); a server cannot add tools at run time (CFG-24); and the sandbox has no identity, secrets or network beyond its profile (CFG-39), with the principal's egress rule behind it (CFG-36, CFG-41). The routes by which code would get reach are closed one by one: no sandbox profile may reach a package index or code host (CHK-52); nothing a run's code writes survives the run (CFG-76); a tool that runs agent code against another system is mediated per operation or can only read (CHK-50); and evaluations include a request no tool can meet, which passes only if the agent says so (CHK-15). Which memory and session stores the sandbox must be kept from is still open. An agent may still propose a tool it wrote by pull request; someone other than its author reviews it, and it loads only once merged, signed and released. A coding agent on a workstation that adds a server to its own configuration is held in `integration`. The impact stays high in the residual: the controls make it unlikely, not less harmful when it happens.",
+      "refs": [
+        "ASI05",
+        "ASI10",
+        "LLM06:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "agent.K17",
+      "asset": "agent",
+      "title": "Agent does not follow an instruction it was given",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 3,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-28",
+        "CFG-08",
+        "CHK-15",
+        "CFG-06",
+        "CHK-27",
+        "CHK-31"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent has the rule in front of it — in its agent file, in a governing document it can read, or in what it was told — and does the task another way: from habit, from what is usual elsewhere, or because it never looked. Nothing is exceeded and nobody attacks; the work is simply not done as required, and the agent may report it done. An instruction to an agent is therefore not a control. A rule holds only where something other than the agent checks it: a check that runs whatever the agent did, a review by someone who did not write the change, an evaluation case for each prohibition. Each of those reduces the chance that a departure reaches the release branch; none makes the agent follow the rule, and a rule that nothing checks rests on the agent alone.",
+      "refs": [],
+      "scenarios": [
+        {
+          "id": "agent.K17.S1",
+          "title": "An agent given the governing documents uses a toolchain they rule out",
+          "origin": "owner's direction of 2026-11-23",
+          "observed": "2026-11-23",
+          "controls": [
+            "CFG-06",
+            "CHK-27"
+          ],
+          "text": "The Agent Standard requires one project file, a lockfile and locked installs for all Python (the Standard; the Standard). Observed on 2026-11-23: the agent `ceo-consultant`, which is bound by those documents and can read them, wrote a script that made its own environment and installed a package into it directly, and had run the checks that way all day. It had also, before the first commit, given the owner Git steps from general knowledge that broke CP20. In both cases the owner noticed, and no check did: the repository had no project file for CHK-27 to compare, and nothing looked at how a script installs. Since the same day `scripts/check-toolchain` runs before every commit made with `scripts/commit-workflow`: it holds the project file, the interpreter pin and the lockfile to the baseline (CHK-27, in part), requires that the only environment is the one the lockfile makes and that every dependency is approved (CFG-06), and scans what people and agents are told to run for any other way of installing. It runs on the person's device and can be skipped by committing by hand; what remains is."
+        }
+      ]
+    },
+    {
+      "id": "dataset.K1",
+      "asset": "dataset",
+      "title": "Dataset disclosed to an outsider through a tool call, egress or response",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-36",
+        "CFG-41",
+        "CFG-37",
+        "CHK-11",
+        "CFG-66"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Injected content or a faulty plan leads an agent to send dataset content to a host or caller outside the organisation. Egress is limited to allowlists and responses are screened by guardrails; a host on the allowlist can still receive what the agent sends it, and a guardrail recognises only the forms it was built for.",
+      "refs": [
+        "LLM02:2025",
+        "ASI02",
+        "AML.T0057",
+        "AML.T0051.001"
+      ],
+      "scenarios": [
+        {
+          "id": "dataset.K1.S1",
+          "title": "In a tool parameter or a fetched URL",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-36",
+            "CFG-41",
+            "CFG-37",
+            "CHK-11"
+          ],
+          "text": "The agent puts the data in a tool call's parameters or a URL it fetches. Traffic reaches only allowlisted hosts (CFG-36, CFG-41), never a private address (CFG-37), and a tool outside the allowlist is denied (CHK-11). Screening a response does nothing for what leaves by a tool."
+        },
+        {
+          "id": "dataset.K1.S2",
+          "title": "In a response",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-66"
+          ],
+          "text": "The data is in what the agent returns: personal data of a category the installation has not permitted, a value matching one of the installation's own patterns, a long encoded run or a URL carrying data. Each is masked by default before the response reaches the caller (CFG-66)."
+        },
+        {
+          "id": "dataset.K1.S3",
+          "title": "Smuggled out in a form the exfiltration patterns do not hold",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CFG-66"
+          ],
+          "text": "An attacker leads the agent to put data in a markdown image link that the end user's client fetches by itself, split across several links or responses, in invisible characters, or in an encoded run shorter than the pattern's length. A link or image reference to a host not on the installation's egress allowlist is masked whatever its path or query string (CFG-66; collector rule 2a of the Standard), and before matching, invisible characters are removed and each base64 run is decoded and screened (CFG-66). Data split across several links to an allowlisted host, or carried in a short run whose decoded content matches no guardrail, still passes."
+        },
+        {
+          "id": "dataset.K1.S4",
+          "title": "Personal data the guardrail does not recognise",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [],
+          "text": "Personal data in a format or language the `pii` guardrail was not built for — another country's identifier, a name in another script, a health detail told in prose — or drawn as text inside a returned image passes unmasked. Images are screened for harmful content only. Nothing covers this; how `pii` detects is still open."
+        }
+      ]
+    },
+    {
+      "id": "dataset.K2",
+      "asset": "dataset",
+      "title": "Confidential control records or telemetry read by an unapproved person",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-57",
+        "CFG-61",
+        "CFG-60"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person without an approved role queries confidential control records or telemetry — directly, through a dashboard, or by an over-broad grant in staging or production. The controls limit who may read; nothing reviews what an approved role or an agent's principal did read, so misuse of permitted access is not seen.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K3",
+      "asset": "dataset",
+      "title": "Message content captured when capture is off",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "workload"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-13",
+        "CFG-43",
+        "CHK-10"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation whose capture setting is off still writes prompt or response text to telemetry or control records, because an exporter bypasses the collector or a new field carries content. Where capture is on, personal data in prompts, responses and logs is masked only as far as the collector's patterns reach; prompts themselves are scanned for secret shapes, not personal identifiers.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K4",
+      "asset": "dataset",
+      "title": "Audit or control records altered, deleted or never written",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "principal",
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-52",
+        "CFG-45",
+        "CHK-14",
+        "PRC-14",
+        "CFG-77"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Audit rows or control records are changed, removed, written in a non-conforming shape or not written at all — by a person, a principal or the agent they describe — so an investigation or an auditor sees an incomplete record. What a run does when telemetry fails to initialise is undecided, and check results are kept only as long as the Git host keeps them.",
+      "refs": [
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K5",
+      "asset": "dataset",
+      "title": "Dataset lost or not restorable within its target",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [
+        "resource"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-48",
+        "PRC-19"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A dataset is deleted, corrupted or lost with its region, and the backup is missing, too old, has never been restored, or sits under the same credentials as the data, so one identity can delete both.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K6",
+      "asset": "dataset",
+      "title": "Dataset kept past its retention period",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-58"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Control records or captured content outlive their retention period, against data-protection law or a tenant agreement. Tool results passed to a model provider's code-execution feature are kept on that feature's terms, which can be longer than the model API's; each such feature is registered with its own terms before it is first used.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K7",
+      "asset": "dataset",
+      "title": "Retrieval index or agent memory poisoned with planted content",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "source",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-32",
+        "CFG-33",
+        "CHK-20",
+        "CFG-76"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Content planted in a source or a channel is indexed, or written to an agent's memory or session store, and later retrieved as trusted context, steering answers or carrying instructions into other sessions. Content is screened at the single ingress point and injection handling is tested; nothing re-screens what is already stored, and session and checkpoint stores have no classification or residency rule yet. Code an agent writes in one run could be saved to memory or a session store and run in a later one; nothing a run's code writes may survive the run where a later run can load it, and no memory or session store is reachable from a sandbox (CFG-76). Which stores that covers is still open.",
+      "refs": [
+        "LLM04:2025",
+        "LLM08:2025",
+        "ASI06"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K8",
+      "asset": "dataset",
+      "title": "Personal data sent to a model or supplier without need or basis, or used to train it",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "supplier",
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "PRC-03",
+        "CHK-07"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation sends personal data to a model provider or another supplier that the task did not need, that the tenant's agreement or data-protection law does not permit, or that the supplier then uses to train its models. The supplier's data handling is assessed before approval, a tenant's personal-data categories are recorded before its first installation, and an agent cannot use a component below its classification; nothing checks what a given request actually carries. Data passed to a provider's code-execution feature falls under that feature's terms rather than the model API's, and is assessed only once the feature is its own service entry, before it is first used.",
+      "refs": [
+        "LLM02:2025",
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K9",
+      "asset": "dataset",
+      "title": "A person's request to see or erase their data cannot be met",
+      "cia": [],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-33"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Someone asks for the data held about them, or for its erasure, and it cannot be found or removed within the legal period because it is spread across capture stores, retrieval indexes, agent memory, logs and backups, keyed by installation and not by person. Tenant exit deletes by tenant. CP28 28.8 requires every installation to find, export and erase one person's data, and PRC-33 does so on request within 30 days, keeping only what a law or regulatory standard requires and data that can no longer be linked to the person; it has no runbook yet, so the residual is unchanged. The stores in scope and who receives a request are still open.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K10",
+      "asset": "dataset",
+      "title": "Masked or anonymised data re-identified",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-43"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Data masked by the collector, or anonymised for evaluations or analysis, is joined with other context — a conversation, a retrieval result, a second dataset — and the person is identified again. Masking is by pattern; no test measures whether what remains identifies anyone.",
+      "refs": [
+        "LLM02:2025",
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K11",
+      "asset": "dataset",
+      "title": "Origin and handling of data an agent uses cannot be shown",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "source"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-04",
+        "CFG-47"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Asked by a tenant, an auditor or a regulator where a piece of data came from, on what terms, and how it was transformed before a model used it, the organisation cannot answer. Sources are registry entries an agent may reference only when approved, and datasets are in the asset register; transformations between a source and an index are recorded nowhere.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "dataset.K12",
+      "asset": "dataset",
+      "title": "Matched value recovered from its hash in a guardrail record",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-66",
+        "CFG-57",
+        "CFG-61"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Every guardrail match is recorded with a hash of the matched content and never the content, so that the record of a masked secret or personal data does not hold it. A value with few possible forms — a card number, a phone number, a national identifier, a short password — can be recovered from a plain hash by hashing every candidate, so whoever could read the records could read what the guardrails caught. The hash is keyed, an HMAC under a key held for the installation in the secret store (CFG-66), so trying candidates needs the key as well as the records, and confidential control records and telemetry are readable only by approved roles (CFG-57, CFG-61). Someone who holds both the records and the installation's key can still recover the values.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": [
+        {
+          "id": "dataset.K12.S1",
+          "title": "A short matched value is recovered by trying every candidate",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CFG-57",
+            "CFG-61"
+          ],
+          "text": "Someone with read access to `response.guardrail` events hashes every phone number in a numbering range and matches the results against the recorded hashes; without the installation's key, none matches."
+        }
+      ]
+    },
+    {
+      "id": "device.K1",
+      "asset": "device",
+      "title": "Workstation compromised and used to reach repositories or cloud",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "service"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-07",
+        "CFG-59",
+        "CFG-56"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Malware on a workstation — an infostealer, a malicious package's install script, a trojanised copy of a developer tool — steals sessions or keys and uses them to reach repositories and cloud consoles. The baseline is attested by the person, not verified, until device management exists, so the residual stays medium.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "device.K2",
+      "asset": "device",
+      "title": "Lost or stolen device exposes local data",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-07"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A laptop is lost with local copies of code, data or tokens on it.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "document.K1",
+      "asset": "document",
+      "title": "Governing document changed without InfoSec approval",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-05",
+        "CFG-08",
+        "CFG-13"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A requirement or contract is weakened by a change nobody in InfoSec approved.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "document.K2",
+      "asset": "document",
+      "title": "Document goes stale",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-13",
+        "PRC-16"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The document no longer describes the controls run, so assurance rests on fiction.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "document.K3",
+      "asset": "document",
+      "title": "Framework reviewed only by its authors",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-10"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "No one outside the authoring loop reviews the framework, so shared blind spots persist.",
+      "refs": [],
+      "scenarios": [
+        {
+          "id": "document.K3.S1",
+          "title": "The agent that drafts the governing documents also keeps the record of their review",
+          "origin": "owner's decision of 2026-11-23",
+          "observed": "2026-11-23",
+          "controls": [
+            "PRC-10"
+          ],
+          "text": "One agent drafts the governing documents, carries the owner's requests to the other agents, and writes the minutes of the Committee and the record of Executive Management's reviews. Since 2026-11-23 that is `ceo-consultant`, by the owner's decision. It approves nothing and has no vote, but what a review found is then known through its author's account of it. The yearly review by someone outside the framework (PRC-10) is what stands against this; that the minutes are written from the meeting's run record, and say where they cover the agent's own work, is an instruction to the agent that nothing yet checks."
+        }
+      ]
+    },
+    {
+      "id": "document.K4",
+      "asset": "document",
+      "title": "Generated prose edited by hand",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "low",
+        "likelihood": 2,
+        "impact": 1
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-28"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A generated block or register is edited by hand and disagrees with the frontmatter it is rendered from.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "document.K5",
+      "asset": "document",
+      "title": "Threat landscape changes and the framework does not",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-24",
+        "PRC-15",
+        "PRC-30"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "New attack techniques against agents appear, or adversaries begin running agents at scale, and no requirement, risk or control changes in response. Threat intelligence is reviewed each quarter and each asset document's risks are reviewed each year and on a trigger (PRC-30).",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "document.K6",
+      "asset": "document",
+      "title": "Breaking Standard change leaves checks, bundles or control record readers behind",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-08"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A major version of the Standard or of an artifact schema changes a contract, and the conformance checks, the bundles built against the old version or the readers of control records written under it are not brought along, so checks pass against a contract that no longer holds and old control records are read as if they meant the new thing. CP03 3.7 requires a migration note before a major version is adopted; PRC-08 commits the note with the version and re-runs the Conformance Checks against every current bundle before the version is released.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "egress.K1",
+      "asset": "egress",
+      "title": "Host added to an allowlist without review",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-08",
+        "CFG-09",
+        "PRC-04"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A host is added to an installation's or tool's allowlist without security review, widening where data can go.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "egress.K2",
+      "asset": "egress",
+      "title": "Allowlisted host taken over or changes hands",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-41"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A domain on an allowlist expires, is sold or is taken over, and the new owner receives what agents send to it. Accepted until 2026-11-14 on a trigger — a host changing owner — that nothing could observe; a lapsed allowlisted domain has since been re-registered and used to take data out of another vendor's agent platform, so the risk is now mitigated by a scheduled comparison of each host's registration with the one recorded at approval (CHK-41). The check reports; it does not stop traffic to a host between runs.",
+      "refs": [
+        "AML.T0057"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "egress.K3",
+      "asset": "egress",
+      "title": "Data leaves by a path the allowlist does not inspect",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-36",
+        "CFG-39"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent, or code it runs, sends data out through an allowlisted host that relays it onward — a package registry proxy, an open redirect, a paste or webhook service — or through a channel the allowlist does not decide, such as encoded DNS lookups. The network rule and the sandbox limit destinations by host and report an attempt outside the list; nothing inspects DNS queries or what an allowlisted host does with a request.",
+      "refs": [
+        "ASI02",
+        "AML.T0057"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "end_user.K1",
+      "asset": "end_user",
+      "title": "One end user reads another's data on a shared installation",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-67",
+        "CHK-46",
+        "CFG-39"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "On an installation that serves several end users, the agent retrieves or acts on another user's data because the acting user's identity is not carried to every tool call, retrieval and audit row — by changing an identifier in a request, or through content one user planted for the agent to act on in another's session. CP31 31.7 requires the identity, 31.10 says where it may come from and 31.11 limits each action to what that end user may reach. CFG-67 carries it and CHK-46 tests it with a second end user at promotion; neither is built, so the residual is unchanged. When the identity is populated, and how an installation declares that it serves more than one end user, is still open. A sandbox a model provider runs for agent code, if reused across sessions, would carry one user's files into another's run; such a sandbox serves one run only (CFG-39).",
+      "refs": [
+        "LLM02:2025",
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "end_user.K2",
+      "asset": "end_user",
+      "title": "End user misled by agent output",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent",
+        "model"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-66",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent gives an end user false or fabricated information — a policy, a price, an entitlement — with no reasoning, sources or sign of uncertainty by which they could judge it, and they act on it; the organisation is held to what its agent said. Where an installation answers end users from retrieved sources, every answer is scored for grounding in those sources and for relevance to the question, and one below either threshold is a match (CFG-66). Both guardrails only log by default, and how they score and their default thresholds are still open.",
+      "refs": [
+        "LLM09:2025",
+        "ASI09",
+        "contractual",
+        "regulatory"
+      ],
+      "scenarios": [
+        {
+          "id": "end_user.K2.S1",
+          "title": "An answer its retrieved sources do not support",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CHK-15"
+          ],
+          "text": "The agent states something no admitted source says. The `grounding` guardrail scores it below the installation's threshold and records the match; the answer still reaches the end user unless the installation sets the guardrail to block."
+        },
+        {
+          "id": "end_user.K2.S2",
+          "title": "An answer that contradicts the organisation's own rules",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [],
+          "text": "The agent tells an end user they are owed a refund, are eligible for a benefit or owe a sum, contrary to the organisation's written rules, and the answer passes grounding because a retrieved passage seems to support it. A check of such answers against a formal statement of the rules is recommended and is not built until the first installation tells end users what they are entitled to; nothing covers this until then."
+        },
+        {
+          "id": "end_user.K2.S3",
+          "title": "The scorer passes a fabricated or off-question answer",
+          "origin": "AWS Agentic AI Lens AGENTSEC01-BP03",
+          "observed": null,
+          "controls": [
+            "CHK-15"
+          ],
+          "text": "The grounding or relevance score comes from a model that rates its own, or a sibling model's, fabrication as supported, or that is led by text in the answer or the sources to score high; or an answer is well supported but answers a different question. Each guardrail's evaluation case shows that it matches one case (CHK-15); nothing measures how often it misses, and which model scores is still open."
+        },
+        {
+          "id": "end_user.K2.S4",
+          "title": "An answer from the model's own knowledge",
+          "origin": "AWS Agentic AI Lens AGENTREL05-BP03",
+          "observed": null,
+          "controls": [
+            "CFG-66"
+          ],
+          "text": "Retrieval fails or returns nothing and the agent answers from what the model learned in training, outdated or invented. Where the installation declares sources, the answer scores low and is a match (CFG-66); an installation that declares no sources has no grounding guardrail, and its factual answers are checked only by its evaluations."
+        }
+      ]
+    },
+    {
+      "id": "end_user.K3",
+      "asset": "end_user",
+      "title": "Toxic, abusive or unsafe content reaches an end user",
+      "cia": [],
+      "arisesFrom": [
+        "agent",
+        "model"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-66",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent's output contains hate, insults, sexual or violent content, or help towards serious harm. Each class is its own guardrail on every response, and on every image an installation returns (CFG-66). `harmful` blocks by default; `hateful`, `insulting`, `sexual` and `violent` only log, so a match in those four is recorded and still delivered unless the installation sets the guardrail stricter. How each guardrail detects, and whether those defaults rise, are still open. Evaluations test one case per guardrail, and for a `confidential` installation one `harmful` case per evasion technique the Standard lists (CHK-15).",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": [
+        {
+          "id": "end_user.K3.S1",
+          "title": "Harmful text in a response",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CHK-15"
+          ],
+          "text": "The model produces content of one of the classes and that class's guardrail matches; what the end user sees depends on the guardrail's action."
+        },
+        {
+          "id": "end_user.K3.S2",
+          "title": "Harmful content worded below the threshold",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CHK-15"
+          ],
+          "text": "Help towards serious harm framed as fiction, a hypothetical or research, or hateful content in a language or dialect the classifier handles poorly, scores below the match threshold and is delivered. Speakers of those languages are less protected than others. For a `confidential` installation the evaluation set has a `harmful` case framed as fiction and one in another language (CHK-15); which languages a classifier handles is still open."
+        },
+        {
+          "id": "end_user.K3.S3",
+          "title": "Harmful help drawn out across several responses",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CHK-15"
+          ],
+          "text": "Each response is screened alone, and a person draws harmful instructions out of the agent a piece at a time; no single response matches. Nothing screens a conversation as a whole; for a `confidential` installation the `multi_turn` evasion case for `harmful` tests it at each release (CHK-15)."
+        },
+        {
+          "id": "end_user.K3.S4",
+          "title": "A returned image carries what the image screen does not read",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CFG-66"
+          ],
+          "text": "An image is returned as a link or inside a document, or carries harmful text drawn into it. A part of a response that no guardrail can screen — an image they do not read, a file or a document — is withheld (CFG-66), and a link or image reference to a host not on the installation's egress allowlist is masked (CFG-66; collector rule 2a of the Standard). An image the guardrails can screen is judged as a picture, and text drawn in it may not be read."
+        }
+      ]
+    },
+    {
+      "id": "end_user.K4",
+      "asset": "end_user",
+      "title": "Answer cannot be traced to the source it came from",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent",
+        "source"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-70"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An answer draws on retrieved content but carries no reference to it, so the end user cannot check it, and the organisation cannot find and correct the source when the answer is wrong. CP28 28.3 requires the trace. CFG-70 records which admissions an answer used and shows its sources where the installation permits; it is not built, so the residual is unchanged. What happens to an answer that cites nothing is still open.",
+      "refs": [
+        "LLM09:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "end_user.K5",
+      "asset": "end_user",
+      "title": "End user not told they are dealing with an AI",
+      "cia": [],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-68"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person takes the agent for a human, or takes generated content for something a person wrote, and gives it trust they would not otherwise. CP28 28.1 requires an installation to disclose itself. CFG-68 requires end users to accept terms and conditions that disclose AI use before their first interaction; it is not built, so the residual is unchanged. The wording of the AI statement, and whether content sent onward is marked as generated, are still open.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "end_user.K6",
+      "asset": "end_user",
+      "title": "Output treats people differently by a protected characteristic",
+      "cia": [],
+      "arisesFrom": [
+        "agent",
+        "model"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-47",
+        "CHK-48",
+        "CFG-71"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent's answers, recommendations or decisions differ by gender, ethnicity, age, disability or another protected characteristic, in ways nobody intended and nobody has measured. CP28 28.4–28.6 require it to be tested and watched; none of the controls is built, so the residual is unchanged. Which characteristics are tested, and the threshold, are still open.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": [
+        {
+          "id": "end_user.K6.S1",
+          "title": "An agent's decisions differ by group",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CHK-47",
+            "CHK-48",
+            "CFG-71"
+          ],
+          "text": "An agent that ranks, scores or decides about individuals treats one group worse. CHK-47 tests paired cases before release, CHK-48 requires a fairness result on the model, and CFG-71 watches production outcomes across groups."
+        },
+        {
+          "id": "end_user.K6.S2",
+          "title": "A guardrail refuses one group's speech more than another's",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [],
+          "text": "The harmful content guardrails flag a dialect, a reclaimed term, or a frank answer about health or sexuality as hateful or sexual more often than other speech, so those end users are refused, or recorded as matches, more often. The fairness checks apply to agents that decide about individuals, not to guardrails; nothing covers this."
+        }
+      ]
+    },
+    {
+      "id": "end_user.K7",
+      "asset": "end_user",
+      "title": "End user harmed by an output cannot challenge it or have it investigated",
+      "cia": [],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-69",
+        "PRC-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An answer or decision harms an end user, and they have no way to contest it or reach a person, or the organisation cannot trace the response back to the run that produced it, so the error is neither corrected for them nor learned from. CP28 28.2 requires every response to be traceable to its run, and 28.9 a route to challenge an output and reach a person. CFG-69 records the trace and PRC-34 requires a tested route that a person answers; neither is built, so the residual is unchanged. The form of the route, who answers it and how quickly are still open.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "environment.K1",
+      "asset": "environment",
+      "title": "Production reached from a development context",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "device",
+        "integration"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-60",
+        "CFG-53",
+        "PRC-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person holds standing write access in production, a production environment is bootstrapped without its separation, or a coding agent in a development workspace finds a token that reaches production — so a mistake, a stolen account or an agent's own initiative changes or deletes live data.",
+      "refs": [
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "environment.K2",
+      "asset": "environment",
+      "title": "Environment drifts from its code",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-01",
+        "CHK-36",
+        "CFG-20",
+        "PRC-14"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Hand changes accumulate until an environment can no longer be rebuilt from code or compared with another.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "environment.K3",
+      "asset": "environment",
+      "title": "Non-production environment has weaker controls and still reaches real systems",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-39",
+        "CFG-36",
+        "CHK-30"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A development, test or evaluation environment runs agents with fewer restrictions than production while it can still reach the internet or third parties, so what an agent does there has real effects. The sandbox, the egress rule and the plan rules apply in every environment, `dev` included.",
+      "refs": [
+        "ASI05",
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "ingress.K1",
+      "asset": "ingress",
+      "title": "Content outside declared channels or limits reaches an agent",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-33",
+        "CFG-32"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Content arrives by an undeclared channel, or beyond the declared size and rate limits, and reaches the model.",
+      "refs": [
+        "LLM01:2025",
+        "LLM10:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "ingress.K2",
+      "asset": "ingress",
+      "title": "Malicious attachment parsed by a workload",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-32",
+        "CFG-39",
+        "CFG-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A crafted file exploits the parser that extracts its text, before any screening of the content.",
+      "refs": [
+        "ASI05"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "ingress.K3",
+      "asset": "ingress",
+      "title": "Content attributed to a sender it did not come from",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-35",
+        "CFG-33"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A message claims a trusted sender — a colleague, a system — and the agent or a reviewer gives it that sender's authority.",
+      "refs": [
+        "ASI09"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "ingress.K4",
+      "asset": "ingress",
+      "title": "Harmful, abusive or illegal content admitted and stored",
+      "cia": [],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-32",
+        "CFG-58"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A user submits abusive, hateful, violent or unlawful content. The agent processes it as ordinary input, and it is written to the capture store, telemetry or agent memory, where staff may read it and the organisation holds it. The screening point looks for injection patterns and secret shapes and retention expires what was captured; nothing classifies incoming content as harmful or keeps it out of the stores.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K1",
+      "asset": "installation",
+      "title": "Installation runs a release that was not signed, tested and staged",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-27",
+        "CFG-28",
+        "CFG-25",
+        "CFG-26",
+        "CFG-62"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The release pointer is moved to a bundle that skipped staging or tests, by the initiator alone or by a role that should not write it. Whether an emergency release citing an incident may skip the promotion reviewer is undecided.",
+      "refs": [
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K2",
+      "asset": "installation",
+      "title": "Installation risk profile no longer matches its use",
+      "cia": [
+        "I",
+        "C"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-21",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The installation is used for more sensitive work, more users or more tools than its declared profile, so its posture defaults are too weak.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K3",
+      "asset": "installation",
+      "title": "Compromised installation not detected or stopped quickly",
+      "cia": [
+        "A",
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-20",
+        "PRC-14",
+        "CFG-46"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation behaving badly keeps running because nobody has noticed — activity at machine speed, out of hours; guardrail hits, denied tool calls and refused content that are recorded and never looked at — or while people work out how to stop it.",
+      "refs": [
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K4",
+      "asset": "installation",
+      "title": "Installation history cannot be reconstructed",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-17",
+        "CFG-26",
+        "CFG-20",
+        "PRC-07"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "After an incident or a complaint, nobody can say which bundle, configuration and infrastructure an installation ran at a given time, or reconstruct why it gave a person the answer or decision it did.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K5",
+      "asset": "installation",
+      "title": "Installation left running after decommission",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-37",
+        "CFG-01",
+        "CHK-37"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Resources of a decommissioned or superseded installation keep running or keep data — conversation history, settings, logs — outside every review, and are taken in a later breach.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K6",
+      "asset": "installation",
+      "title": "Installation's regulatory classification wrong or out of date",
+      "cia": [],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-31"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation whose use is high-risk under AI regulation is not classified as such, its use changes and the classification does not, or the organisation plans against the wrong dates. No requirement carries this yet: PRC-31 records and reviews the classification, and the policy requirement, the entry's field and the list of regulations considered are still to be set.",
+      "refs": [
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K7",
+      "asset": "installation",
+      "title": "Installation used for a purpose it was not built for",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-38",
+        "PRC-21",
+        "CFG-66"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "People use the installation as something else: a free general assistant, a generator of spam or prohibited content, a way to reach a model the organisation pays for. Each installation's calls, tokens and cost are capped, its use is compared with its profile each quarter and its responses are screened; nothing in between looks at what it is being asked to do.",
+      "refs": [
+        "LLM10:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "installation.K8",
+      "asset": "installation",
+      "title": "Installation's guardrail settings weaker than its use needs",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-66",
+        "CFG-08",
+        "CFG-09",
+        "PRC-21"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation's guardrails — the action of each, the grounding and relevance thresholds, its denied topics, words and patterns, and the personal data a response may carry — let through what its use should stop, and nobody decided that they should. A setting less strict than the Standard's default is refused without a `classification-exception` approval on the entry (CFG-66), and every change to the entry is a reviewed pull request (CFG-08, CFG-09); those stop a loosening nobody approved. Each quarter every guardrail setting and every loosening approval is compared with the installation's use and its personal data record, and each is kept, tightened by pull request, or has its approval renewed with a reason (PRC-21); between reviews a setting can be wrong for up to a quarter.",
+      "refs": [],
+      "scenarios": [
+        {
+          "id": "installation.K8.S1",
+          "title": "A setting loosened without approval",
+          "origin": "AWS Agentic AI Lens AGENTOPS02-BP02",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CFG-08",
+            "CFG-09"
+          ],
+          "text": "An action is moved from block to log, a threshold lowered or a list emptied in a change that looks routine, or by someone using a compromised account. A less strict setting is refused without its approval, and the change needs a reviewer; a change to the Standard's own defaults is a change to a governing document and is reviewed as one."
+        },
+        {
+          "id": "installation.K8.S2",
+          "title": "A looser setting approved under pressure outlives its reason",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "PRC-21"
+          ],
+          "text": "During a guardrail outage, a complaint about latency, a cost spike or a run of false matches, a less strict action, `degrade` or a lower threshold is approved, and stays after the pressure has passed. The next quarterly review renews the approval with a reason or removes it (PRC-21), so it outlives its reason by a quarter at most."
+        },
+        {
+          "id": "installation.K8.S3",
+          "title": "Defaults kept where the use needs stricter",
+          "origin": "AWS Agentic AI Lens AGENTSEC04-BP01",
+          "observed": null,
+          "controls": [
+            "PRC-21"
+          ],
+          "text": "A high-risk installation keeps the defaults sized for a low-risk one — hateful content only logged, grounding at its default threshold — or permits more personal data categories in responses than its use needs, or its words and denied topics stay as they were after the tenant gained a competitor or entered a regulated field. The quarterly review reads the guardrail settings, denied topics, words and permitted personal data against the installation's use (PRC-21); a setting the reviewer judges adequate and is not is still kept."
+        }
+      ]
+    },
+    {
+      "id": "integration.K1",
+      "asset": "integration",
+      "title": "Connected application holds a broad grant",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person",
+        "supplier"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-22",
+        "CFG-49",
+        "PRC-23"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person grants an application — often an AI tool — broad access to repositories, mail, drive or cloud consoles, and the application or its supplier is compromised. The inventory is reconciled and grants reviewed; the harm of a broad grant stays until it is narrowed, so the impact is not credited down.",
+      "refs": [
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "integration.K2",
+      "asset": "integration",
+      "title": "Grant outlives its person or purpose",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-27",
+        "PRC-38",
+        "CHK-22"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A grant stays live after the person leaves or the purpose ends, including a grant to a product its supplier has discontinued.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "integration.K3",
+      "asset": "integration",
+      "title": "Local MCP server reads more than intended",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "device"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-06",
+        "CFG-07"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A local MCP server on a workstation reads files, tokens or other servers' data beyond what its tools declare, through a path-restriction flaw, a client library that runs what a remote server sends, or a debugging tool a web page can reach.",
+      "refs": [
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "integration.K4",
+      "asset": "integration",
+      "title": "AI tool or integration in use but not in the inventory",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-22",
+        "PRC-23"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person starts using an AI tool, model or assistant that was never recorded, so it is never assessed, reviewed or removed. The weekly reconciliation sees grants on the organisation's accounts; it does not see a tool used with a personal account.",
+      "refs": [
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "integration.K5",
+      "asset": "integration",
+      "title": "AI browser or extension acts inside a person's signed-in sessions",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A browser or extension with an agent mode reads a web page carrying hidden instructions — in text or in an image — and acts across the accounts the person is signed in to: the Git host, cloud consoles, mail. No requirement or control addresses agent-mode browsing on inventoried accounts.",
+      "refs": [
+        "LLM01:2025",
+        "ASI01",
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "integration.K6",
+      "asset": "integration",
+      "title": "Local coding agent acts with the person's access beyond the task",
+      "cia": [
+        "I",
+        "A"
+      ],
+      "arisesFrom": [
+        "device",
+        "service"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-07",
+        "CFG-60"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A coding agent on a workstation reads a token it was not meant to have, takes a destructive or unrequested action with it, installs dependencies with no human looking, or is driven by malicious package code using its approval-skipping flags — or gives itself a capability nobody reviewed, by adding an MCP server or tool to its own configuration or by writing and starting a local server. It must run sandboxed as a non-administrator with no access to credential files, and no human identity holds write access in staging or production; its MCP servers and tools are set by configuration the organisation manages and it cannot change, and a server it starts for itself is unreachable from it (CFG-07). The sandbox is attested, not verified.",
+      "refs": [
+        "ASI02",
+        "ASI05",
+        "ASI10"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K1",
+      "asset": "model",
+      "title": "Model or version changed without re-evaluation",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-19",
+        "CFG-15",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A provider updates the model behind an alias, or code names a model directly, so agents run on a model their evaluations never saw.",
+      "refs": [
+        "LLM03:2025",
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K2",
+      "asset": "model",
+      "title": "Model unavailable or withdrawn by its provider",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-29",
+        "PRC-18"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The provider has an outage, deprecates the version or ends the agreement, and installations that depend on it stop.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "model.K3",
+      "asset": "model",
+      "title": "Model output reaches a downstream system or renderer unvalidated",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-66",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Output from the model is rendered, stored or executed by another component as if it were trusted, so injected content becomes script in a page, a query in a database or a command in a shell; a query the model wrote runs against real data with a wrong or destructive result; or output that is not in the structure its consumer expects makes the next step fail or misread it. When the model writes code that filters or aggregates data, the model never sees that data: a wrong filter, or a loop over pages that stops early, gives a confident wrong answer that the transcript cannot show. Nothing checks the logic of such code before its output is believed; the code's hash is to be recorded on the call that ran it, so a wrong answer can be traced.",
+      "refs": [
+        "LLM05:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K4",
+      "asset": "model",
+      "title": "Self-hosted model weights poisoned or backdoored",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Weights obtained from a model hub carry a backdoor or poisoned behaviour that evaluations do not trigger; a small, fixed number of poisoned training documents is enough to plant one. Dormant while self-hosting is prohibited.",
+      "refs": [
+        "LLM04:2025",
+        "AML.T0018",
+        "AML.T0010"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K5",
+      "asset": "model",
+      "title": "Model usage runs away or is made by someone else at our cost",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [
+        "agent",
+        "secret"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-38",
+        "CFG-65",
+        "CHK-44",
+        "CHK-49",
+        "CFG-73"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A recursive loop or abusive caller runs up usage, or a stolen provider credential is used to run and resell model calls on the organisation's account, and billing data arrives too late to show it. Each installation is capped and providers are reached by workload identity where they allow it; provider-reported usage is compared each night with what installations recorded (CHK-44), with its budget and usage source still to be set. A model the organisation hosts itself has no token bill: the same misuse shows as compute, which that check does not see. Capacity shared across installations is. Tool definitions are paid for on every model call, so a bundle with many servers costs more per turn for no work done; the definitions loaded at the start of a run are capped (CHK-49), and every call records how much of the window they take (CFG-73).",
+      "refs": [
+        "LLM10:2025",
+        "AML.T0029"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K6",
+      "asset": "model",
+      "title": "Model file executes code when loaded",
+      "cia": [
+        "I",
+        "C"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A model downloaded in an unsafe serialisation format runs code on the machine that loads it, and malformed files have passed a hub's own scanner. Dormant while self-hosting is prohibited; the supplier assessment is the only control until an inference workload is approved.",
+      "refs": [
+        "LLM03:2025",
+        "AML.T0010"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K7",
+      "asset": "model",
+      "title": "Model left to compute what should be computed deterministically",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A figure, a total, a date, a count or the result of a query is produced by the model's own reckoning where a tool or a query would have given the exact answer, and it is wrong in a way that looks right. Evaluations catch the cases someone wrote; no rule says which kinds of answer must come from a tool. An agent whose code aggregates tool results computes such figures in code rather than in the model, which helps here and moves the exposure to K3.",
+      "refs": [
+        "LLM09:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "model.K8",
+      "asset": "model",
+      "title": "Model used beyond its documented limits, or its limits were never documented",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "supplier",
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "CHK-04",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A model is put to a task, a language, a domain or a population it was not evaluated for, because its intended use and known limitations were never written down or nobody read them. The provider is assessed, an agent may reference only an approved model entry, and the agent's own evaluations test its task; the model entry does not record limitations.",
+      "refs": [
+        "LLM09:2025",
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "person.K1",
+      "asset": "person",
+      "title": "Account taken over by phishing or credential theft",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-59",
+        "CFG-63",
+        "CFG-49"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An attacker gains a person's account and acts with their access.",
+      "refs": [
+        "AML.T0012"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "person.K2",
+      "asset": "person",
+      "title": "Person keeps access after leaving or changing role",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-27",
+        "PRC-38",
+        "PRC-23"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A leaver's or mover's access is not removed when their role ends.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "person.K3",
+      "asset": "person",
+      "title": "One person both makes and approves a change",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-13",
+        "CFG-25",
+        "CFG-09",
+        "PRC-23",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The same person authors and approves a change or a promotion, so no second person looked. While the organisation has one person, independence cannot hold and the compensating controls are not independently verified, so the residual stays medium.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "person.K4",
+      "asset": "person",
+      "title": "Person acts on what an agent proposes or advises without examining it",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-12",
+        "CFG-42",
+        "PRC-12"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Confirmation prompts become routine and a person approves an irreversible action an agent proposes without reading it, or carries out a change an agent advised as if it had been reviewed. Review gates and awareness reduce this; they cannot make attention certain.",
+      "refs": [
+        "ASI09"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "person.K5",
+      "asset": "person",
+      "title": "Break-glass access misused",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-53",
+        "PRC-14"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Emergency access is granted to oneself, kept beyond the emergency or used for routine work. The one-business-day review of each use has no control of its own.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "person.K6",
+      "asset": "person",
+      "title": "Person mishandles data for lack of awareness",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-12"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person handles confidential data — in a prompt to an AI tool, a ticket, a shared file — without knowing its class or its rules.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "policy_rule.K1",
+      "asset": "policy_rule",
+      "title": "Policy rule loosened without review",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-08",
+        "CFG-09",
+        "PRC-04",
+        "CFG-21"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A rule is widened — a new tool, a broader parameter, a write effect — without security review, and agents gain authority nobody approved.",
+      "refs": [
+        "ASI02",
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "policy_rule.K2",
+      "asset": "policy_rule",
+      "title": "Tool guard bypassed so rules do not apply",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-10",
+        "CFG-40",
+        "CHK-11",
+        "CHK-50"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A runtime calls tools by a path that skips the guard, or a restriction exists only as an instruction to the model, so the rules are in force on paper only. Where a tool runs agent code against another system, the guard sees one call while many operations happen inside it, so rules written per operation never apply; and a provider's setting for which tools code may call is guidance to the model, not a boundary. Such a tool is allowlisted only if every operation its code performs comes to the guard as a call of its own, or its credential can only read (CHK-50); and the guard decides calls from code against its own record of which tools code may call (CFG-40).",
+      "refs": [
+        "ASI02"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "policy_rule.K3",
+      "asset": "policy_rule",
+      "title": "Runtime rules out of step with Git",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-21",
+        "CFG-15",
+        "CFG-62"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The rules a harness loads differ from the reviewed rules in Git, because the registry table was written outside CI.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "policy_rule.K4",
+      "asset": "policy_rule",
+      "title": "Conflicting rules resolved the permissive way",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-40",
+        "CHK-45"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Two rules apply to one tool call and the guard evaluates them in an order that lets an allow override a deny. CFG-40 Clause.5 makes a denial by any applicable rule final, whatever the order, and CHK-45 tests it; neither is built, so the residual is unchanged. The Standard does not yet state the rule, and no check exercises the guard's egress target decision.",
+      "refs": [
+        "ASI02"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "principal.K1",
+      "asset": "principal",
+      "title": "Principal shared so one installation acts with another's access",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-02",
+        "CHK-40",
+        "CFG-11"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Two installations share a principal, or a binding is created outside the installation module, so one inherits the other's access.",
+      "refs": [
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "principal.K2",
+      "asset": "principal",
+      "title": "Principal holds more permission than needed",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-11",
+        "CHK-30",
+        "PRC-21",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A principal is granted broad roles for convenience, or an installation is left on the platform's default service account, so a compromised installation reaches far beyond its purpose.",
+      "refs": [
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "prompt.K1",
+      "asset": "prompt",
+      "title": "Prompt changed without review",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-08",
+        "CFG-09",
+        "CFG-13",
+        "CFG-16",
+        "CFG-62"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent file or fragment is changed and released without a reviewed pull request, by mistake or by a compromised account.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "prompt.K2",
+      "asset": "prompt",
+      "title": "Prompt extracted and found to hold secrets or internal detail",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "end_user",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-16",
+        "CHK-29"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A caller coaxes the agent into revealing its prompt. A prompt can always be extracted; the harm is limited to what it contains, so nothing secret may be in it.",
+      "refs": [
+        "LLM07:2025",
+        "AML.T0056"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "prompt.K3",
+      "asset": "prompt",
+      "title": "Prompt missing a required section",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-19",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent file ships without a required section — scope, refusals, escalation — so the agent has no stated limit for that case.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "prompt.K4",
+      "asset": "prompt",
+      "title": "Shared fragment change alters agents untested",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-15",
+        "CFG-15",
+        "CHK-09"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A change to a fragment many agents include alters every one of them, and only the agent whose pull request changed it is evaluated.",
+      "refs": [
+        "ASI08"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "resource.K1",
+      "asset": "resource",
+      "title": "Resource created outside infrastructure code",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-36",
+        "CFG-60",
+        "CFG-47"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person creates or edits a resource in the console, outside review, and it drifts from what code says.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "resource.K2",
+      "asset": "resource",
+      "title": "Infrastructure state read or changed outside the pipeline",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-64"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Terraform state, which holds resource details and sometimes secrets, is read or rewritten by a person or a tool other than the pipeline.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "resource.K3",
+      "asset": "resource",
+      "title": "Insecure configuration applied",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-30",
+        "CFG-20"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A plan opens a bucket, a port or a role wider than the rules allow, and is applied.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "resource.K4",
+      "asset": "resource",
+      "title": "Unlabelled resource escapes ownership and deletion",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-33",
+        "CHK-37"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A resource without labels is missed by cost, review and tenant exit.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "resource.K5",
+      "asset": "resource",
+      "title": "CI workflow compromised through broad permissions or unpinned actions",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "service"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-35",
+        "CFG-56"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A workflow runs a third-party action by a moving tag, or with write permissions it does not need, and a compromised action takes over the pipeline.",
+      "refs": [
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "resource.K6",
+      "asset": "resource",
+      "title": "Repository settings weakened",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-27",
+        "CFG-03"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Branch protection, required reviews or secret scanning are switched off on a repository.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K1",
+      "asset": "secret",
+      "title": "Secret committed to a repository or built into an image",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 3,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-29",
+        "CHK-16",
+        "CFG-05"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A developer or agent writes a secret into code, configuration, a prompt, an MCP or IDE configuration file, or an image, and it is pushed or built.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K2",
+      "asset": "secret",
+      "title": "Exposed secret not revoked in time",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-22",
+        "CFG-51"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A secret is known to be exposed but stays valid while people find where it is used. A leaked cloud key has been taken to full administrator in under ten minutes, which is why an exposed secret is revoked within one hour and rotated within a day (PRC-22).",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K3",
+      "asset": "secret",
+      "title": "Secret readable by another installation's principal",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "principal"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-04",
+        "CHK-17",
+        "CFG-50"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A secret's access policy lets more than its installation's principal read it.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K4",
+      "asset": "secret",
+      "title": "Static provider key used where workload identity is possible",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-65"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A long-lived API key is used to reach a provider that accepts workload identity, adding a secret that can leak.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K5",
+      "asset": "secret",
+      "title": "Missing or expired secret stops an installation",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "low",
+        "likelihood": 2,
+        "impact": 1
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-17",
+        "CFG-51"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A secret expires or is missing at deploy, and the installation fails.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K6",
+      "asset": "secret",
+      "title": "Secret pasted into an AI tool, chat, ticket or record outside the secret store",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-12"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A person pastes a key, token or password into an AI assistant, a chat, a support case or a note, where it sits outside rotation and is harvested when that system or its supplier is breached. CP30 30.10 forbids it and awareness covers it; secret detection runs on repositories and bundles only, so nothing finds a secret in a ticket or a third-party record.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "secret.K7",
+      "asset": "secret",
+      "title": "Secret repeated in an agent's response",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-32",
+        "CFG-66",
+        "PRC-22"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A credential reaches the agent's context — in a tool result, a retrieved document or a message — and the model repeats it in a response, since a model does not reliably hold such values back; the caller, or whoever the response is passed to, can then use it against the system it opens. Secret-shaped values are redacted from every item of external content before the model sees it (CFG-32) and masked in every response, never less strictly (CFG-66). A `secret` match also raises an alert, so that the exposure is confirmed or dismissed, and a confirmed one is revoked within the hour (CFG-66; PRC-22): the value was in the model's context, and so possibly with its provider, even when the response was masked. Both screens recognise the shapes they hold and no others. The inherent impact rests on one credential reaching several tenants' data.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": [
+        {
+          "id": "secret.K7.S1",
+          "title": "A credential from a tool result or document is repeated",
+          "origin": "AWS Agentic AI Lens AGENTSEC08-BP02",
+          "observed": null,
+          "controls": [
+            "CFG-32",
+            "CFG-66",
+            "PRC-22"
+          ],
+          "text": "A key in a tool output or a retrieved file is redacted on the way in; one that slips past is masked on the way out, and the match starts its confirmation and revocation."
+        },
+        {
+          "id": "secret.K7.S2",
+          "title": "A credential in a format no pattern holds",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [],
+          "text": "A new or custom key format passes both screens and reaches the caller, and since nothing recognised it, nothing starts its revocation. Nothing covers this; the patterns are those of collector rule 2a (the Standard)."
+        }
+      ]
+    },
+    {
+      "id": "service.K1",
+      "asset": "service",
+      "title": "Malicious, typosquatted or hallucinated package, extension or plugin installed",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "agent",
+        "integration"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-06",
+        "CFG-06",
+        "CFG-12",
+        "CHK-24",
+        "CHK-52"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A developer, a build or a coding agent adds a package, IDE extension or agent plugin that is malicious, typosquatted, freshly hijacked, swapped behind its pin, or registered under a name an AI tool invented — and its install script or code runs. A coding agent that resolves and installs dependencies itself removes the point at which a person would have noticed. Code an agent runs in a sandbox could also install a package at run time, outside the lockfile and the package registry, if the sandbox could reach a package index; no sandbox profile may name one (CHK-52).",
+      "refs": [
+        "LLM03:2025",
+        "ASI04",
+        "AML.T0010"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "service.K2",
+      "asset": "service",
+      "title": "Known-vulnerable dependency shipped",
+      "cia": [
+        "I",
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-38",
+        "PRC-25",
+        "CFG-22"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A dependency, library or framework with a published vulnerability is built into a bundle or image and stays there past its service level.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "service.K3",
+      "asset": "service",
+      "title": "Dependency outage takes installations down",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-29",
+        "PRC-18"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A hosted service the platform depends on fails — the cloud region or control plane itself included, with dependencies on it that nobody listed — and installations stop rather than degrade as declared.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "service.K4",
+      "asset": "service",
+      "title": "MCP server changed after approval",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-06",
+        "CFG-24",
+        "CHK-25",
+        "CHK-50"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An MCP server's code or tool descriptions change after it was approved — a new version, a rug pull, hidden instructions in a description — and agents use it as before. The patterns that detect hidden instructions are a first version and untested against a corpus. A server that runs agent code against its provider's API keeps the same tool definition while the provider adds operations behind it, so the definition hash sees nothing; some providers' MCP gateways turn this mode on by default. Such a tool must declare the highest effect its code can reach, and be mediated per operation or able only to read (CHK-50).",
+      "refs": [
+        "ASI04",
+        "LLM03:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "service.K5",
+      "asset": "service",
+      "title": "Hosted service's AI or agent features active on defaults nobody reviewed",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "PRC-24"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A service the organisation uses — the Git host, a workspace suite, a ticketing tool — ships an AI or agent feature switched on by default, with autonomous execution or broad data access the customer never assessed, and its supplier treats hardening as the customer's job. The supplier assessment asks which such features are on and what they reach, and the quarterly threat-intelligence review catches a feature added later; the assessment questionnaire is still to be written. A model provider's code-execution feature is one such: it can keep data on terms that differ from the provider's model API, and each one is registered and assessed as a service of its own before it is first used.",
+      "refs": [
+        "ASI03",
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "signing_identity.K1",
+      "asset": "signing_identity",
+      "title": "Signing key stolen and used to sign a malicious bundle",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-17",
+        "PRC-22",
+        "CFG-54"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An attacker obtains the signing identity and signs a bundle that every loader then trusts. Revocation and immutable storage limit the window; a valid signature is still accepted until revoked.",
+      "refs": [
+        "ASI04",
+        "AML.T0010"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "signing_identity.K2",
+      "asset": "signing_identity",
+      "title": "Release-branch commit by an unverified signer",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-14",
+        "CFG-08",
+        "PRC-35"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A commit on the release branch is unsigned or signed by someone not on the known list.",
+      "refs": [],
+      "scenarios": [
+        {
+          "id": "signing_identity.K2.S1",
+          "title": "An unsigned commit reaches the release branch",
+          "origin": "the risk's first text",
+          "observed": "2026-11-23",
+          "controls": [
+            "CFG-14",
+            "CFG-08"
+          ],
+          "text": "A commit with no signature is pushed or merged to the release branch. Observed while this repository's first commit was being prepared: it was first made with no signature, before any signing key existed on the workstation, and was made again, signed, before anything was pushed."
+        },
+        {
+          "id": "signing_identity.K2.S2",
+          "title": "A commit is signed by a key not bound to a known person",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-14"
+          ],
+          "text": "The signature is valid, but its key belongs to nobody in the ownership file."
+        },
+        {
+          "id": "signing_identity.K2.S3",
+          "title": "A commit's author name or email is not tied to its signer",
+          "origin": "this repository's first commit",
+          "observed": "2026-11-23",
+          "controls": [
+            "PRC-35"
+          ],
+          "text": "The author name and email on a commit are whatever the workstation's Git configuration says. Observed while this repository's first commit was being prepared: the configured name was malformed, and nothing checked that the email was verified on the Git host or matched the person's record. CFG-14 binds the key to a person and says nothing about the author fields. PRC-35 has each person's Git host account show as unverified any commit in their name that no key of theirs signed; that warns a reader and refuses nothing. The contract for the author fields, and a check that refuses a mismatch, are."
+        },
+        {
+          "id": "signing_identity.K2.S4",
+          "title": "A repository's first commit lands before any protection exists",
+          "origin": "this repository's first commit",
+          "observed": "2026-11-23",
+          "controls": [
+            "CFG-14"
+          ],
+          "text": "The first commit cannot arrive by pull request, and the required-signatures setting does not exist until the repository does, so nothing can refuse it. Observed on this repository's first commit, which held the whole tree, was signed by the owner and was pushed directly. The *First commit* exception of CP02 admits a first commit on those terms. CFG-14 cannot refuse an unsigned first commit, but finds one afterwards: its verification reads every commit on the release branch."
+        }
+      ]
+    },
+    {
+      "id": "signing_identity.K3",
+      "asset": "signing_identity",
+      "title": "Signature verification skipped at load",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-30",
+        "CFG-17"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A runtime loads a bundle by a path that does not verify its signature.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "skill.K1",
+      "asset": "skill",
+      "title": "Skill carries an unapproved script",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "supplier"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-23",
+        "CHK-05",
+        "CFG-17"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A skill imported from a supplier or a public marketplace, or written in a hurry, includes a script that was never approved, and the agent can run it.",
+      "refs": [
+        "LLM03:2025",
+        "ASI04",
+        "ASI05"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "skill.K2",
+      "asset": "skill",
+      "title": "Skill instructions carry hidden instructions",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "supplier"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-05",
+        "CHK-15",
+        "CFG-08",
+        "CHK-25"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A third-party skill's text contains instructions a reviewer misses — invisible characters, an innocuous-looking line — that steer the agent once loaded. Skill text is scanned with the same pattern classes as MCP tool descriptions (CHK-25); wiring the scan to CP07 and realising it are.",
+      "refs": [
+        "LLM01:2025",
+        "ASI01",
+        "ASI04"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "skill.K3",
+      "asset": "skill",
+      "title": "Skill used by an agent not approved for it",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-04"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent references a skill approved only for other agents or other classifications.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "source.K1",
+      "asset": "source",
+      "title": "Source used beyond its approved classification or terms",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-04",
+        "CHK-07"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent retrieves from a source not approved for its classification, sends it queries the source's terms do not permit, or reproduces its content in an answer without the right to — copyright or a licence the organisation does not hold.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "source.K2",
+      "asset": "source",
+      "title": "Source unavailable or stale",
+      "cia": [
+        "A",
+        "I"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "low",
+        "likelihood": 2,
+        "impact": 1
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-29"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A source fails or serves outdated content, and installations answer from it as if it were current.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "source.K3",
+      "asset": "source",
+      "title": "Source permissions looser than intended, and retrieval makes the content findable",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-32",
+        "PRC-23"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The agent respects the source's permissions and still discloses, because years of loose sharing — stale guests, permissions of people who left, anyone-with-the-link shares, groups wider than intended — were never cleaned, and retrieval turns what was merely reachable into what is easily found. The source's sharing settings are reviewed before its entry is approved (PRC-32); where the review's date is recorded on the entry is.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "supplier.K1",
+      "asset": "supplier",
+      "title": "Supplier used before assessment or after it lapses",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "CHK-18",
+        "CHK-04"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A service from an unassessed supplier is referenced by an agent or installation, or a supplier's re-assessment falls overdue while it stays in use.",
+      "refs": [
+        "ASI04"
+      ],
+      "scenarios": [
+        {
+          "id": "supplier.K1.S1",
+          "title": "A model is approved before its supplier is assessed",
+          "origin": "owner's decision of 2026-11-23",
+          "observed": "2026-11-23",
+          "controls": [],
+          "text": "A model entry is given `status: approved` while its provider has no supplier entry, no service entry and no assessment, so its ceiling and regions rest on nothing. Observed on 2026-11-23: the owner approved `claude-opus-5-5` for `agent-builder` by decision, ahead of the assessment CP18 18.2 requires. No control covers an approval the owner makes by decision; the assessment is."
+        }
+      ]
+    },
+    {
+      "id": "supplier.K2",
+      "asset": "supplier",
+      "title": "Exited supplier keeps access or data",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-28"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "After an agreement ends, the supplier keeps credentials, integrations or a copy of our data.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "supplier.K3",
+      "asset": "supplier",
+      "title": "Breach at a supplier exposes data processed there",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "PRC-24"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A supplier is breached — through a flaw in its hosted service, an exposed database, a default credential on its console, or a sub-processor such as an analytics provider — and data we sent it is exposed. Assessment chooses suppliers and threat intelligence re-rates them; neither prevents the breach, so the impact stays.",
+      "refs": [
+        "LLM03:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "supplier.K4",
+      "asset": "supplier",
+      "title": "Breach at a supplier hands the attacker our credentials or grants",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "integration",
+        "secret"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-22",
+        "PRC-22",
+        "PRC-24",
+        "CFG-65"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A supplier that holds OAuth tokens, API keys or session access for us is breached — often through one employee's infected device — and the attacker uses what it held to reach our repositories, workspace or cloud, at the same time as every other customer's. The harm is bounded by how narrow each grant is and how fast it is revoked: grants are reconciled, an exposed credential is revoked under the incident path, workload identity leaves fewer keys to steal, and threat intelligence can show a supplier's exposure before we are reached. None prevents the breach, so the impact stays.",
+      "refs": [
+        "ASI03",
+        "ASI04",
+        "LLM03:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "supplier.K5",
+      "asset": "supplier",
+      "title": "A supplier keeps what we send it, or trains its models on it",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "model",
+        "integration"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-02",
+        "CHK-07"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The provider of a closed-source model, or of an AI tool built on one, keeps the prompts, documents and tool results sent to it and uses them to train or improve its models, so that our content, or a tenant's, may later surface to other customers and cannot be recalled. We cannot inspect a closed-source model or its training data, so the only assurance is the provider's terms. Those terms differ between a provider's plans, a consumer plan may allow training where a commercial agreement forbids it, and a setting or a default can change by notice. The supplier's data handling and the AI features switched on by its default are assessed before approval and again when its terms change, and an agent cannot use a model or service below its classification; nothing checks what the provider does with the data. Personal data sent to a provider is `dataset.K8`.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": [
+        {
+          "id": "supplier.K5.S1",
+          "title": "The organisation's own documents are sent to a model provider before its terms are assessed",
+          "origin": "owner's instruction of 2026-11-23",
+          "observed": "2026-11-23",
+          "controls": [
+            "PRC-02"
+          ],
+          "text": "The governing documents of this repository are read by a coding agent, and so sent to its model's provider, through a tool whose supplier and service have no registry entry and no assessment. Observed in this repository from its first commit: the agent `ceo-consultant` runs on a model whose entry is `proposed`. The owner stated on 2026-11-23 that the tool runs under the provider's Max plan, a consumer plan, with the setting that allows training on the account's data switched off. That is the owner's word about a setting only the account holder can see, and it rests on a consumer plan's terms, not on a commercial agreement. The assessment that would confirm it has not been done."
+        }
+      ]
+    },
+    {
+      "id": "tenant.K1",
+      "asset": "tenant",
+      "title": "Another tenant's data read through a shared component",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-21",
+        "CFG-02",
+        "CHK-40",
+        "CFG-39"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation serving one tenant reads another tenant's data through a store, retrieval index, cache, principal or tool that serves both — directly, or because injected content steers the agent to query it — or through a sandbox a model provider runs for agent code, reused from another tenant's run with that run's files still in it. Isolation is enforced by principal separation and tested through every tool and source at each release, and a sandbox a supplier operates serves one run only (CFG-39); nothing in the catalogue watches for a cross-tenant read at run time, and the Standard's evaluations have no case kind for isolation yet. The Risk Owner decides at review whether release-time testing is enough.",
+      "refs": [
+        "LLM08:2025",
+        "LLM02:2025",
+        "AML.T0057",
+        "AML.T0051.001",
+        "ASI03"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K2",
+      "asset": "tenant",
+      "title": "Tenant data processed above its contracted ceiling",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person",
+        "supplier"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-07",
+        "PRC-03",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation for the tenant uses a model, supplier, service or source whose ceiling is below the classification of the tenant's data, or the tenant entry's ceiling is raised beyond what the signed agreement permits. A model provider's code-execution feature can hold tool results on terms that differ from its model API — for one provider, up to 30 days and outside zero data retention — so using it under the API's entry and ceiling misstates both; each such feature is its own service entry before it is first used.",
+      "refs": [
+        "LLM02:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K3",
+      "asset": "tenant",
+      "title": "Tenant data processed outside its permitted regions",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "supplier",
+        "service"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-30",
+        "PRC-03",
+        "PRC-02",
+        "CHK-42"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A model, supplier or retrieval source attached to one of the tenant's installations processes data in a region the agreement does not permit — attached after onboarding, or moved by its provider. CHK-30 checks regions for resources in the infrastructure plan and PRC-03 runs once, before the first installation; the region of every component an installation references is compared with the tenant's permitted regions on each pull request (CHK-42). Realising that check is; a provider that moves its processing without changing its entry is caught only at re-assessment. A provider's code-execution feature may process and keep data in regions its model API does not, and is not visible to that check until it has an entry of its own, which it gets before it is first used.",
+      "refs": [
+        "contractual"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K4",
+      "asset": "tenant",
+      "title": "Tenant data left behind after exit",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-29",
+        "CFG-01",
+        "CHK-33",
+        "CHK-43"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "After the tenant exits, its data remains in a store — a backup, retrieval index, checkpoint, control record partition or secret — beyond the agreed period, or is not returned. PRC-29 attests the deletion, and after the exit period a check confirms that nothing labelled with the tenant's id remains (CHK-43); realising it is. Data that was never labelled is outside what the check can see.",
+      "refs": [
+        "contractual"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K5",
+      "asset": "tenant",
+      "title": "Tenant not told of an incident within its agreed period",
+      "cia": [],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "PRC-14"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An incident affecting the tenant's data is contained and recorded, but the tenant is notified late or not at all, against `notification_hours` on its entry.",
+      "refs": [
+        "contractual",
+        "regulatory"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K6",
+      "asset": "tenant",
+      "title": "One tenant's load degrades service for others",
+      "cia": [
+        "A"
+      ],
+      "arisesFrom": [
+        "agent",
+        "end_user"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-38"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An installation's usage — a runaway loop, a flood of requests, expensive queries — exhausts capacity other tenants share. CFG-38 caps each installation; capacity shared across installations, such as the organisation's quota at a model provider, is capped by nothing.",
+      "refs": [
+        "LLM10:2025",
+        "AML.T0029"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K7",
+      "asset": "tenant",
+      "title": "Tenant entry changed without authority",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-08",
+        "CFG-09",
+        "CHK-39",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The tenant entry — ceiling, permitted regions, notification hours — is altered without the agreement changing, by mistake or by a compromised account, so every check that reads it passes on wrong values.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "tenant.K8",
+      "asset": "tenant",
+      "title": "Activity attributed to the wrong tenant",
+      "cia": [
+        "I",
+        "C"
+      ],
+      "arisesFrom": [
+        "workload"
+      ],
+      "inherent": {
+        "level": "medium",
+        "likelihood": 2,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-02",
+        "CFG-43",
+        "PRC-21",
+        "CHK-10",
+        "CHK-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Signals or audit rows from installations that share a container carry the wrong installation, so the control records given to the tenant are incomplete or include another tenant's activity, and exit deletion misses rows. CP10 10.5 requires the per-request binding; the smoke run now tests it on a shared container (CHK-10), beside the quarterly review. Wiring the clause to 10.5 and realising it are.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "vocab.K1",
+      "asset": "vocab",
+      "title": "Vocabulary term changed or removed while in use",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-39",
+        "CFG-21",
+        "CHK-03",
+        "CHK-04"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A term is renamed or deleted, breaking the names, dashboards and policies derived from it.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "vocab.K2",
+      "asset": "vocab",
+      "title": "Duplicate or conflicting vocabulary terms",
+      "cia": [
+        "I"
+      ],
+      "arisesFrom": [
+        "person"
+      ],
+      "inherent": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-32",
+        "CHK-01"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Two terms mean the same thing, or one term two things, so names derived from them stop carrying meaning.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K1",
+      "asset": "workload",
+      "title": "Host compromised by code an agent runs",
+      "cia": [
+        "I",
+        "C"
+      ],
+      "arisesFrom": [
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-39",
+        "CFG-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An agent generates or fetches code and runs it — through a code tool, a skill script or unvalidated output passed to an interpreter — and the code reaches the host, its credentials, the cluster or its network, or leaves the sandbox through the one route it was allowed. The control restrains the agent; the asset it protects is the workload. The sandbox runtime is not yet chosen.",
+      "refs": [
+        "ASI05",
+        "LLM05:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K2",
+      "asset": "workload",
+      "title": "Workload endpoint accepts unauthenticated or malformed requests",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-23",
+        "CFG-35",
+        "CFG-34"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "An endpoint — an inference server, a gateway, an agent's operations stream, a store behind it — serves a request with no valid identity, or with input outside its schema, and acts on it.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K3",
+      "asset": "workload",
+      "title": "Workload fetches internal or metadata addresses",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "agent",
+        "ingress"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-37",
+        "CFG-36"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A URL the agent is given or builds points at a private range or the cloud metadata service, and the workload fetches it.",
+      "refs": [
+        "ASI02"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K4",
+      "asset": "workload",
+      "title": "Error responses reveal internal detail",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [
+        "end_user"
+      ],
+      "inherent": {
+        "level": "low",
+        "likelihood": 2,
+        "impact": 1
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-44"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Stack traces, paths or configuration in error responses help an attacker plan the next step.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K5",
+      "asset": "workload",
+      "title": "Released image's base or operating system carries a known vulnerability",
+      "cia": [
+        "C",
+        "I",
+        "A"
+      ],
+      "arisesFrom": [
+        "service"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-38",
+        "PRC-25"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A workload image ships on a base image, operating-system package or runtime with a known exploitable vulnerability, or keeps one past its service level. A vulnerable dependency or library built into the image is `service.K2`; the same nightly match finds both.",
+      "refs": [
+        "LLM03:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K6",
+      "asset": "workload",
+      "title": "Telemetry bypasses the governed collector",
+      "cia": [
+        "C"
+      ],
+      "arisesFrom": [],
+      "inherent": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 2
+      },
+      "residual": {
+        "level": "low",
+        "likelihood": 1,
+        "impact": 1
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-43",
+        "CFG-31"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "A workload exports telemetry directly to a vendor, so masking and capture rules are not applied.",
+      "refs": [],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K7",
+      "asset": "workload",
+      "title": "First-party code ships with an exploitable flaw",
+      "cia": [
+        "C",
+        "I"
+      ],
+      "arisesFrom": [
+        "person",
+        "agent"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CHK-31",
+        "PRC-04",
+        "PRC-11"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "Code the organisation wrote — much of it produced by an AI assistant — is merged with an injection, access-control or validation flaw that no dependency scan would find. Lint and type checks run on every pull request, security-relevant changes are reviewed against a checklist and confidential installations are adversarially tested; static analysis starts only at its trigger, and rule suppressions are left to reviewer judgement, with CP27 27.7 declared `unenforced` until the linter can list them.",
+      "refs": [
+        "LLM05:2025"
+      ],
+      "scenarios": []
+    },
+    {
+      "id": "workload.K8",
+      "asset": "workload",
+      "title": "A safety layer fails, is bypassed or fails open, and nothing stands behind it",
+      "cia": [
+        "I",
+        "A"
+      ],
+      "arisesFrom": [
+        "service"
+      ],
+      "inherent": {
+        "level": "high",
+        "likelihood": 2,
+        "impact": 3
+      },
+      "residual": {
+        "level": "medium",
+        "likelihood": 1,
+        "impact": 3
+      },
+      "treatment": "mitigate",
+      "controls": [
+        "CFG-29",
+        "PRC-18",
+        "CHK-20",
+        "CFG-66",
+        "CHK-23",
+        "CHK-15"
+      ],
+      "decision": null,
+      "owner": "CEO",
+      "text": "The context screen or the response guardrails are unavailable, time out, are skipped by a code path, or miss a case, and the request goes through unscreened because that layer was the only one. A model's own refusals are not a second layer, because a guardrail acts outside the model. The response screen is the only exit for a response and for model output a workload returns (CFG-66); a guardrail that cannot return a result withholds what it was screening, and `degrade` reaches only a guardrail whose action is `log` (CFG-66). Each installation declares what it does when a component is down and the declared behaviours are exercised each year; content enters through a single screening point by design, so input screening has no second layer.",
+      "refs": [
+        "LLM01:2025"
+      ],
+      "scenarios": [
+        {
+          "id": "workload.K8.S1",
+          "title": "A screening layer is unavailable and the content passes",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-29",
+            "CFG-66",
+            "PRC-18"
+          ],
+          "text": "The screen or a guardrail is down, slowed by a flood of long messages, or returns an error that the calling code reads as \"no match\", and the content passes unscreened. An undeclared failure stops the run (CFG-29), a guardrail that cannot answer withholds the response (CFG-66), and the declared behaviours are triggered once a year (PRC-18). A custom pattern slow enough to stall its guardrail fails the same way and is withheld."
+        },
+        {
+          "id": "workload.K8.S2",
+          "title": "A code path skips the layer",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CHK-20"
+          ],
+          "text": "A response or a user message reaches its destination by a path that never calls the screen. The response screen is the only exit for a response (CFG-66), and the input screen is exercised on every declared channel (CHK-20)."
+        },
+        {
+          "id": "workload.K8.S3",
+          "title": "The layer misses a case and nothing stands behind it",
+          "origin": "the risk's first text",
+          "observed": null,
+          "controls": [
+            "CHK-20"
+          ],
+          "text": "The screen runs and does not recognise the content. On input there is no second layer by design; what limits the harm is held under the risk the missed content causes (`agent.K1`, `end_user.K3`, `dataset.K1`)."
+        },
+        {
+          "id": "workload.K8.S4",
+          "title": "A response is streamed to the caller before the guardrails have screened it",
+          "origin": "AWS Agentic AI Lens AGENTPERF02-BP04, AGENTSUS02-BP03",
+          "observed": null,
+          "controls": [
+            "CFG-66"
+          ],
+          "text": "To shorten the wait for the first words, a response is sent as it is generated, and harmful content, a secret or personal data is on the caller's screen before a guardrail that judges the whole response can mask or block it; cutting the response off afterwards does not undo what was seen. Every response passes every guardrail before it is returned (CFG-66), which rules streaming out until a guardrail can screen a response in parts."
+        },
+        {
+          "id": "workload.K8.S5",
+          "title": "A response leaves by a route other than the response screen",
+          "origin": "AWS Agentic AI Lens AGENTCOST02-BP03, AGENTSUS02-BP02",
+          "observed": null,
+          "controls": [
+            "CFG-66",
+            "CHK-23"
+          ],
+          "text": "A response cache returns a stored answer for a similar request, screened under another installation's settings or not at all, or a workload other than the harness — an internal server, a summariser — calls a model and returns its output to its caller directly. The screen applies to every workload that returns model output (CFG-66), and before each promotion every such workload whose Principal holds a grant on a model provider is probed in `staging` for a masked reply (CHK-23). A response cache placed before the screen is covered by it; how a cache behind it would be screened is still open. A cache shared between tenants is also `tenant.K1`."
+        },
+        {
+          "id": "workload.K8.S6",
+          "title": "The detector behind a guardrail changes and its threshold no longer means what was approved",
+          "origin": "CP32 risk discovery, 2026-11-27",
+          "observed": null,
+          "controls": [
+            "CHK-15"
+          ],
+          "text": "The supplier of a classifier updates its model or scoring, and the threshold recorded for an installation now lets more through or blocks more, with nothing changed on our side. Each enabled guardrail's evaluation case finds the change at the next release (CHK-15); nothing finds it between releases. How each guardrail detects, and so whether a supplier's model sits behind it, is still open."
+        }
+      ]
+    }
+  ]
+}

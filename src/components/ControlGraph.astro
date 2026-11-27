@@ -1,0 +1,144 @@
+---
+// The interactive 3D control graph (src/lib/graph-view.ts), drawn from the ai-governance repo's
+// Control Graph (`npm run extract:graph`, served at /governance/graph.json). Each layer sits on
+// its own shell: assets at the centre, then policies, subjects, controls and risks outside.
+// `focus` picks the layers to bring forward (and `focusLinks` the links to animate); a page can
+// also change it by dispatching `cg:focus` on the element.
+import graph from '../data/graph.json';
+
+interface Props {
+  layers?: string[];
+  focus?: string[];
+  focusLinks?: string[];
+  legend?: boolean;
+  offset?: number; // shift the centre right by this share of the width, on wide screens
+  class?: string;
+}
+const ALL = ['asset_class', 'control_policy', 'governance_subject', 'control', 'risk'];
+const { layers = ALL, focus, focusLinks, legend = true, offset, class: className } = Astro.props;
+const { counts } = graph;
+const LEGEND = [
+  { type: 'control_policy', label: 'Policies', count: counts.policies },
+  { type: 'governance_subject', label: 'Governance subjects', count: counts.subjects },
+  { type: 'control', label: 'Controls', count: counts.controls },
+  { type: 'asset_class', label: 'Assets', count: counts.assets },
+  { type: 'risk', label: 'Risks', count: counts.risks },
+].filter((l) => layers.includes(l.type));
+---
+<div
+  class:list={['cg', className]}
+  data-control-graph
+  data-layers={layers.join(',')}
+  data-focus={focus?.join(',')}
+  data-focus-links={focusLinks?.join(',')}
+  data-offset={offset}
+>
+  {legend && (
+    <div class="cg-legend" role="group" aria-label="Show or hide layers">
+      {LEGEND.map((l) => (
+        <button type="button" class="cg-key" aria-pressed="true" data-type={l.type}>
+          <span class={`swatch swatch-${l.type}`} aria-hidden="true"></span>
+          {l.label} <span class="n">{l.count}</span>
+        </button>
+      ))}
+    </div>
+  )}
+  <div class="cg-stage">
+    <div class="cg-canvas" aria-hidden="true"></div>
+    <p class="cg-status">Loading the graph…</p>
+    <div class="cg-mini" aria-hidden="true"></div>
+    <div class="cg-tip" hidden></div>
+    <button type="button" class="cg-tap" hidden>Tap to explore the graph</button>
+  </div>
+</div>
+
+<script>
+  // Load the 3D library only when a graph scrolls into view.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        const root = entry.target as HTMLElement;
+        import('../lib/graph-view')
+          .then(({ mountGraph }) => mountGraph(root))
+          .catch(() => (root.querySelector('.cg-status')!.textContent = "The graph couldn't load. Try refreshing the page."));
+      }
+    },
+    { rootMargin: '300px' },
+  );
+  document.querySelectorAll<HTMLElement>('[data-control-graph]').forEach((el) => observer.observe(el));
+</script>
+
+<style>
+  .cg { display: flex; flex-direction: column; min-height: 0; background: var(--bg); color: var(--text); }
+  .cg-legend { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.8rem 1rem; }
+  .cg-key {
+    display: inline-flex; align-items: center; gap: 0.45rem; font: inherit; font-size: 0.84rem; cursor: pointer;
+    padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text);
+    transition: opacity 0.15s, border-color 0.15s;
+  }
+  .cg-key:hover { border-color: var(--accent); }
+  .cg-key[aria-pressed='false'] { opacity: 0.45; }
+  .cg-key[aria-pressed='false'] .swatch { background: transparent !important; }
+  .cg-key .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .swatch { width: 0.7rem; height: 0.7rem; border-radius: 50%; border: 2px solid var(--swatch); background: var(--swatch); }
+  .swatch-control_policy { --swatch: var(--text); width: 0.9rem; height: 0.9rem; }
+  .swatch-governance_subject { --swatch: var(--g-subject); }
+  /* Controls are shields. */
+  .swatch-control { --swatch: var(--g-control); border: 0; border-radius: 0; width: 0.75rem; height: 0.85rem; clip-path: polygon(50% 0, 100% 16%, 100% 52%, 50% 100%, 0 52%, 0 16%); }
+  .swatch-asset_class { --swatch: var(--g-asset); }
+  /* Risks are red warning signs. */
+  .swatch-risk {
+    border: 0; border-radius: 0; width: 0.85rem; height: 0.78rem; position: relative;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    background: var(--risk-high);
+  }
+  .swatch-risk::after {
+    content: '!'; position: absolute; inset: 0; display: grid; place-items: end center;
+    font: 800 0.55rem/1 system-ui, sans-serif; color: #16090a; padding-bottom: 0.02rem;
+  }
+
+  .cg-stage { position: relative; flex: 1; min-height: 20rem; overflow: hidden; }
+  .cg-stage [hidden] { display: none !important; }
+  .cg-canvas { position: absolute; top: 0; bottom: 0; left: 0; width: 100%; cursor: grab; }
+  .cg-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--muted); }
+  .cg-tip {
+    position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; max-width: 19rem;
+    display: grid; gap: 0.15rem; padding: 0.65rem 0.8rem; border-radius: 10px;
+    background: var(--text); color: var(--bg); font-size: 0.85rem; line-height: 1.4;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+  }
+  .cg-tip :global(.tip-type) { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.7; }
+  .cg-tip :global(.tip-id) { font: 600 0.75rem ui-monospace, Menlo, monospace; opacity: 0.8; }
+  .cg-tip :global(.tip-level) { font-size: 0.75rem; font-weight: 600; }
+  .cg-tip :global(.tip-level)::before { content: '●'; margin-right: 0.3rem; }
+  .cg-tip :global(.tip-high)::before { color: var(--risk-high); }
+  .cg-tip :global(.tip-medium)::before { color: var(--risk-medium); }
+  .cg-tip :global(.tip-low)::before { color: var(--risk-low); }
+  .cg-tip :global(.tip-go) { font-size: 0.75rem; opacity: 0.7; margin-top: 0.2rem; }
+  .cg-mini { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+  .cg-mini :global(.mini) {
+    position: absolute; left: 0; top: 0; max-width: 15rem;
+    padding: 0.2rem 0.5rem 0.2rem 0.45rem; border-radius: 6px;
+    background: color-mix(in srgb, var(--bg) 90%, transparent); color: var(--text);
+    border: 1px solid var(--border); border-left: 3px solid var(--mini-color);
+    font-size: 0.72rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+  }
+  .cg-mini :global(.mini-id) { font: 600 0.68rem ui-monospace, Menlo, monospace; color: var(--muted); }
+  .cg-mini :global(.mini-control_policy) { --mini-color: var(--text); }
+  .cg-mini :global(.mini-governance_subject) { --mini-color: var(--g-subject); }
+  .cg-mini :global(.mini-control) { --mini-color: var(--g-control); }
+  .cg-mini :global(.mini-asset_class) { --mini-color: var(--g-asset); }
+  .cg-mini :global(.mini-risk) { --mini-color: var(--risk-high); }
+  .cg-tap {
+    position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%); z-index: 2;
+    font: inherit; font-weight: 600; padding: 0.7rem 1.2rem; border-radius: 999px; border: 0;
+    background: var(--accent); color: var(--accent-contrast); box-shadow: 0 6px 20px rgb(0 0 0 / 0.25);
+  }
+  @media (max-width: 760px) {
+    .cg-legend { padding: 0.6rem 0.8rem; }
+    .cg-key { font-size: 0.76rem; padding: 0.25rem 0.6rem; gap: 0.35rem; }
+  }
+</style>

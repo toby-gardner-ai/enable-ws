@@ -12,19 +12,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 3);
 ---
 <Base>
-  <!-- 1. Hero: what you get, why it matters, one obvious next step -->
-  <section class="hero">
-    <div class="container">
-      <span class="eyebrow">AI Enablement</span>
-      <h1>Turn AI from a buzzword<br />into real results for your business.</h1>
-      <p class="lead">{SITE.oneLiner}</p>
-      <div class="btn-row">
-        <a href={SITE.bookingUrl} class="btn btn-primary">Book a free discovery call</a>
-        <a href="/work" class="btn btn-ghost">See what I've built</a>
-      </div>
-      <p class="muted small">30 minutes · no preparation needed · you keep the notes</p>
-    </div>
-  </section>
+  <!-- 1. The control graph story comes first: the thing people see on arrival -->
+  <Governance />
 
   <!-- 2. The problem, in the customer's own words -->
   <section class="soft">
@@ -71,9 +60,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
     </div>
   </section>
-
-  <!-- 3b. AI Governance: why it matters, with the interactive control graph -->
-  <Governance />
 
   <!-- 4. The plan: three simple steps -->
   <section>
@@ -189,8 +175,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 </Base>
 
 <style>
-  .hero { padding-top: clamp(4rem, 10vw, 7rem); }
-  .small { font-size: 0.9rem; margin-top: 0.9rem; }
   .stats .card { display: flex; flex-direction: column; gap: 0.2rem; }
   .stats strong { font-size: 1.5rem; }
 </style>

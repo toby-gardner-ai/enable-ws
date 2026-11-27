@@ -1,42 +1,292 @@
 ---
-// AI Governance: why it matters, shown with Toby's interactive control graph.
-// The graph is a self-contained page in /public/governance/ (built from the ai-governance repo's graph/ toolchain).
-const GRAPH_URL = '/governance/control-graph.html';
----
-<section class="soft governance" id="ai-governance">
-  <div class="container">
-    <span class="eyebrow">AI Governance</span>
-    <h2 class="gov-title">It all starts with AI Governance</h2>
-    <p class="lead">Governance is key to AI enablement</p>
+// AI Governance: the control graph as a scrolling story. The graph stays pinned while each step
+// brings one layer forward, from the assets at the centre out to the risks.
+import ControlGraph from './ControlGraph.astro';
+import { SITE } from '../config';
 
-    <figure class="graph-frame">
-      <div class="graph-head">
-        <a href={GRAPH_URL} target="_blank" rel="noopener">Open full screen ↗</a>
+const STEPS = [
+  {
+    focus: [],
+    eyebrow: 'AI Enablement',
+    title: 'It starts with AI Governance',
+    text: "Governance is key to enabling AI and executing on AI strategy. Drag the graph to turn it, hover any node to see how it's all connected, layer by layer.",
+    intro: true,
+  },
+  {
+    focus: ['asset_class'],
+    eyebrow: 'At the centre',
+    title: 'The assets to protect',
+    text: 'Agents, models, datasets, secrets, tenants and the people who use them: everything AI governance exists to keep safe.',
+  },
+  {
+    focus: ['control_policy'],
+    links: ['has_subject'],
+    eyebrow: 'The rules',
+    title: 'Policies set the rules',
+    text: 'Each control policy owns one area, from agent authorisation to audit logging, and says what must be true.',
+  },
+  {
+    focus: ['governance_subject'],
+    links: ['has_subject', 'enforced_by'],
+    eyebrow: 'What they govern',
+    title: 'Governance subjects',
+    text: 'Every policy is split into the subjects it governs, each a topic with requirements of its own.',
+    link: { href: '/subjects', label: 'Browse the subjects' },
+  },
+  {
+    focus: ['control'],
+    links: ['enforced_by', 'protected_by'],
+    eyebrow: 'The wall',
+    title: 'Controls hold the line',
+    text: "Checks, configurations and procedures make each subject's requirements true, and protect the assets inside.",
+    link: { href: '/controls', label: 'See the control lifecycle' },
+  },
+  {
+    focus: ['risk'],
+    links: ['mitigated_by'],
+    eyebrow: 'Outside the wall',
+    title: 'Risks press in',
+    text: 'Every risk is aimed at an asset and held back by the controls that reduce it, bringing most high risks down to medium or low. Hover a warning sign to see its level.',
+    link: { href: '/risks', label: 'Open the risk map' },
+  },
+];
+---
+<section class="story" id="ai-governance">
+  <div class="story-graph">
+    <ControlGraph legend={false} offset={0.22} class="story-cg" />
+  </div>
+  <div class="story-steps">
+    <div class="rails" aria-hidden="true"></div>
+    {STEPS.map((step, i) => (
+      <div class:list={['step', { intro: step.intro }]} data-focus={step.focus.join(',')} data-links={step.links?.join(',') ?? ''} data-active={i === 0 ? '' : undefined}>
+        <div class="step-card">
+          {!step.intro && (
+            <>
+              <svg class="trace" aria-hidden="true"><path class="half" pathLength="100" /><path class="half" pathLength="100" /></svg>
+              <span class="head" aria-hidden="true"></span>
+              <span class="head" aria-hidden="true"></span>
+            </>
+          )}
+          <span class="eyebrow">{step.eyebrow}</span>
+          {step.intro ? <h1 class="story-title">{step.title}</h1> : <h3>{step.title}</h3>}
+          <p>{step.text}</p>
+          {step.intro && (
+            <div class="btn-row">
+              <a href={SITE.bookingUrl} class="btn btn-primary">Book a free discovery call</a>
+              <a href="/controls" class="btn btn-ghost">Explore the controls</a>
+            </div>
+          )}
+          {step.link && <a class="step-link" href={step.link.href}>{step.link.label} →</a>}
+        </div>
       </div>
-      <iframe
-        src={GRAPH_URL}
-        title="Interactive AI governance control graph"
-        loading="lazy"
-        sandbox="allow-scripts allow-popups"
-      ></iframe>
-      <a class="btn btn-primary mobile-open" href={GRAPH_URL} target="_blank" rel="noopener">Explore the interactive graph ↗</a>
-      <figcaption class="muted">Drag to rotate, scroll to zoom.</figcaption>
-    </figure>
+    ))}
   </div>
 </section>
 
+<script>
+  const story = document.querySelector<HTMLElement>('.story')!;
+  const graph = story.querySelector<HTMLElement>('[data-control-graph]')!;
+  const pinned = story.querySelector<HTMLElement>('.story-graph')!;
+  const column = story.querySelector<HTMLElement>('.story-steps')!;
+  const rails = story.querySelector<HTMLElement>('.rails')!;
+  const steps = [...story.querySelectorAll<HTMLElement>('.step')];
+  const cards = steps.map((s) => s.querySelector<HTMLElement>('.step-card')!);
+  const narrow = matchMedia('(max-width: 900px)');
+
+  // The sticky graph sits just below the site header, whatever its height.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const setHeader = () => story.style.setProperty('--header-h', `${header?.offsetHeight ?? 64}px`);
+  new ResizeObserver(setHeader).observe(header ?? document.body);
+  setHeader();
+
+  // The reading line: the middle of the screen, or on narrow screens just below the pinned graph.
+  const readingLine = () => (narrow.matches ? (header?.offsetHeight ?? 64) + pinned.offsetHeight + 40 : innerHeight / 2);
+
+  let current: HTMLElement | null = null;
+  const activate = (step: HTMLElement) => {
+    if (step === current) return;
+    current = step;
+    steps.forEach((s) => s.toggleAttribute('data-active', s === step));
+    // The opening view can be turned and explored; once the story is being scrolled the graph
+    // locks (hover still works, but no turning or zooming), so the wheel scrolls the page. The
+    // state is also kept on the element, for a graph that hasn't loaded yet to read when it starts.
+    const locked = step !== steps[0];
+    graph.dataset.focus = step.dataset.focus ?? '';
+    graph.dataset.focusLinks = step.dataset.links ?? '';
+    graph.toggleAttribute('data-locked', locked);
+    graph.dispatchEvent(
+      new CustomEvent('cg:focus', {
+        detail: { types: step.dataset.focus ? step.dataset.focus.split(',') : null, links: step.dataset.links?.split(',').filter(Boolean) },
+      }),
+    );
+    graph.dispatchEvent(new CustomEvent('cg:lock', { detail: locked }));
+  };
+
+  // The progress line runs down the centre of the cards. It is drawn only in the gaps between
+  // them: a lead-in above the first card, then from each card's bottom to the next card's top.
+  // When it reaches a card, the card switches on and the line splits into two heads that trace
+  // its border down both sides, meeting at the bottom centre before the line carries on.
+  const RADIUS = 14;
+  type Segment = { top: number; height: number; el: HTMLElement; fill: HTMLElement };
+  let segments: Segment[] = [];
+  const traced = cards.slice(1).map((card) => ({
+    card,
+    halves: [...card.querySelectorAll<SVGPathElement>('.half')],
+    heads: [...card.querySelectorAll<HTMLElement>('.head')],
+    length: 0,
+  }));
+
+  const layout = () => {
+    const tops = traced.map((t) => t.card.offsetTop);
+    const bottoms = traced.map((t) => t.card.offsetTop + t.card.offsetHeight);
+    const centre = traced[0].card.offsetLeft + traced[0].card.offsetWidth / 2;
+    const spans = [{ top: tops[0] - Math.min(220, innerHeight * 0.22), bottom: tops[0] }];
+    for (let i = 1; i < traced.length; i++) spans.push({ top: bottoms[i - 1], bottom: tops[i] });
+    rails.replaceChildren();
+    segments = spans.map(({ top, bottom }) => {
+      const el = document.createElement('span');
+      el.className = 'rail';
+      el.style.cssText = `top:${top}px;height:${bottom - top}px;left:${centre}px`;
+      const fill = document.createElement('span');
+      fill.className = 'rail-fill';
+      el.append(fill);
+      rails.append(el);
+      return { top, height: bottom - top, el, fill };
+    });
+    // Each half of a card's border, from the top centre round one side to the bottom centre.
+    for (const t of traced) {
+      const w = t.card.offsetWidth, h = t.card.offsetHeight, r = RADIUS, c = w / 2;
+      t.halves[0].setAttribute('d', `M${c},0 H${r} A${r},${r} 0 0 0 0,${r} V${h - r} A${r},${r} 0 0 0 ${r},${h} H${c}`);
+      t.halves[1].setAttribute('d', `M${c},0 H${w - r} A${r},${r} 0 0 1 ${w},${r} V${h - r} A${r},${r} 0 0 1 ${w - r},${h} H${c}`);
+      t.length = t.halves[0].getTotalLength();
+    }
+  };
+
+  const update = () => {
+    const line = readingLine() - column.getBoundingClientRect().top; // in the column's coordinates
+    for (const seg of segments) {
+      const filled = Math.max(0, Math.min(seg.height, line - seg.top));
+      seg.fill.style.height = `${filled}px`;
+      seg.el.toggleAttribute('data-moving', filled > 0 && filled < seg.height);
+    }
+    let active = steps[0];
+    traced.forEach((t, i) => {
+      const step = steps[i + 1];
+      const p = Math.max(0, Math.min(1, (line - t.card.offsetTop) / t.card.offsetHeight));
+      for (const half of t.halves) half.style.strokeDashoffset = String(100 * (1 - p));
+      t.heads.forEach((head, k) => {
+        const point = t.halves[k].getPointAtLength(t.length * p);
+        head.style.transform = `translate(${point.x}px, ${point.y}px)`;
+        head.hidden = p <= 0 || p >= 1;
+      });
+      step.toggleAttribute('data-reached', p > 0);
+      step.toggleAttribute('data-passed', p >= 1);
+      if (p > 0) active = step;
+    });
+    activate(active);
+  };
+  let frame = 0;
+  const schedule = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(update);
+  };
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', () => {
+    layout();
+    schedule();
+  });
+  new ResizeObserver(() => {
+    layout();
+    schedule();
+  }).observe(column);
+  layout();
+  update();
+</script>
+
 <style>
-  .gov-title { font-size: clamp(1.9rem, 4.2vw, 2.8rem); max-width: 22ch; }
-  .graph-frame { margin: 2.5rem 0 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); overflow: hidden; }
-  .graph-head { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem 1.5rem; padding: 0.9rem 1.2rem; font-size: 0.92rem; border-bottom: 1px solid var(--border); }
-  .graph-head a { white-space: nowrap; font-weight: 600; }
-  iframe { display: block; width: 100%; height: min(78vh, 760px); border: 0; }
-  figcaption { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-top: 1px solid var(--border); }
-  .mobile-open { display: none; margin: 1.2rem; }
-  /* The graph's own layout needs a wide screen; on phones offer it full screen instead. */
+  .story {
+    /* --pad lines the text up with the site's content column (the logo above). */
+    --pad: max(1.25rem, calc((100vw - var(--max)) / 2));
+    display: grid; grid-template-columns: minmax(19rem, calc(var(--pad) + 40rem)) minmax(0, 1fr);
+    padding: 0; position: relative; background: var(--bg);
+  }
+  /* The graph fills the whole section behind the steps; its centre is shifted right of the text. */
+  .story-graph {
+    grid-column: 1 / -1; grid-row: 1; align-self: start;
+    position: sticky; top: var(--header-h, 4rem); height: calc(100vh - var(--header-h, 4rem));
+  }
+  .story-graph :global(.story-cg) { height: 100%; }
+  .story-steps {
+    grid-column: 1; grid-row: 1; padding: 0 0 20vh var(--pad); position: relative; z-index: 1;
+    pointer-events: none; /* the graph beneath takes drags once it opens up at the last step */
+  }
+
+  /* The progress line, in the gaps between cards: a faint track that fills with a glow, its bright
+     tip showing while it moves. */
+  .rails { position: absolute; inset: 0; pointer-events: none; }
+  .rails :global(.rail) { position: absolute; width: 2px; margin-left: -1px; background: color-mix(in srgb, var(--accent) 14%, transparent); }
+  .rails :global(.rail-fill) {
+    position: absolute; left: 0; top: 0; width: 100%; height: 0;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent), 0 0 14px color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+  .rails :global(.rail[data-moving] .rail-fill)::after,
+  .head {
+    content: ''; position: absolute; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 0 2px var(--bg), 0 0 8px 2px var(--accent), 0 0 20px 5px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .rails :global(.rail[data-moving] .rail-fill)::after { left: 50%; bottom: -5px; margin-left: -5px; }
+
+  /* Each card's border, traced from the top centre down both sides to the bottom centre. */
+  .trace { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .trace .half {
+    fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 100; stroke-dashoffset: 100;
+    filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 55%, transparent));
+    transition: opacity 0.4s;
+  }
+  .step[data-passed]:not([data-active]) .trace .half { opacity: 0.45; filter: none; }
+  .head { left: -5px; top: -5px; pointer-events: none; }
+  .head[hidden] { display: none; }
+  .step-card { pointer-events: auto; }
+  .step { min-height: 78vh; display: flex; align-items: center; }
+  .step.intro { min-height: calc(100vh - var(--header-h, 4rem)); }
+  .step-card {
+    position: relative; width: 100%; max-width: 30rem; padding: 1.6rem 1.7rem; border-radius: var(--radius);
+    background: color-mix(in srgb, var(--bg-soft) 82%, transparent); border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    opacity: 0.35; transform: translateY(12px); transition: opacity 0.5s, transform 0.5s, box-shadow 0.6s;
+  }
+  .step[data-passed] .step-card { opacity: 0.6; transform: none; }
+  /* A card the line reaches switches on, like a light. */
+  .step[data-active] .step-card {
+    opacity: 1; transform: none;
+    box-shadow: 0 0 46px -10px color-mix(in srgb, var(--accent) 50%, transparent), inset 0 0 30px -18px var(--accent);
+  }
+  /* The opening: wider and shorter, so it sits alongside the graph rather than as a narrow column. */
+  .step.intro .step-card { max-width: 34rem; background: none; border: 0; backdrop-filter: none; padding-left: 0; box-shadow: none; }
+  .step.intro .btn-row { flex-wrap: nowrap; margin-top: 1.4rem; }
+  .story-title { font-size: clamp(2.3rem, 4.2vw, 3.5rem); margin-bottom: 0.5em; }
+  .step.intro .btn-row { pointer-events: auto; }
+  .step h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 0.6rem; }
+  .step p { color: var(--muted); font-size: 1.05rem; margin: 0; }
+  .step.intro p { font-size: 1.2rem; }
+  .step-link { display: inline-block; margin-top: 1rem; font-weight: 600; text-decoration: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .step-card { transform: none; }
+    .trace .half { transition: none; }
+  }
+
+  /* Phones and narrow screens: the graph is pinned at the top and the steps scroll beneath it. */
   @media (max-width: 900px) {
-    iframe { display: none; }
-    .mobile-open { display: inline-flex; }
-    figcaption { display: none; }
+    .story { display: block; }
+    .story-graph { height: 46vh; z-index: 2; }
+    .story-steps { padding: 0 1.25rem 30vh; }
+    .step, .step.intro { min-height: 62vh; align-items: flex-start; padding-top: 1.5rem; }
+    .step-card { padding: 1.2rem 1.3rem; }
+    .step h3 { font-size: 1.35rem; }
+    .step p { font-size: 0.98rem; }
+    .step-card { max-width: none; }
+    .step.intro .btn-row { flex-wrap: wrap; }
+    .step.intro .step-card { max-width: none; padding: 1.4rem 1.5rem; background: color-mix(in srgb, var(--bg-soft) 85%, transparent); border: 1px solid var(--border); }
   }
 </style>
